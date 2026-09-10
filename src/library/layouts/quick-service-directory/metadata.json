@@ -1,5 +1,5 @@
 {
   "id": "quick-service-directory",
   "displayName": "Directory",
-  "pageGroupType": "DIRECTORY"
+  "pageSetType": "DIRECTORY"
 }
