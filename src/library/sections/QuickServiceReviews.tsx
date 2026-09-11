@@ -21,6 +21,7 @@ import {
   type YextFields,
   TranslatableString,
 } from "@yext/visual-editor";
+import { resolveStyledTextStyles } from "../shared/sectionHelpers";
 
 type QuickServiceReviewsProps = {
   section: {
@@ -1525,17 +1526,6 @@ const textValue = (value: unknown) => {
 
   return "";
 };
-
-const resolveStyledTextStyles = (
-  styles: StyledTextValue | undefined,
-): React.CSSProperties => ({
-  fontFamily: styles?.fontFamily === "default" ? undefined : styles?.fontFamily,
-  fontSize: styles?.fontSize === "default" ? undefined : styles?.fontSize,
-  fontWeight: styles?.fontWeight === "default" ? undefined : styles?.fontWeight,
-  fontStyle: styles?.fontStyle === "default" ? undefined : styles?.fontStyle,
-  textTransform:
-    styles?.textTransform === "default" ? undefined : styles?.textTransform,
-});
 
 const getFirstPartyReviewsAggregate = (streamDocument: any) => {
   const aggregates = streamDocument?.ref_reviewsAgg;

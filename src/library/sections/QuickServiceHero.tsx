@@ -19,7 +19,6 @@ import {
   resolveYextEntityField,
   Image,
   ReviewStars,
-  ThemeOptions,
   type ComprehensiveCTAValue,
   type StyledImageValue,
   type StyledTextValue,
@@ -32,6 +31,7 @@ import {
   useDocument,
   VisibilityWrapper,
 } from "@yext/visual-editor";
+import { aspectRatioOptions } from "../shared/sectionHelpers";
 import type {
   ComplexImageType,
   HoursType,
@@ -1773,7 +1773,7 @@ const fields: YextFields<QuickServiceHeroProps> = {
           aspectRatio: {
             label: "Aspect Ratio",
             type: "basicSelector",
-            options: ThemeOptions.ASPECT_RATIO,
+            options: aspectRatioOptions,
           },
           imageConstrain: {
             label: "Image Constrain",
@@ -1827,7 +1827,7 @@ const fields: YextFields<QuickServiceHeroProps> = {
           aspectRatio: {
             label: "Aspect Ratio",
             type: "basicSelector",
-            options: ThemeOptions.ASPECT_RATIO,
+            options: aspectRatioOptions,
           },
           imageConstrain: {
             label: "Image Constrain",
@@ -2446,7 +2446,7 @@ const QuickServiceHeroComponent: PuckComponent<QuickServiceHeroProps> = (
                         }
                       >
                         <ComprehensiveCTA
-                          value={item}
+                          value={item as Partial<ComprehensiveCTAValue>}
                           className={
                             ctaVariant === "primary"
                               ? "hero-cta hero-cta--solid"

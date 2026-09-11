@@ -11,7 +11,6 @@ import {
   getAnalyticsScopeHash,
   Image,
   resolveComponentData,
-  ThemeOptions,
   type StyledTextValue,
   type ThemeColor,
   type YextComponentConfig,
@@ -22,6 +21,11 @@ import {
   useDocument,
   VisibilityWrapper,
 } from "@yext/visual-editor";
+import {
+  aspectRatioOptions,
+  resolveStringEntityFieldValue,
+  resolveStyledTextStyles,
+} from "../shared/sectionHelpers";
 import type {
   ComplexImageType,
   DayOfWeekNames,
@@ -64,42 +68,6 @@ type QuickServiceHoursProps = {
   };
   sectionImage: HoursSectionImageField;
 };
-
-const resolveStringEntityFieldValue = (
-  field: YextEntityField<string | TranslatableString> | undefined,
-  locale: string,
-  streamDocument: any,
-  fallback = "",
-) => {
-  if (!field) {
-    return fallback;
-  }
-
-  const resolvedValue = resolveComponentData(field, locale, streamDocument);
-  if (typeof resolvedValue === "string" && resolvedValue.trim().length > 0) {
-    return resolvedValue.trim();
-  }
-
-  if (
-    typeof field?.constantValue === "string" &&
-    field.constantValue.trim().length > 0
-  ) {
-    return field.constantValue.trim();
-  }
-
-  return fallback;
-};
-
-const resolveStyledTextStyles = (
-  styles: StyledTextValue | undefined,
-): React.CSSProperties => ({
-  fontFamily: styles?.fontFamily === "default" ? undefined : styles?.fontFamily,
-  fontSize: styles?.fontSize === "default" ? undefined : styles?.fontSize,
-  fontWeight: styles?.fontWeight === "default" ? undefined : styles?.fontWeight,
-  fontStyle: styles?.fontStyle === "default" ? undefined : styles?.fontStyle,
-  textTransform:
-    styles?.textTransform === "default" ? undefined : styles?.textTransform,
-});
 
 const resolveImageFieldValue = (value: unknown) => {
   if (
@@ -1717,7 +1685,7 @@ const fields: YextFields<QuickServiceHoursProps> = {
       aspectRatio: {
         label: "Aspect Ratio",
         type: "basicSelector",
-        options: ThemeOptions.ASPECT_RATIO,
+        options: aspectRatioOptions,
       },
       imageConstrain: {
         label: "Image Constrain",

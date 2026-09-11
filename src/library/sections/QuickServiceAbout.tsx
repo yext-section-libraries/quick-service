@@ -12,7 +12,6 @@ import {
   getAnalyticsScopeHash,
   resolveComponentData,
   StyledTextComponent,
-  ThemeOptions,
   type AssetImageType,
   type StyledImageValue,
   type StyledPlainTextProps,
@@ -24,6 +23,10 @@ import {
   useDocument,
   VisibilityWrapper,
 } from "@yext/visual-editor";
+import {
+  aspectRatioOptions,
+  defaultTextStyles,
+} from "../shared/sectionHelpers";
 
 type AboutSectionImage = {
   image: YextEntityField<AssetImageType>;
@@ -1488,7 +1491,7 @@ const fields: YextFields<QuickServiceAboutProps> = {
       aspectRatio: {
         label: "Aspect Ratio",
         type: "basicSelector",
-        options: ThemeOptions.ASPECT_RATIO,
+        options: aspectRatioOptions,
       },
       imageConstrain: {
         label: "Image Constrain",
@@ -1513,6 +1516,7 @@ const fields: YextFields<QuickServiceAboutProps> = {
 
 const defaultHeading: QuickServiceAboutProps["heading"] = {
   ...headingConfig.defaultProps,
+  fontOptions: headingConfig.defaultProps?.fontOptions ?? defaultTextStyles,
   data: {
     text: {
       field: "",
@@ -1542,6 +1546,7 @@ const defaultSectionImage: QuickServiceAboutProps["sectionImage"] = {
 
 const defaultContent: QuickServiceAboutProps["content"] = {
   ...contentConfig.defaultProps,
+  fontOptions: contentConfig.defaultProps?.fontOptions ?? defaultTextStyles,
   data: {
     text: {
       field: "",
@@ -1576,7 +1581,7 @@ const QuickServiceAboutComponent: PuckComponent<QuickServiceAboutProps> = (
     props.section.backgroundColor,
     streamDocument,
   );
-  const resolvedSectionImage = resolveComponentData(
+  const resolvedSectionImage = resolveComponentData<AssetImageType>(
     props.sectionImage.image,
     locale,
     streamDocument,

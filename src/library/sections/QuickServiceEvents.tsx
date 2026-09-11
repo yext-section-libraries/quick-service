@@ -14,7 +14,6 @@ import {
   getAnalyticsScopeHash,
   resolveComponentData,
   StyledTextComponent,
-  ThemeOptions,
   type AssetImageType,
   type StyledImageValue,
   type StyledPlainTextProps,
@@ -26,6 +25,10 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
+import {
+  aspectRatioOptions,
+  defaultTextStyles,
+} from "../shared/sectionHelpers";
 
 type EventsContent = StyledRichTextProps & {
   button: Partial<ComprehensiveCTAValue>;
@@ -1574,7 +1577,7 @@ const fields: YextFields<QuickServiceEventsProps> = {
       aspectRatio: {
         label: "Aspect Ratio",
         type: "basicSelector",
-        options: ThemeOptions.ASPECT_RATIO,
+        options: aspectRatioOptions,
       },
       imageConstrain: {
         label: "Image Constrain",
@@ -1628,6 +1631,7 @@ const defaultSectionImage: QuickServiceEventsProps["sectionImage"] = {
 
 const defaultContent: QuickServiceEventsProps["content"] = {
   ...contentConfig.defaultProps,
+  fontOptions: contentConfig.defaultProps?.fontOptions ?? defaultTextStyles,
   data: {
     text: {
       field: "",
@@ -1675,6 +1679,7 @@ const defaultEventsProps: QuickServiceEventsProps = {
   },
   heading: {
     ...headingConfig.defaultProps,
+    fontOptions: headingConfig.defaultProps?.fontOptions ?? defaultTextStyles,
     data: {
       text: {
         field: "",
@@ -1802,7 +1807,7 @@ const QuickServiceEventsComponent: PuckComponent<QuickServiceEventsProps> = (
                     }
                   >
                     <ComprehensiveCTA
-                      value={resolvedButton}
+                      value={resolvedButton as Partial<ComprehensiveCTAValue>}
                       className={`quick-service-events-cta${
                         buttonVariant === "primary"
                           ? " quick-service-events-cta--solid"

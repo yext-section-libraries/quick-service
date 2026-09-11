@@ -14,7 +14,6 @@ import {
   Image,
   resolveComponentData,
   StyledTextComponent,
-  ThemeOptions,
   type StyledImageValue,
   type StyledPlainTextProps,
   type StyledTextValue,
@@ -28,6 +27,7 @@ import {
   useDocument,
   VisibilityWrapper,
 } from "@yext/visual-editor";
+import { aspectRatioOptions } from "../shared/sectionHelpers";
 import type { ComplexImageType, ImageType } from "@yext/pages-components";
 
 type OfferingsItem = {
@@ -1652,7 +1652,7 @@ const fields: YextFields<QuickServiceOfferingsProps> = {
       aspectRatio: {
         label: "Aspect Ratio",
         type: "basicSelector",
-        options: ThemeOptions.ASPECT_RATIO,
+        options: aspectRatioOptions,
       },
       imageConstrain: {
         label: "Image Constrain",

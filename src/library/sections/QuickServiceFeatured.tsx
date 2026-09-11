@@ -13,13 +13,12 @@ import {
   EntityField,
   getDefaultRTF,
   Image,
-  MaybeRTF,
   getAnalyticsScopeHash,
   getSurfaceColorStyle,
   getThemeColorCssValue,
   resolveComponentData,
-  ThemeOptions,
   type EnhancedTranslatableCTA,
+  type MaybeRTFProps,
   type StreamDocument,
   type StyledTextValue,
   type ThemeColor,
@@ -33,6 +32,12 @@ import {
   createItemSource,
   useDocument,
 } from "@yext/visual-editor";
+import {
+  aspectRatioOptions,
+  renderRichText,
+  resolveStringEntityFieldValue,
+  resolveStyledTextStyles,
+} from "../shared/sectionHelpers";
 
 type FeaturedItemSourceItem = {
   image: YextEntityField<ImageType | ComplexImageType | TranslatableAssetImage>;
@@ -64,31 +69,6 @@ type QuickServiceFeaturedProps = {
       buttonColor: ThemeColor;
     };
   };
-};
-
-const resolveStringEntityFieldValue = (
-  field: YextEntityField<TranslatableString> | undefined,
-  locale: string,
-  streamDocument: StreamDocument,
-  fallback = "",
-) => {
-  if (!field) {
-    return fallback;
-  }
-
-  const resolvedValue = resolveComponentData(field, locale, streamDocument);
-  if (typeof resolvedValue === "string" && resolvedValue.trim().length > 0) {
-    return resolvedValue.trim();
-  }
-
-  if (
-    typeof field?.constantValue === "string" &&
-    field.constantValue.trim().length > 0
-  ) {
-    return field.constantValue.trim();
-  }
-
-  return fallback;
 };
 
 const defaultFeaturedCta = (
@@ -1611,23 +1591,10 @@ h1, h2, h3, h4, h5, h6,
   color: var(--bc-text);
 }`;
 
-const resolveStyledTextStyles = (
-  styles: StyledTextValue | undefined,
-): React.CSSProperties => ({
-  fontFamily: styles?.fontFamily === "default" ? undefined : styles?.fontFamily,
-  fontSize: styles?.fontSize === "default" ? undefined : styles?.fontSize,
-  fontWeight: styles?.fontWeight === "default" ? undefined : styles?.fontWeight,
-  fontStyle: styles?.fontStyle === "default" ? undefined : styles?.fontStyle,
-  textTransform:
-    styles?.textTransform === "default" ? undefined : styles?.textTransform,
-});
-
 const resolveRichTextStyleOverrides = (
   styles: StyledTextValue | undefined,
   color?: string,
-): NonNullable<
-  React.ComponentProps<typeof MaybeRTF>["richTextStyleOverrides"]
-> => ({
+): NonNullable<MaybeRTFProps["richTextStyleOverrides"]> => ({
   fontFamily: styles?.fontFamily === "default" ? undefined : styles?.fontFamily,
   fontSize: styles?.fontSize === "default" ? undefined : styles?.fontSize,
   fontWeight: styles?.fontWeight === "default" ? undefined : styles?.fontWeight,
@@ -1851,7 +1818,7 @@ const fields: YextFields<QuickServiceFeaturedProps> = {
               aspectRatio: {
                 label: "Aspect Ratio",
                 type: "basicSelector",
-                options: ThemeOptions.ASPECT_RATIO,
+                options: aspectRatioOptions,
               },
               imageConstrain: {
                 label: "Image Constrain",
@@ -1947,9 +1914,7 @@ const QuickServiceFeaturedComponent: PuckComponent<
         ...card,
         title,
         description: card.description
-          ? resolveComponentData(card.description, locale, streamDocument, {
-              richTextStyleOverrides,
-            })
+          ? resolveComponentData(card.description, locale, streamDocument)
           : undefined,
         button,
         image,
@@ -2061,7 +2026,7 @@ const QuickServiceFeaturedComponent: PuckComponent<
                         >
                           {card.title}
                         </h3>
-                        {card.description ? card.description : null}
+                        {renderRichText(card.description, richTextStyleOverrides)}
                         <CTA
                           className="quick-service-featured-cta"
                           label={card.button?.label ?? ""}
@@ -2070,6 +2035,7 @@ const QuickServiceFeaturedComponent: PuckComponent<
                           variant="primary"
                           color={props.content.styles.buttonColor}
                           target={props.puck.isEditing ? undefined : "_top"}
+                          normalizeLink={card.button?.normalizeLink ?? false}
                           openInNewTab={card.button?.openInNewTab}
                           eventName={`featuredCta${index}`}
                         />

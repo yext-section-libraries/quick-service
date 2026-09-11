@@ -13,7 +13,6 @@ import {
   Image,
   getAnalyticsScopeHash,
   resolveComponentData,
-  ThemeOptions,
   type ComprehensiveCTAValue,
   type AssetImageType,
   type StyledImageValue,
@@ -27,6 +26,12 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
+import {
+  aspectRatioOptions,
+  resolveStringEntityFieldValue,
+  resolveStyledTextStyles,
+  toRenderableText,
+} from "../shared/sectionHelpers";
 
 type AddressFieldSet = {
   subheading: YextEntityField<TranslatableString>;
@@ -70,31 +75,6 @@ type QuickServiceDetailsProps = {
     content: TextListProps;
   };
   sectionImage: SectionImageField;
-};
-
-const resolveStringEntityFieldValue = (
-  field: YextEntityField<string | TranslatableString> | undefined,
-  locale: string,
-  streamDocument: any,
-  fallback = "",
-) => {
-  if (!field) {
-    return fallback;
-  }
-
-  const resolvedValue = resolveComponentData(field, locale, streamDocument);
-  if (typeof resolvedValue === "string" && resolvedValue.trim().length > 0) {
-    return resolvedValue.trim();
-  }
-
-  if (
-    typeof field?.constantValue === "string" &&
-    field.constantValue.trim().length > 0
-  ) {
-    return field.constantValue.trim();
-  }
-
-  return fallback;
 };
 
 const detailsImageUrl =
@@ -1539,47 +1519,6 @@ h1, h2, h3, h4, h5, h6,
   color: var(--bc-text);
 }`;
 
-const toRenderableText = (value: unknown, fallback = "") => {
-  if (typeof value === "string" || typeof value === "number") {
-    return String(value);
-  }
-
-  if (
-    value &&
-    typeof value === "object" &&
-    "defaultValue" in (value as Record<string, unknown>)
-  ) {
-    const defaultValue = (value as Record<string, unknown>).defaultValue;
-    if (typeof defaultValue === "string" || typeof defaultValue === "number") {
-      return String(defaultValue);
-    }
-  }
-
-  return fallback;
-};
-
-const resolveTextFieldValue = (
-  field: YextEntityField<string | TranslatableString> | undefined,
-  locale: string,
-  streamDocument: any,
-  fallback = "",
-) =>
-  toRenderableText(
-    field ? resolveComponentData(field, locale, streamDocument) : "",
-    toRenderableText(field?.constantValue, fallback),
-  ).trim();
-
-const resolveStyledTextStyles = (
-  styles: StyledTextValue | undefined,
-): React.CSSProperties => ({
-  fontFamily: styles?.fontFamily === "default" ? undefined : styles?.fontFamily,
-  fontSize: styles?.fontSize === "default" ? undefined : styles?.fontSize,
-  fontWeight: styles?.fontWeight === "default" ? undefined : styles?.fontWeight,
-  fontStyle: styles?.fontStyle === "default" ? undefined : styles?.fontStyle,
-  textTransform:
-    styles?.textTransform === "default" ? undefined : styles?.textTransform,
-});
-
 const normalizeTextListValues = (value: unknown): string[] => {
   if (typeof value === "string" || typeof value === "number") {
     const text = String(value).trim();
@@ -1773,7 +1712,7 @@ const fields: YextFields<QuickServiceDetailsProps> = {
       aspectRatio: {
         label: "Aspect Ratio",
         type: "basicSelector",
-        options: ThemeOptions.ASPECT_RATIO,
+        options: aspectRatioOptions,
       },
       imageConstrain: {
         label: "Image Constrain",
@@ -2012,7 +1951,7 @@ const QuickServiceDetailsComponent: PuckComponent<QuickServiceDetailsProps> = (
   const resolvedAddress = getEntityAddressValues(streamDocument);
   const addressLines = renderAddressLines(resolvedAddress);
   const addressColor = getThemeColorCssValue(props.address.fontColor);
-  const entityPhoneValue = resolveTextFieldValue(
+  const entityPhoneValue = resolveStringEntityFieldValue(
     props.phone.entityPhone,
     locale,
     streamDocument,
@@ -2109,9 +2048,7 @@ const QuickServiceDetailsComponent: PuckComponent<QuickServiceDetailsProps> = (
                 >
                   <p
                     className="quick-service-detail-label"
-                    style={{
-                      ...(addressColor ? { color: addressColor } : {}),
-                    }}
+                    style={addressColor ? { color: addressColor } : undefined}
                   >
                     {resolveStringEntityFieldValue(
                       props.address.subheading,
@@ -2147,9 +2084,7 @@ const QuickServiceDetailsComponent: PuckComponent<QuickServiceDetailsProps> = (
                 >
                   <p
                     className="quick-service-detail-label"
-                    style={{
-                      ...(phoneColor ? { color: phoneColor } : {}),
-                    }}
+                    style={phoneColor ? { color: phoneColor } : undefined}
                   >
                     {resolveStringEntityFieldValue(
                       props.phone.subheading,

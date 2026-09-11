@@ -23,6 +23,11 @@ import {
   type StyledTextValue,
   type TranslatableString,
 } from "@yext/visual-editor";
+import {
+  resolveStringEntityFieldValue as resolveTextFieldValue,
+  resolveStyledTextStyles,
+  toRenderableText,
+} from "../shared/sectionHelpers";
 
 type ImageConstantValue = {
   url: string;
@@ -1533,44 +1538,6 @@ h1, h2, h3, h4, h5, h6,
   color: var(--bc-text);
 }`;
 
-const toRenderableText = (value: unknown, fallback = "") => {
-  if (typeof value === "string" || typeof value === "number") {
-    return String(value);
-  }
-
-  if (value && typeof value === "object") {
-    if ("text" in (value as Record<string, unknown>)) {
-      const text = (value as Record<string, unknown>).text;
-      if (typeof text === "string" || typeof text === "number") {
-        return String(text);
-      }
-    }
-
-    if ("defaultValue" in (value as Record<string, unknown>)) {
-      const defaultValue = (value as Record<string, unknown>).defaultValue;
-      if (
-        typeof defaultValue === "string" ||
-        typeof defaultValue === "number"
-      ) {
-        return String(defaultValue);
-      }
-    }
-  }
-
-  return fallback;
-};
-
-const resolveStyledTextStyles = (
-  styles: StyledTextValue | undefined,
-): React.CSSProperties => ({
-  fontFamily: styles?.fontFamily === "default" ? undefined : styles?.fontFamily,
-  fontSize: styles?.fontSize === "default" ? undefined : styles?.fontSize,
-  fontWeight: styles?.fontWeight === "default" ? undefined : styles?.fontWeight,
-  fontStyle: styles?.fontStyle === "default" ? undefined : styles?.fontStyle,
-  textTransform:
-    styles?.textTransform === "default" ? undefined : styles?.textTransform,
-});
-
 const resolveCtaLinkValue = (
   cta: YextCTAField | undefined,
   locale: string,
@@ -1632,22 +1599,6 @@ const normalizeNavigableUrl = (value: string) => {
 
 const getLinkTarget = (openInNewTab: boolean, isEditing = false) =>
   openInNewTab ? "_blank" : isEditing ? undefined : "_top";
-
-const resolveTextFieldValue = (
-  field: YextEntityField<string | TranslatableString> | undefined,
-  locale: string,
-  streamDocument: any,
-  fallback = "",
-) => {
-  if (!field) {
-    return fallback.trim();
-  }
-
-  return toRenderableText(
-    resolveComponentData(field, locale, streamDocument),
-    toRenderableText(field.constantValue, fallback),
-  ).trim();
-};
 
 const resolveImageValue = (value: unknown) => {
   if (
@@ -2297,7 +2248,7 @@ const QuickServiceFooterComponent: PuckComponent<QuickServiceFooterProps> = (
                         }
                       >
                         <ComprehensiveCTA
-                          value={badge.cta}
+                          value={badge.cta as Partial<ComprehensiveCTAValue>}
                           eventName={`footerBadge${index}`}
                         />
                       </EntityField>

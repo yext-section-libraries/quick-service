@@ -12,10 +12,10 @@ import {
   getAnalyticsScopeHash,
   getSurfaceColorStyle,
   getThemeColorCssValue,
-  MaybeRTF,
   resolveComponentData,
   StyledTextComponent,
   type StyledPlainTextProps,
+  type MaybeRTFProps,
   type StyledTextValue,
   type StreamDocument,
   type ThemeColor,
@@ -27,6 +27,7 @@ import {
   type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
+import { renderRichText } from "../shared/sectionHelpers";
 
 type FaqItemSourceItem = {
   question: YextEntityField<TranslatableString>;
@@ -1719,7 +1720,7 @@ const QuickServiceFaqComponent: PuckComponent<QuickServiceFaqProps> = (
       faqSurfaceStyle?.color,
   };
   const answerRichTextStyleOverrides: NonNullable<
-    React.ComponentProps<typeof MaybeRTF>["richTextStyleOverrides"]
+    MaybeRTFProps["richTextStyleOverrides"]
   > = {
     ...props.faqs.styles.answer,
     color:
@@ -1777,15 +1778,7 @@ const QuickServiceFaqComponent: PuckComponent<QuickServiceFaqProps> = (
                         )
                       : "";
                     const answer = faq.answer
-                      ? resolveComponentData(
-                          faq.answer,
-                          locale,
-                          streamDocument,
-                          {
-                            richTextStyleOverrides:
-                              answerRichTextStyleOverrides,
-                          },
-                        )
+                      ? resolveComponentData(faq.answer, locale, streamDocument)
                       : undefined;
 
                     return (
@@ -1854,16 +1847,10 @@ const QuickServiceFaqComponent: PuckComponent<QuickServiceFaqProps> = (
                         </button>
                         <div className="quick-service-faq-panel">
                           <div className="quick-service-faq-panel-inner">
-                            {typeof answer === "string" ? (
-                              <MaybeRTF
-                                data={answer}
-                                richTextStyleOverrides={
-                                  answerRichTextStyleOverrides
-                                }
-                              />
-                            ) : React.isValidElement(answer) ? (
-                              answer
-                            ) : null}
+                            {renderRichText(
+                              answer,
+                              answerRichTextStyleOverrides,
+                            )}
                           </div>
                         </div>
                       </Background>

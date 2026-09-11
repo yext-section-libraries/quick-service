@@ -19,7 +19,6 @@ import {
   getSurfaceColorStyle,
   getThemeColorCssValue,
   getAnalyticsScopeHash,
-  resolveComponentData,
   type ThemeColor,
   type StyledTextValue,
   type YextComponentConfig,
@@ -29,6 +28,11 @@ import {
   useNearbyLocations,
   VisibilityWrapper,
 } from "@yext/visual-editor";
+import {
+  resolveStringEntityFieldValue,
+  resolveStyledTextStyles,
+  toRenderableText as toText,
+} from "../shared/sectionHelpers";
 
 type QuickServiceLocationsProps = {
   section: {
@@ -73,72 +77,9 @@ type QuickServiceLocationsProps = {
   };
 };
 
-const resolveStringEntityFieldValue = (
-  field: YextEntityField<string> | undefined,
-  locale: string,
-  streamDocument: any,
-  fallback = "",
-) => {
-  if (!field) {
-    return fallback;
-  }
-
-  const resolvedValue = resolveComponentData(field, locale, streamDocument);
-  if (typeof resolvedValue === "string" && resolvedValue.trim().length > 0) {
-    return resolvedValue.trim();
-  }
-
-  if (
-    typeof field?.constantValue === "string" &&
-    field.constantValue.trim().length > 0
-  ) {
-    return field.constantValue.trim();
-  }
-
-  return fallback;
-};
-
 type NearbyLocationDoc = NonNullable<
   ReturnType<typeof useNearbyLocations>["data"]
 >["response"]["docs"][number];
-
-const resolveStyledTextStyles = (
-  styles: StyledTextValue | undefined,
-): React.CSSProperties => ({
-  fontFamily: styles?.fontFamily === "default" ? undefined : styles?.fontFamily,
-  fontSize: styles?.fontSize === "default" ? undefined : styles?.fontSize,
-  fontWeight: styles?.fontWeight === "default" ? undefined : styles?.fontWeight,
-  fontStyle: styles?.fontStyle === "default" ? undefined : styles?.fontStyle,
-  textTransform:
-    styles?.textTransform === "default" ? undefined : styles?.textTransform,
-});
-
-const toText = (value: unknown, fallback = "") => {
-  if (typeof value === "string" || typeof value === "number") {
-    return String(value);
-  }
-
-  if (value && typeof value === "object") {
-    if ("text" in (value as Record<string, unknown>)) {
-      const text = (value as Record<string, unknown>).text;
-      if (typeof text === "string" || typeof text === "number") {
-        return String(text);
-      }
-    }
-
-    if ("defaultValue" in (value as Record<string, unknown>)) {
-      const defaultValue = (value as Record<string, unknown>).defaultValue;
-      if (
-        typeof defaultValue === "string" ||
-        typeof defaultValue === "number"
-      ) {
-        return String(defaultValue);
-      }
-    }
-  }
-
-  return fallback;
-};
 
 const toMiles = (
   first?: { latitude?: number; longitude?: number },
