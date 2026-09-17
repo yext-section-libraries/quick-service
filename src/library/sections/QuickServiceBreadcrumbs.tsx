@@ -1,4 +1,5 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { msg } from "@yext/visual-editor/section-library-support";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -36,44 +37,44 @@ type QuickServiceBreadcrumbsProps = {
 
 const fields: YextFields<QuickServiceBreadcrumbsProps> = {
   section: {
-    label: "Section",
+    label: msg("fields.section", "Section"),
     type: "object",
     objectFields: {
       backgroundColor: {
-        label: "Background Color",
+        label: msg("fields.backgroundColor", "Background Color"),
         type: "basicSelector",
         options: "BACKGROUND_COLOR",
       },
       visibleOnLivePage: {
-        label: "Visible on Live Page",
+        label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
     },
   },
   rootLabel: {
-    label: "Root Label",
+    label: msg("fields.rootLabel", "Root Label"),
     type: "entityField",
     filter: { types: ["type.string"] },
   },
   textStyles: {
-    label: "Text Styles",
+    label: msg("fields.textStyles", "Text Styles"),
     type: "styledText",
   },
   fontColor: {
-    label: "Font Color",
+    label: msg("fields.fontColor", "Font Color"),
     type: "basicSelector",
     options: "SITE_COLOR",
   },
   includeCurrentLocation: {
-    label: "Include Current Location",
+    label: msg("fields.includeCurrentLocation", "Include Current Location"),
     type: "radio",
     options: [
-      { label: "Yes", value: true },
-      { label: "No", value: false },
+      { label: msg("fields.options.yes", "Yes"), value: true },
+      { label: msg("fields.options.no", "No"), value: false },
     ],
   },
 };
@@ -266,7 +267,7 @@ const QuickServiceBreadcrumbsComponent: PuckComponent<
 
 export const QuickServiceBreadcrumbs: YextComponentConfig<QuickServiceBreadcrumbsProps> =
   {
-    label: "Breadcrumbs",
+    label: msg("components.breadcrumbs", "Breadcrumbs"),
     fields,
     defaultProps: {
       section: {

@@ -2,7 +2,13 @@ import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
-import { AnalyticsScopeProvider } from "@yext/pages-components";
+import { useTranslation } from "react-i18next";
+import {
+  AnalyticsScopeProvider,
+  HoursStatus,
+  HoursTable as HoursTableComponent,
+  type StatusParams,
+} from "@yext/pages-components";
 import {
   Background,
   EntityField,
@@ -21,6 +27,7 @@ import {
   useDocument,
   VisibilityWrapper,
 } from "@yext/visual-editor";
+import { msg, pt } from "@yext/visual-editor/section-library-support";
 import {
   aspectRatioOptions,
   resolveStringEntityFieldValue,
@@ -29,7 +36,6 @@ import {
 import type {
   ComplexImageType,
   DayOfWeekNames,
-  DayType,
   HoursType,
   ImageType,
 } from "@yext/pages-components";
@@ -80,92 +86,6 @@ const resolveImageFieldValue = (value: unknown) => {
   }
 
   return undefined;
-};
-
-const formatClockTime = (value?: string) => {
-  if (!value) return "";
-  const twentyFourHourMatch = value.match(/^(\d{2}):(\d{2})$/);
-  if (!twentyFourHourMatch) return value;
-
-  const rawHours = Number(twentyFourHourMatch[1]);
-  const minutes = twentyFourHourMatch[2];
-  const meridiem = rawHours >= 12 ? "PM" : "AM";
-  const normalizedHours = rawHours % 12 || 12;
-  return `${normalizedHours}:${minutes} ${meridiem}`;
-};
-
-const formatHoursValue = (value?: string | DayType) => {
-  if (!value) return "Closed";
-  if (typeof value === "string") return value;
-  if (value.isClosed) return "Closed";
-
-  const intervals =
-    value.openIntervals
-      ?.map((interval) => {
-        const start = formatClockTime(interval.start);
-        const end = formatClockTime(interval.end);
-        if (!start || !end) return null;
-        return `${start} - ${end}`;
-      })
-      .filter((interval): interval is string => Boolean(interval)) ?? [];
-
-  return intervals.length > 0 ? intervals.join(", ") : "Closed";
-};
-
-const titleCaseDay = (day: string) =>
-  day.charAt(0).toUpperCase() + day.slice(1).toLowerCase();
-
-const getOrderedDays = (startOfWeek: keyof DayOfWeekNames | "today") => {
-  const activeDay = getActiveDay();
-  const startDay =
-    startOfWeek === "today" ? activeDay : (startOfWeek as string).toLowerCase();
-  const startIndex = days.indexOf(startDay as (typeof days)[number]);
-  if (startIndex < 0) {
-    return [...days];
-  }
-
-  return [...days.slice(startIndex), ...days.slice(0, startIndex)];
-};
-
-type HoursRowGroup = {
-  label: string;
-  value: string;
-};
-
-const buildHoursGroups = (
-  orderedDays: readonly (typeof days)[number][],
-  hours?: HoursType,
-  collapseDays?: boolean,
-) => {
-  const rows = orderedDays.map((day) => ({
-    day,
-    label: titleCaseDay(day),
-    value: formatHoursValue(hours?.[day]),
-  }));
-
-  if (!collapseDays) {
-    return rows.map((row) => ({
-      label: row.label,
-      value: row.value,
-    }));
-  }
-
-  const groups: HoursRowGroup[] = [];
-  rows.forEach((row) => {
-    const lastGroup = groups[groups.length - 1];
-    if (lastGroup && lastGroup.value === row.value) {
-      const [startLabel] = lastGroup.label.split(" - ");
-      lastGroup.label = `${startLabel} - ${row.label}`;
-      return;
-    }
-
-    groups.push({
-      label: row.label,
-      value: row.value,
-    });
-  });
-
-  return groups;
 };
 
 const hoursImageUrl =
@@ -552,9 +472,19 @@ h1, h2, h3, h4, h5, h6,
   text-decoration: none;
 }
 
-.quick-service-hours-row { margin: 0; padding: 13px 0; border-bottom: 1px solid currentColor; display: flex; justify-content: space-between; gap: 20px; }
-.quick-service-hours-day, .quick-service-hours-time { font-size: 16px; line-height: 1.5; }
-.quick-service-hours-row-active .quick-service-hours-day, .quick-service-hours-row-active .quick-service-hours-time { font-weight: 700; }
+.quick-service-hours-list .HoursTable-row {
+  margin: 0;
+  padding: 13px 0;
+  border-bottom: 1px solid currentColor;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+.quick-service-hours-list .HoursTable-day,
+.quick-service-hours-list .HoursTable-intervals {
+  font-size: 16px;
+  line-height: 1.5;
+}
 .quick-service-hours-list { margin: 0 0 28px; }
 .quick-service-hours-note { margin: 0 !important; padding: 0 !important; font-size: 16px; line-height: 1.5; }
 
@@ -1631,128 +1561,161 @@ const isHoursData = (value: unknown): value is HoursType =>
 
 const fields: YextFields<QuickServiceHoursProps> = {
   section: {
-    label: "Section",
+    label: msg("fields.section", "Section"),
     type: "object",
     objectFields: {
       visibleOnLivePage: {
-        label: "Visible on Live Page",
+        label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       backgroundColor: {
-        label: "Background Color",
+        label: msg("fields.backgroundColor", "Background Color"),
         type: "basicSelector",
         options: "BACKGROUND_COLOR",
       },
       textStyles: {
-        label: "Text Styles",
+        label: msg("fields.textStyles", "Text Styles"),
         type: "styledText",
       },
     },
   },
   heading: {
-    label: "Heading",
+    label: msg("fields.heading", "Heading"),
     type: "object",
     objectFields: {
       text: {
-        label: "Text",
+        label: msg("fields.text", "Text"),
         type: "entityField",
         filter: { types: ["type.string"] },
       },
       styles: {
-        label: "Text Styles",
+        label: msg("fields.textStyles", "Text Styles"),
         type: "styledText",
       },
       fontColor: {
-        label: "Font Color",
+        label: msg("fields.fontColor", "Font Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
     },
   },
   sectionImage: {
-    label: "Section Image",
+    label: msg("fields.sectionImage", "Section Image"),
     type: "object",
     objectFields: {
       image: {
-        label: "Image",
+        label: msg("fields.image", "Image"),
         type: "entityField",
         filter: { types: ["type.image"] },
       },
       aspectRatio: {
-        label: "Aspect Ratio",
+        label: msg("fields.aspectRatio", "Aspect Ratio"),
         type: "basicSelector",
         options: aspectRatioOptions,
       },
       imageConstrain: {
-        label: "Image Constrain",
+        label: msg("fields.imageConstrain", "Image Constrain"),
         type: "select",
         options: [
-          { label: "Fixed", value: "fixed" },
-          { label: "Filled", value: "filled" },
+          { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+          { label: msg("fields.options.filled", "Filled"), value: "filled" },
         ],
       },
     },
   },
   hours: {
-    label: "Hours",
+    label: msg("fields.hours", "Hours"),
     type: "object",
     objectFields: {
       entityHours: {
-        label: "Hours",
+        label: msg("fields.hours", "Hours"),
         type: "entityField",
         filter: { types: ["type.hours"] },
         disableConstantValueToggle: true,
       },
       fontColor: {
-        label: "Font Color",
+        label: msg("fields.fontColor", "Font Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
       hoursStyles: {
-        label: "Hours Styles",
+        label: msg("fields.hoursStyles", "Hours Styles"),
         type: "object",
         objectFields: {
           startOfWeek: {
-            label: "Start Of Week",
+            label: msg("fields.startOfWeek", "Start Of Week"),
             type: "select",
             options: [
-              { label: "Monday", value: "monday" },
-              { label: "Tuesday", value: "tuesday" },
-              { label: "Wednesday", value: "wednesday" },
-              { label: "Thursday", value: "thursday" },
-              { label: "Friday", value: "friday" },
-              { label: "Saturday", value: "saturday" },
-              { label: "Sunday", value: "sunday" },
-              { label: "Today", value: "today" },
+              {
+                label: msg("fields.options.monday", "Monday"),
+                value: "monday",
+              },
+              {
+                label: msg("fields.options.tuesday", "Tuesday"),
+                value: "tuesday",
+              },
+              {
+                label: msg("fields.options.wednesday", "Wednesday"),
+                value: "wednesday",
+              },
+              {
+                label: msg("fields.options.thursday", "Thursday"),
+                value: "thursday",
+              },
+              {
+                label: msg("fields.options.friday", "Friday"),
+                value: "friday",
+              },
+              {
+                label: msg("fields.options.saturday", "Saturday"),
+                value: "saturday",
+              },
+              {
+                label: msg("fields.options.sunday", "Sunday"),
+                value: "sunday",
+              },
+              { label: msg("fields.options.today", "Today"), value: "today" },
             ],
           },
           collapseDays: {
-            label: "Collapse Days",
+            label: msg("fields.collapseDays", "Collapse Days"),
             type: "radio",
             options: [
-              { label: "Yes", value: true },
-              { label: "No", value: false },
+              { label: msg("fields.options.yes", "Yes"), value: true },
+              { label: msg("fields.options.no", "No"), value: false },
             ],
           },
           showAdditionalHoursText: {
-            label: "Show Additional Hours Text",
+            label: msg(
+              "fields.showAdditionalHoursText",
+              "Show Additional Hours Text",
+            ),
             type: "radio",
             options: [
-              { label: "Yes", value: true },
-              { label: "No", value: false },
+              { label: msg("fields.options.yes", "Yes"), value: true },
+              { label: msg("fields.options.no", "No"), value: false },
             ],
           },
           alignment: {
-            label: "Alignment",
+            label: msg("fields.alignment", "Alignment"),
             type: "select",
             options: [
-              { label: "Start", value: "items-start" },
-              { label: "Center", value: "items-center" },
-              { label: "End", value: "items-end" },
+              {
+                label: msg("fields.options.start", "Start"),
+                value: "items-start",
+              },
+              {
+                label: msg("fields.options.center", "Center"),
+                value: "items-center",
+              },
+              {
+                label: msg("fields.options.end", "End"),
+                value: "items-end",
+              },
             ],
           },
         },
@@ -1760,44 +1723,26 @@ const fields: YextFields<QuickServiceHoursProps> = {
     },
   },
   additionalText: {
-    label: "Additional Text",
+    label: msg("fields.additionalText", "Additional Text"),
     type: "object",
     objectFields: {
       text: {
-        label: "Text",
+        label: msg("fields.text", "Text"),
         type: "entityField",
         filter: { types: ["type.string"] },
       },
       styles: {
-        label: "Text Styles",
+        label: msg("fields.textStyles", "Text Styles"),
         type: "styledText",
       },
       fontColor: {
-        label: "Font Color",
+        label: msg("fields.fontColor", "Font Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
     },
   },
 };
-
-const days = [
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-  "sunday",
-] as const;
-
-const getActiveDay = () =>
-  new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/Chicago",
-    weekday: "long",
-  })
-    .format(new Date())
-    .toLowerCase();
 
 const hasHoursData = (hours?: HoursType) =>
   Boolean(
@@ -1882,6 +1827,7 @@ const defaultHoursProps: QuickServiceHoursProps = {
 const QuickServiceHoursComponent: PuckComponent<QuickServiceHoursProps> = (
   props,
 ) => {
+  const { t, i18n } = useTranslation();
   const streamDocument = useDocument<any>();
   const locale = streamDocument?.locale ?? "en";
   const sectionSurfaceStyle = getSurfaceColorStyle(
@@ -1895,7 +1841,6 @@ const QuickServiceHoursComponent: PuckComponent<QuickServiceHoursProps> = (
     streamDocument,
     defaultHoursProps.heading.text.constantValue ?? "",
   );
-  const orderedDays = getOrderedDays(props.hours.hoursStyles.startOfWeek);
   const resolvedEntityHours = resolveComponentData(
     props.hours.entityHours,
     locale,
@@ -1937,11 +1882,24 @@ const QuickServiceHoursComponent: PuckComponent<QuickServiceHoursProps> = (
     streamDocument,
     streamDocument?.additionalHoursText ?? "",
   );
-  const hoursRows = buildHoursGroups(
-    orderedDays,
-    hours,
-    props.hours.hoursStyles.collapseDays,
-  );
+  const dayOfWeekNames = React.useMemo<DayOfWeekNames>(() => {
+    const formatter = new Intl.DateTimeFormat(i18n.language, {
+      timeZone: "UTC",
+      weekday: "long",
+    });
+    const formatWeekday = (day: number) =>
+      formatter.format(new Date(Date.UTC(2024, 0, day)));
+
+    return {
+      sunday: formatWeekday(7),
+      monday: formatWeekday(8),
+      tuesday: formatWeekday(9),
+      wednesday: formatWeekday(10),
+      thursday: formatWeekday(11),
+      friday: formatWeekday(12),
+      saturday: formatWeekday(13),
+    };
+  }, [i18n.language]);
   const alignment =
     props.hours.hoursStyles.alignment === "items-center"
       ? "center"
@@ -1963,6 +1921,62 @@ const QuickServiceHoursComponent: PuckComponent<QuickServiceHoursProps> = (
     width: "100%",
     height: "100%",
     objectFit: "cover",
+  };
+  const renderHoursStatus = (params: StatusParams) => {
+    const isComingSoon = !!params.comingSoon;
+    const isOpen24Hours = !!params.currentInterval?.is24h?.();
+    const isTemporarilyClosed = !params.futureInterval;
+    const hasFutureStatus =
+      !isComingSoon && !isOpen24Hours && !isTemporarilyClosed;
+    const interval = params.isOpen
+      ? params.currentInterval
+      : params.futureInterval;
+    const time = params.isOpen
+      ? (interval?.getEndTime(i18n.language, params.timeOptions) ?? "")
+      : (interval?.getStartTime(i18n.language, params.timeOptions) ?? "");
+    const dayOfWeek = interval
+      ? params.isOpen
+        ? interval.end
+            ?.setLocale(i18n.language)
+            .toLocaleString(params.dayOptions)
+        : interval.start
+            ?.setLocale(i18n.language)
+            .toLocaleString(params.dayOptions)
+      : "";
+    const currentStatus = isComingSoon
+      ? t("comingSoon", "Coming Soon")
+      : isOpen24Hours
+        ? t("open24Hours", "Open 24 Hours")
+        : isTemporarilyClosed
+          ? t("temporarilyClosed", "Temporarily Closed")
+          : params.isOpen
+            ? t("openNow", "Open Now")
+            : t("closed", "Closed");
+    const futureStatus =
+      hasFutureStatus && time
+        ? params.isOpen
+          ? dayOfWeek
+            ? t(
+                "closesAtTimeWeek",
+                "Closes at {{time}} {{dayOfWeek}}",
+                { time, dayOfWeek },
+              )
+            : t("closesAtTime", "Closes at {{time}}", { time })
+          : dayOfWeek
+            ? t(
+                "opensAtTimeWeek",
+                "Opens at {{time}} {{dayOfWeek}}",
+                { time, dayOfWeek },
+              )
+            : t("opensAtTime", "Opens at {{time}}", { time })
+        : "";
+
+    return (
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        <strong>{currentStatus}</strong>
+        {futureStatus ? <span>{futureStatus}</span> : null}
+      </div>
+    );
   };
 
   return (
@@ -1999,7 +2013,7 @@ const QuickServiceHoursComponent: PuckComponent<QuickServiceHoursProps> = (
                 }}
               >
                 <EntityField
-                  displayName="Heading"
+                  displayName={pt("heading", "Heading")}
                   fieldId={props.heading.text.field}
                   constantValueEnabled={props.heading.text.constantValueEnabled}
               >
@@ -2014,7 +2028,7 @@ const QuickServiceHoursComponent: PuckComponent<QuickServiceHoursProps> = (
                 </h2>
                 </EntityField>
                 <EntityField
-                  displayName="Hours"
+                  displayName={pt("hours", "Hours")}
                   fieldId={props.hours.entityHours.field}
                   constantValueEnabled={
                     props.hours.entityHours.constantValueEnabled
@@ -2027,26 +2041,35 @@ const QuickServiceHoursComponent: PuckComponent<QuickServiceHoursProps> = (
                     ...(hoursColor ? { color: hoursColor } : {}),
                   }}
                 >
-                  {hoursRows.map((row) => (
-                    <p
-                      key={`${row.label}-${row.value}`}
-                      className="quick-service-hours-row"
-                      style={{ borderBottomColor: "currentColor" }}
-                    >
-                      <span className="quick-service-hours-day">
-                        {row.label}
-                      </span>
-                      <span className="quick-service-hours-time">
-                        {row.value}
-                      </span>
-                    </p>
-                  ))}
+                  <HoursStatus
+                    hours={hours}
+                    comingSoon={streamDocument?.comingSoon}
+                    timezone={streamDocument?.timezone ?? "UTC"}
+                    dayOptions={{ weekday: "long" }}
+                    statusTemplate={renderHoursStatus}
+                  />
+                  <HoursTableComponent
+                    hours={hours}
+                    comingSoon={streamDocument?.comingSoon}
+                    startOfWeek={props.hours.hoursStyles.startOfWeek}
+                    collapseDays={props.hours.hoursStyles.collapseDays}
+                    dayOfWeekNames={dayOfWeekNames}
+                    intervalTranslations={{
+                      isClosed: t("closed", "Closed"),
+                      open24Hours: t("open24Hours", "Open 24 Hours"),
+                      reopenDate: t("reopenDate", "Reopen Date"),
+                      timeFormatLocale: i18n.language,
+                    }}
+                  />
                 </div>
                 </EntityField>
                 {props.hours.hoursStyles.showAdditionalHoursText &&
                 additionalText ? (
                   <EntityField
-                    displayName="Additional Hours Text"
+                    displayName={pt(
+                      "additionalHoursText",
+                      "Additional Hours Text",
+                    )}
                     fieldId={props.additionalText.text.field}
                     constantValueEnabled={
                       props.additionalText.text.constantValueEnabled
@@ -2069,7 +2092,7 @@ const QuickServiceHoursComponent: PuckComponent<QuickServiceHoursProps> = (
               {hasSectionImage ? (
                 <article className="split-banner-image">
                   <EntityField
-                    displayName="Section Image"
+                    displayName={pt("sectionImage", "Section Image")}
                     fieldId={props.sectionImage.image.field}
                     constantValueEnabled={
                       props.sectionImage.image.constantValueEnabled
@@ -2096,7 +2119,7 @@ const QuickServiceHoursComponent: PuckComponent<QuickServiceHoursProps> = (
 
 export const QuickServiceHours: YextComponentConfig<QuickServiceHoursProps> =
   {
-    label: "Hours",
+    label: msg("components.hours", "Hours"),
     fields,
     defaultProps: defaultHoursProps,
     render: (props) => <QuickServiceHoursComponent {...props} />,

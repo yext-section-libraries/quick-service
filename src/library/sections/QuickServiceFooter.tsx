@@ -1,4 +1,5 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { msg } from "@yext/visual-editor/section-library-support";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -1638,7 +1639,7 @@ const getResolvedBrandImage = (
 
 const linkFieldMap = {
   cta: {
-    label: "CTA",
+    label: msg("fields.cta", "CTA"),
     type: "entityField",
     filter: { types: ["type.cta"] },
   },
@@ -1646,51 +1647,51 @@ const linkFieldMap = {
 
 const fields: YextFields<QuickServiceFooterProps> = {
   section: {
-    label: "Section",
+    label: msg("fields.section", "Section"),
     type: "object",
     objectFields: {
       visibleOnLivePage: {
-        label: "Visible on Live Page",
+        label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       backgroundColor: {
-        label: "Background Color",
+        label: msg("fields.backgroundColor", "Background Color"),
         type: "basicSelector",
         options: "BACKGROUND_COLOR",
       },
     },
   },
   brand: {
-    label: "Brand",
+    label: msg("fields.brand", "Brand"),
     type: "object",
     objectFields: {
       displayType: {
-        label: "Type",
+        label: msg("fields.type", "Type"),
         type: "radio",
         options: [
-          { label: "Text", value: "text" },
-          { label: "Logo", value: "logo" },
+          { label: msg("fields.options.text", "Text"), value: "text" },
+          { label: msg("fields.options.logo", "Logo"), value: "logo" },
         ],
       },
       entityName: {
-        label: "Brand Name",
+        label: msg("fields.brandName", "Brand Name"),
         type: "object",
         objectFields: {
           text: {
-            label: "Text",
+            label: msg("fields.text", "Text"),
             type: "entityField",
             filter: { types: ["type.string"], allowList: ["name"] },
           },
           styles: {
-            label: "Text Styles",
+            label: msg("fields.textStyles", "Text Styles"),
             type: "styledText",
           },
           fontColor: {
-            label: "Font Color",
+            label: msg("fields.fontColor", "Font Color"),
             type: "basicSelector",
             options: "SITE_COLOR",
           },
@@ -1699,7 +1700,7 @@ const fields: YextFields<QuickServiceFooterProps> = {
       customName: { type: "text", visible: false },
       logoSource: { type: "text", visible: false },
       entityLogo: {
-        label: "Brand Logo",
+        label: msg("fields.brandLogo", "Brand Logo"),
         type: "entityField",
         filter: { types: ["type.image"] },
       },
@@ -1707,11 +1708,11 @@ const fields: YextFields<QuickServiceFooterProps> = {
     },
   },
   footerLinks: {
-    label: "Footer Nav Links",
+    label: msg("fields.footerNavLinks", "Footer Nav Links"),
     type: "object",
     objectFields: {
       links: {
-        label: "Links",
+        label: msg("fields.links", "Links"),
         type: "array",
         arrayFields: linkFieldMap,
         defaultItemProps: {
@@ -1730,18 +1731,18 @@ const fields: YextFields<QuickServiceFooterProps> = {
         getItemSummary: (_item, index) => `Link ${(index ?? 0) + 1}`,
       },
       styles: {
-        label: "Text Styles",
+        label: msg("fields.textStyles", "Text Styles"),
         type: "styledText",
       },
       fontColor: {
-        label: "Font Color",
+        label: msg("fields.fontColor", "Font Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
     },
   },
   socialLinks: {
-    label: "Social Links",
+    label: msg("fields.socialLinks", "Social Links"),
     type: "array",
     arrayFields: linkFieldMap,
     defaultItemProps: {
@@ -1760,37 +1761,37 @@ const fields: YextFields<QuickServiceFooterProps> = {
     getItemSummary: (_item, index) => `Link ${(index ?? 0) + 1}`,
   },
   footerText: {
-    label: "Footer Text Styles",
+    label: msg("fields.footerTextStyles", "Footer Text Styles"),
     type: "object",
     objectFields: {
       styles: {
-        label: "Text Styles",
+        label: msg("fields.textStyles", "Text Styles"),
         type: "styledText",
       },
       fontColor: {
-        label: "Font Color",
+        label: msg("fields.fontColor", "Font Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
     },
   },
   copyright: {
-    label: "Copyright Text",
+    label: msg("fields.copyrightText", "Copyright Text"),
     type: "object",
     objectFields: {
       text: {
-        label: "Text",
+        label: msg("fields.text", "Text"),
         type: "entityField",
         filter: { types: ["type.string"] },
       },
     },
   },
   appBadges: {
-    label: "CTAs",
+    label: msg("fields.ctas", "CTAs"),
     type: "array",
     arrayFields: {
       cta: {
-        label: "CTA",
+        label: msg("fields.cta", "CTA"),
         type: "comprehensiveCTA",
       },
     },
@@ -1820,7 +1821,7 @@ const fields: YextFields<QuickServiceFooterProps> = {
     getItemSummary: (_item, index) => `CTA ${(index ?? 0) + 1}`,
   },
   legalLinks: {
-    label: "Legal Links",
+    label: msg("fields.legalLinks", "Legal Links"),
     type: "array",
     arrayFields: linkFieldMap,
     defaultItemProps: {
@@ -2298,7 +2299,7 @@ const QuickServiceFooterComponent: PuckComponent<QuickServiceFooterProps> = (
 
 export const QuickServiceFooter: YextComponentConfig<QuickServiceFooterProps> =
   {
-    label: "Footer",
+    label: msg("components.footer", "Footer"),
     fields,
     defaultProps: defaultFooterProps,
     render: (props) => <QuickServiceFooterComponent {...props} />,

@@ -2,6 +2,7 @@ import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
+import { useTranslation } from "react-i18next";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
   Background,
@@ -21,6 +22,7 @@ import {
   type YextFields,
   TranslatableString,
 } from "@yext/visual-editor";
+import { msg, pt } from "@yext/visual-editor/section-library-support";
 import { resolveStyledTextStyles } from "../shared/sectionHelpers";
 
 type QuickServiceReviewsProps = {
@@ -47,20 +49,24 @@ type FirstPartyReview = {
   content: string;
 };
 
-const sampleReviews: FirstPartyReview[] = [
+const getSampleReviews = (): FirstPartyReview[] => [
   {
-    authorName: "Sample Guest",
+    authorName: pt("sampleGuest", "Sample Guest"),
     rating: "5",
     reviewDate: "",
-    content:
+    content: pt(
+      "sampleReviewEditorOnly",
       "Sample review data shown only in the editor. This will not appear on the live page.",
+    ),
   },
   {
-    authorName: "Sample Guest",
+    authorName: pt("sampleGuest", "Sample Guest"),
     rating: "4",
     reviewDate: "",
-    content:
+    content: pt(
+      "sampleReviewReplaceBeforePublishing",
       "Add real first-party reviews to replace this sample content before publishing.",
+    ),
   },
 ];
 
@@ -732,10 +738,16 @@ h1, h2, h3, h4, h5, h6,
 }
 .quick-service-review-rating {
   margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
   font-size: 16px;
   line-height: 1.3;
   font-weight: 500;
   letter-spacing: 0.02em;
+}
+.quick-service-review-date {
+  white-space: nowrap;
 }
 .quick-service-review-text {
   margin: 0;
@@ -1596,16 +1608,16 @@ const getFirstPartyTopReviews = (streamDocument: any) => {
 
 const headingFields: YextFields<QuickServiceReviewsProps["heading"]> = {
   text: {
-    label: "Text",
+    label: msg("fields.text", "Text"),
     type: "entityField",
     filter: { types: ["type.string"] },
   },
   styles: {
-    label: "Text Styles",
+    label: msg("fields.textStyles", "Text Styles"),
     type: "styledText",
   },
   fontColor: {
-    label: "Font Color",
+    label: msg("fields.fontColor", "Font Color"),
     type: "basicSelector",
     options: "SITE_COLOR",
   },
@@ -1613,20 +1625,20 @@ const headingFields: YextFields<QuickServiceReviewsProps["heading"]> = {
 
 const sectionFields: YextFields<QuickServiceReviewsProps["section"]> = {
   visibleOnLivePage: {
-    label: "Visible on Live Page",
+    label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
     type: "radio",
     options: [
-      { label: "Yes", value: true },
-      { label: "No", value: false },
+      { label: msg("fields.options.yes", "Yes"), value: true },
+      { label: msg("fields.options.no", "No"), value: false },
     ],
   },
   backgroundColor: {
-    label: "Background Color",
+    label: msg("fields.backgroundColor", "Background Color"),
     type: "basicSelector",
     options: "BACKGROUND_COLOR",
   },
   cardBackgroundColor: {
-    label: "Card Background Fill",
+    label: msg("fields.cardBackgroundFill", "Card Background Fill"),
     type: "basicSelector",
     options: "BACKGROUND_COLOR",
   },
@@ -1634,25 +1646,25 @@ const sectionFields: YextFields<QuickServiceReviewsProps["section"]> = {
 
 const fields: YextFields<QuickServiceReviewsProps> = {
   section: {
-    label: "Section",
+    label: msg("fields.section", "Section"),
     type: "object",
     objectFields: sectionFields,
   },
   heading: {
-    label: "Heading",
+    label: msg("fields.heading", "Heading"),
     type: "object",
     objectFields: headingFields,
   },
   content: {
-    label: "Content",
+    label: msg("fields.content", "Content"),
     type: "object",
     objectFields: {
       styles: {
-        label: "Text Styles",
+        label: msg("fields.textStyles", "Text Styles"),
         type: "styledText",
       },
       fontColor: {
-        label: "Font Color",
+        label: msg("fields.fontColor", "Font Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
@@ -1663,6 +1675,7 @@ const fields: YextFields<QuickServiceReviewsProps> = {
 const QuickServiceReviewsComponent: PuckComponent<QuickServiceReviewsProps> = (
   props,
 ) => {
+  const { t } = useTranslation();
   const streamDocument = useDocument<any>();
   const locale = streamDocument?.locale ?? "en";
   const isEditing = Boolean(props.puck?.isEditing);
@@ -1712,8 +1725,8 @@ const QuickServiceReviewsComponent: PuckComponent<QuickServiceReviewsProps> = (
       : "";
   const hasRating = rating.length > 0;
   const hasReviewCount = reviewCountValue.length > 0;
-  const reviews = hasReviews ? entityReviews : sampleReviews;
-  const helperText = "Recent Reviews:";
+  const reviews = hasReviews ? entityReviews : getSampleReviews();
+  const helperText = t("recentReviews", "Recent Reviews:");
 
   return (
     <AnalyticsScopeProvider
@@ -1729,14 +1742,14 @@ const QuickServiceReviewsComponent: PuckComponent<QuickServiceReviewsProps> = (
             as="section"
             background={props.section.backgroundColor}
             className="quick-service-reviews-section"
-            aria-label="Reviews"
+            aria-label={t("reviews", "Reviews")}
             style={{
               ...sectionSurfaceStyle,
             }}
           >
             <div className="quick-service-reviews-wrap">
               <EntityField
-                displayName="Heading"
+                displayName={pt("heading", "Heading")}
                 fieldId={props.heading.text.field}
                 constantValueEnabled={props.heading.text.constantValueEnabled}
               >
@@ -1751,7 +1764,10 @@ const QuickServiceReviewsComponent: PuckComponent<QuickServiceReviewsProps> = (
               </h2>
               </EntityField>
               {hasRating || hasReviewCount ? (
-                <p className="quick-service-reviews-summary" style={textStyle}>
+                <div
+                  className="quick-service-reviews-summary"
+                  style={textStyle}
+                >
                   {hasRating ? (
                     <ReviewStars
                       averageRating={Number(rating)}
@@ -1760,7 +1776,7 @@ const QuickServiceReviewsComponent: PuckComponent<QuickServiceReviewsProps> = (
                       }
                     />
                   ) : null}
-                </p>
+                </div>
               ) : null}
               <p className="quick-service-reviews-recent" style={textStyle}>
                 {helperText}
@@ -1792,7 +1808,7 @@ const QuickServiceReviewsComponent: PuckComponent<QuickServiceReviewsProps> = (
                         <h3 style={cardTextStyle}>{review.authorName}</h3>
                       </div>
                       {hasReviewRating || hasReviewDate ? (
-                        <p
+                        <div
                           className="quick-service-review-rating"
                           style={cardTextStyle}
                         >
@@ -1805,9 +1821,11 @@ const QuickServiceReviewsComponent: PuckComponent<QuickServiceReviewsProps> = (
                             <span style={{ margin: "0 6px" }}>|</span>
                           ) : null}
                           {hasReviewDate ? (
-                            <span>{review.reviewDate}</span>
+                            <span className="quick-service-review-date">
+                              {review.reviewDate}
+                            </span>
                           ) : null}
-                        </p>
+                        </div>
                       ) : null}
                       <p
                         className="quick-service-review-text"
@@ -1868,7 +1886,7 @@ const defaultReviewsProps: QuickServiceReviewsProps = {
 
 export const QuickServiceReviews: YextComponentConfig<QuickServiceReviewsProps> =
   {
-    label: "Reviews",
+    label: msg("components.reviews", "Reviews"),
     fields,
     defaultProps: defaultReviewsProps,
     render: (props) => <QuickServiceReviewsComponent {...props} />,

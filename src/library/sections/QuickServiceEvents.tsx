@@ -1,4 +1,5 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { msg } from "@yext/visual-editor/section-library-support";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -51,13 +52,13 @@ type QuickServiceEventsProps = {
 
 const headingConfig = createStyledTextConfig({
   kind: "plain",
-  label: "Heading",
+  label: msg("fields.heading", "Heading"),
   includeColor: true,
 });
 
 const contentConfig = createStyledTextConfig({
   kind: "richText",
-  label: "Content",
+  label: msg("fields.content", "Content"),
   includeColor: true,
 });
 
@@ -1547,64 +1548,64 @@ h1, h2, h3, h4, h5, h6,
 
 const fields: YextFields<QuickServiceEventsProps> = {
   section: {
-    label: "Section",
+    label: msg("fields.section", "Section"),
     type: "object",
     objectFields: {
       visibleOnLivePage: {
-        label: "Visible on Live Page",
+        label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       backgroundColor: {
-        label: "Background Color",
+        label: msg("fields.backgroundColor", "Background Color"),
         type: "basicSelector",
         options: "BACKGROUND_COLOR",
       },
     },
   },
   sectionImage: {
-    label: "Section Image",
+    label: msg("fields.sectionImage", "Section Image"),
     type: "object",
     objectFields: {
       image: {
-        label: "Image",
+        label: msg("fields.image", "Image"),
         type: "entityField",
         filter: { types: ["type.image"] },
       },
       aspectRatio: {
-        label: "Aspect Ratio",
+        label: msg("fields.aspectRatio", "Aspect Ratio"),
         type: "basicSelector",
         options: aspectRatioOptions,
       },
       imageConstrain: {
-        label: "Image Constrain",
+        label: msg("fields.imageConstrain", "Image Constrain"),
         type: "select",
         options: [
-          { label: "Fixed", value: "fixed" },
-          { label: "Filled", value: "filled" },
+          { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+          { label: msg("fields.options.filled", "Filled"), value: "filled" },
         ],
       },
       styles: {
-        label: "Image Styles",
+        label: msg("fields.imageStyles", "Image Styles"),
         type: "styledImage",
       },
     },
   },
   heading: {
-    label: "Heading",
+    label: msg("fields.heading", "Heading"),
     type: "object",
     objectFields: headingConfig.fields!,
   },
   content: {
-    label: "Content",
+    label: msg("fields.content", "Content"),
     type: "object",
     objectFields: {
       ...contentConfig.fields!,
       button: {
-        label: "Button",
+        label: msg("fields.button", "Button"),
         type: "comprehensiveCTA",
       },
     },
@@ -1846,7 +1847,7 @@ const QuickServiceEventsComponent: PuckComponent<QuickServiceEventsProps> = (
 
 export const QuickServiceEvents: YextComponentConfig<QuickServiceEventsProps> =
   {
-    label: "Events",
+    label: msg("components.events", "Events"),
     fields,
     defaultProps: defaultEventsProps,
     render: (props) => <QuickServiceEventsComponent {...props} />,

@@ -1,4 +1,5 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { msg } from "@yext/visual-editor/section-library-support";
 
 import { parsePhoneNumber } from "awesome-phonenumber";
 import * as React from "react";
@@ -174,72 +175,72 @@ const getNearbyDirectionsUrl = (locationData: NearbyLocationDoc) => {
 
 const fields: YextFields<QuickServiceLocationsProps> = {
   section: {
-    label: "Section",
+    label: msg("fields.section", "Section"),
     type: "object",
     objectFields: {
       visibleOnLivePage: {
-        label: "Visible on Live Page",
+        label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       backgroundColor: {
-        label: "Background Color",
+        label: msg("fields.backgroundColor", "Background Color"),
         type: "basicSelector",
         options: "BACKGROUND_COLOR",
       },
     },
   },
   heading: {
-    label: "Heading",
+    label: msg("fields.heading", "Heading"),
     type: "object",
     objectFields: {
       text: {
-        label: "Text",
+        label: msg("fields.text", "Text"),
         type: "entityField",
         filter: { types: ["type.string"] },
       },
       styles: {
-        label: "Text Styles",
+        label: msg("fields.textStyles", "Text Styles"),
         type: "styledText",
       },
       fontColor: {
-        label: "Font Color",
+        label: msg("fields.fontColor", "Font Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
     },
   },
   map: {
-    label: "Map",
+    label: msg("fields.map", "Map"),
     type: "object",
     objectFields: {
       limit: {
-        label: "Limit",
+        label: msg("fields.limit", "Limit"),
         type: "number",
         min: 1,
         max: 25,
       },
       radius: {
-        label: "Radius",
+        label: msg("fields.radius", "Radius"),
         type: "number",
         min: 1,
         max: 1000,
       },
       coordinate: {
-        label: "Coordinates",
+        label: msg("fields.coordinates", "Coordinates"),
         type: "entityField",
         filter: { types: ["type.coordinate"] },
       },
       mapStyle: {
-        label: "Mapbox Map Style",
+        label: msg("fields.mapboxMapStyle", "Mapbox Map Style"),
         type: "select",
         options: mapboxStaticMapStyleOptions,
       },
       zoom: {
-        label: "Zoom",
+        label: msg("fields.zoom", "Zoom"),
         type: "number",
         min: 0,
         max: 22,
@@ -247,142 +248,142 @@ const fields: YextFields<QuickServiceLocationsProps> = {
     },
   },
   locations: {
-    label: "Locations",
+    label: msg("fields.locations", "Locations"),
     type: "object",
     objectFields: {
       dividerColor: {
-        label: "Divider Color",
+        label: msg("fields.dividerColor", "Divider Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
       cardBackgroundColor: {
-        label: "Card Background Color",
+        label: msg("fields.cardBackgroundColor", "Card Background Color"),
         type: "basicSelector",
         options: "BACKGROUND_COLOR",
       },
       cardTitleColor: {
-        label: "Card Title Color",
+        label: msg("fields.cardTitleColor", "Card Title Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
       showAddress: {
-        label: "Show Address",
+        label: msg("fields.showAddress", "Show Address"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       showPhone: {
-        label: "Show Phone",
+        label: msg("fields.showPhone", "Show Phone"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       showHours: {
-        label: "Show Hours",
+        label: msg("fields.showHours", "Show Hours"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       showDistance: {
-        label: "Show Distance",
+        label: msg("fields.showDistance", "Show Distance"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       showDirections: {
-        label: "Show Directions",
+        label: msg("fields.showDirections", "Show Directions"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       address: {
-        label: "Address",
+        label: msg("fields.address", "Address"),
         type: "object",
         objectFields: {
           showRegion: {
-            label: "Show Region",
+            label: msg("fields.showRegion", "Show Region"),
             type: "radio",
             options: [
-              { label: "Yes", value: true },
-              { label: "No", value: false },
+              { label: msg("fields.options.yes", "Yes"), value: true },
+              { label: msg("fields.options.no", "No"), value: false },
             ],
           },
           showCountry: {
-            label: "Show Country",
+            label: msg("fields.showCountry", "Show Country"),
             type: "radio",
             options: [
-              { label: "Yes", value: true },
-              { label: "No", value: false },
+              { label: msg("fields.options.yes", "Yes"), value: true },
+              { label: msg("fields.options.no", "No"), value: false },
             ],
           },
         },
       },
       phone: {
-        label: "Phone",
+        label: msg("fields.phone", "Phone"),
         type: "object",
         objectFields: {
           phoneFormat: {
-            label: "Phone Number Format",
+            label: msg("fields.phoneNumberFormat", "Phone Number Format"),
             type: "radio",
             options: [
-              { label: "Domestic", value: "domestic" },
-              { label: "International", value: "international" },
+              { label: msg("fields.options.domestic", "Domestic"), value: "domestic" },
+              { label: msg("fields.options.international", "International"), value: "international" },
             ],
           },
           includeHyperlink: {
-            label: "Include Phone Hyperlink",
+            label: msg("fields.includePhoneHyperlink", "Include Phone Hyperlink"),
             type: "radio",
             options: [
-              { label: "Yes", value: true },
-              { label: "No", value: false },
+              { label: msg("fields.options.yes", "Yes"), value: true },
+              { label: msg("fields.options.no", "No"), value: false },
             ],
           },
         },
       },
       hoursStyles: {
-        label: "Hours Styles",
+        label: msg("fields.hoursStyles", "Hours Styles"),
         type: "object",
         objectFields: {
           showCurrentStatus: {
-            label: "Show Current Status",
+            label: msg("fields.showCurrentStatus", "Show Current Status"),
             type: "radio",
             options: [
-              { label: "Yes", value: true },
-              { label: "No", value: false },
+              { label: msg("fields.options.yes", "Yes"), value: true },
+              { label: msg("fields.options.no", "No"), value: false },
             ],
           },
           timeFormat: {
-            label: "Time Format",
+            label: msg("fields.timeFormat", "Time Format"),
             type: "select",
             options: [
-              { label: "12 Hour", value: "12h" },
-              { label: "24 Hour", value: "24h" },
+              { label: msg("fields.options.hour12Label", "12 Hour"), value: "12h" },
+              { label: msg("fields.options.hour24Label", "24 Hour"), value: "24h" },
             ],
           },
           dayOfWeekFormat: {
-            label: "Day Of Week Format",
+            label: msg("fields.dayOfWeekFormat", "Day Of Week Format"),
             type: "select",
             options: [
-              { label: "Short", value: "short" },
-              { label: "Long", value: "long" },
+              { label: msg("fields.options.short", "Short"), value: "short" },
+              { label: msg("fields.options.long", "Long"), value: "long" },
             ],
           },
           showDayNames: {
-            label: "Show Day Names",
+            label: msg("fields.showDayNames", "Show Day Names"),
             type: "radio",
             options: [
-              { label: "Yes", value: true },
-              { label: "No", value: false },
+              { label: msg("fields.options.yes", "Yes"), value: true },
+              { label: msg("fields.options.no", "No"), value: false },
             ],
           },
         },
@@ -2221,7 +2222,7 @@ const QuickServiceLocationsComponent: PuckComponent<
 
 export const QuickServiceLocations: YextComponentConfig<QuickServiceLocationsProps> =
   {
-    label: "Locations",
+    label: msg("components.locations", "Locations"),
     fields,
     defaultProps: defaultLocationsProps,
     render: (props) => <QuickServiceLocationsComponent {...props} />,
