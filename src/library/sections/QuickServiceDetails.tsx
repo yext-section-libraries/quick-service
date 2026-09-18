@@ -1,4 +1,5 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { msg } from "@yext/visual-editor/section-library-support";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -1560,16 +1561,16 @@ const resolveTextListValues = (
 
 const headingFields: YextFields<QuickServiceDetailsProps["heading"]> = {
   text: {
-    label: "Text",
+    label: msg("fields.text", "Text"),
     type: "entityField",
     filter: { types: ["type.string"] },
   },
   styles: {
-    label: "Text Styles",
+    label: msg("fields.textStyles", "Text Styles"),
     type: "styledText",
   },
   fontColor: {
-    label: "Font Color",
+    label: msg("fields.fontColor", "Font Color"),
     type: "basicSelector",
     options: "SITE_COLOR",
   },
@@ -1577,12 +1578,12 @@ const headingFields: YextFields<QuickServiceDetailsProps["heading"]> = {
 
 const addressFields: YextFields<AddressFieldSet> = {
   subheading: {
-    label: "Subheading",
+    label: msg("fields.subheading", "Subheading"),
     type: "entityField",
     filter: { types: ["type.string"] },
   },
   fontColor: {
-    label: "Font Color",
+    label: msg("fields.fontColor", "Font Color"),
     type: "basicSelector",
     options: "SITE_COLOR",
   },
@@ -1590,110 +1591,110 @@ const addressFields: YextFields<AddressFieldSet> = {
 
 const phoneFields: YextFields<PhoneFieldSet> = {
   subheading: {
-    label: "Subheading",
+    label: msg("fields.subheading", "Subheading"),
     type: "entityField",
     filter: { types: ["type.string"] },
   },
   fontColor: {
-    label: "Font Color",
+    label: msg("fields.fontColor", "Font Color"),
     type: "basicSelector",
     options: "SITE_COLOR",
   },
   entityPhone: {
-    label: "Phone",
+    label: msg("fields.phone", "Phone"),
     type: "entityField",
     filter: { types: ["type.phone"] },
   },
   phoneFormat: {
-    label: "Phone Format",
+    label: msg("fields.phoneFormat", "Phone Format"),
     type: "radio",
     options: [
-      { label: "Domestic", value: "domestic" },
-      { label: "International", value: "international" },
+      { label: msg("fields.options.domestic", "Domestic"), value: "domestic" },
+      { label: msg("fields.options.international", "International"), value: "international" },
     ],
   },
   includePhoneHyperlink: {
-    label: "Include Phone Hyperlink",
+    label: msg("fields.includePhoneHyperlink", "Include Phone Hyperlink"),
     type: "radio",
     options: [
-      { label: "Yes", value: true },
-      { label: "No", value: false },
+      { label: msg("fields.options.yes", "Yes"), value: true },
+      { label: msg("fields.options.no", "No"), value: false },
     ],
   },
 };
 
 const fields: YextFields<QuickServiceDetailsProps> = {
   section: {
-    label: "Section",
+    label: msg("fields.section", "Section"),
     type: "object",
     objectFields: {
       visibleOnLivePage: {
-        label: "Visible on Live Page",
+        label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       backgroundColor: {
-        label: "Background Color",
+        label: msg("fields.backgroundColor", "Background Color"),
         type: "basicSelector",
         options: "BACKGROUND_COLOR",
       },
     },
   },
   heading: {
-    label: "Heading",
+    label: msg("fields.heading", "Heading"),
     type: "object",
     objectFields: headingFields,
   },
   address: {
-    label: "Address",
+    label: msg("fields.address", "Address"),
     type: "object",
     objectFields: addressFields,
   },
   phone: {
-    label: "Phone",
+    label: msg("fields.phone", "Phone"),
     type: "object",
     objectFields: phoneFields,
   },
   websiteLink: {
-    label: "Website Link",
+    label: msg("fields.websiteLink", "Website Link"),
     type: "comprehensiveCTA",
   },
   directionsLink: {
-    label: "Direction Link",
+    label: msg("fields.directionLink", "Direction Link"),
     type: "comprehensiveCTA",
   },
   otherDetails: {
-    label: "Other Details",
+    label: msg("fields.otherDetails", "Other Details"),
     type: "object",
     objectFields: {
       subheading: {
-        label: "Subheading",
+        label: msg("fields.subheading", "Subheading"),
         type: "entityField",
         filter: { types: ["type.string"] },
       },
       fontColor: {
-        label: "Font Color",
+        label: msg("fields.fontColor", "Font Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
       content: {
-        label: "Content",
+        label: msg("fields.content", "Content"),
         type: "object",
         objectFields: {
           list: {
-            label: "List",
+            label: msg("fields.list", "List"),
             type: "entityField",
             filter: { types: ["type.string"], includeListsOnly: true },
           },
           commaSeparated: {
-            label: "Comma Separated",
+            label: msg("fields.commaSeparated", "Comma Separated"),
             type: "radio",
             options: [
-              { label: "Yes", value: true },
-              { label: "No", value: false },
+              { label: msg("fields.options.yes", "Yes"), value: true },
+              { label: msg("fields.options.no", "No"), value: false },
             ],
           },
         },
@@ -1701,29 +1702,29 @@ const fields: YextFields<QuickServiceDetailsProps> = {
     },
   },
   sectionImage: {
-    label: "Section Image",
+    label: msg("fields.sectionImage", "Section Image"),
     type: "object",
     objectFields: {
       image: {
-        label: "Image",
+        label: msg("fields.image", "Image"),
         type: "entityField",
         filter: { types: ["type.image"] },
       },
       aspectRatio: {
-        label: "Aspect Ratio",
+        label: msg("fields.aspectRatio", "Aspect Ratio"),
         type: "basicSelector",
         options: aspectRatioOptions,
       },
       imageConstrain: {
-        label: "Image Constrain",
+        label: msg("fields.imageConstrain", "Image Constrain"),
         type: "select",
         options: [
-          { label: "Fixed", value: "fixed" },
-          { label: "Filled", value: "filled" },
+          { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+          { label: msg("fields.options.filled", "Filled"), value: "filled" },
         ],
       },
       styles: {
-        label: "Image Styles",
+        label: msg("fields.imageStyles", "Image Styles"),
         type: "styledImage",
       },
     },
@@ -2261,7 +2262,7 @@ const QuickServiceDetailsComponent: PuckComponent<QuickServiceDetailsProps> = (
 
 export const QuickServiceDetails: YextComponentConfig<QuickServiceDetailsProps> =
   {
-    label: "Details",
+    label: msg("components.details", "Details"),
     fields,
     defaultProps: {
       section: {

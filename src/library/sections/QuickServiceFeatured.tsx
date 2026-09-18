@@ -1,4 +1,5 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { msg } from "@yext/visual-editor/section-library-support";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -1618,25 +1619,25 @@ const buildDefaultImage = (
 });
 
 const featuredItemsSource = createItemSource<FeaturedItemSourceItem>({
-  label: "Content",
+  label: msg("fields.content", "Content"),
   mappingFields: {
     image: {
-      label: "Image",
+      label: msg("fields.image", "Image"),
       type: "entityField",
       filter: { types: ["type.image"] },
     },
     title: {
-      label: "Title",
+      label: msg("fields.title", "Title"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     description: {
-      label: "Description",
+      label: msg("fields.description", "Description"),
       type: "entityField",
       filter: { types: ["type.rich_text_v2"] },
     },
     button: {
-      label: "Button",
+      label: msg("fields.button", "Button"),
       type: "entityField",
       filter: { types: ["type.cta"] },
     },
@@ -1749,89 +1750,89 @@ const defaultContent: QuickServiceFeaturedProps["content"] = {
 
 const fields: YextFields<QuickServiceFeaturedProps> = {
   section: {
-    label: "Section",
+    label: msg("fields.section", "Section"),
     type: "object",
     objectFields: {
       visibleOnLivePage: {
-        label: "Visible on Live Page",
+        label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       backgroundColor: {
-        label: "Background Color",
+        label: msg("fields.backgroundColor", "Background Color"),
         type: "basicSelector",
         options: "BACKGROUND_COLOR",
       },
     },
   },
   heading: {
-    label: "Heading",
+    label: msg("fields.heading", "Heading"),
     type: "object",
     objectFields: {
       text: {
-        label: "Text",
+        label: msg("fields.text", "Text"),
         type: "entityField",
         filter: { types: ["type.string"] },
       },
       styles: {
-        label: "Text Styles",
+        label: msg("fields.textStyles", "Text Styles"),
         type: "styledText",
       },
       fontColor: {
-        label: "Font Color",
+        label: msg("fields.fontColor", "Font Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
       backgroundColor: {
-        label: "Background Fill",
+        label: msg("fields.backgroundFill", "Background Fill"),
         type: "basicSelector",
         options: "BACKGROUND_COLOR",
       },
     },
   },
   content: {
-    label: "Content",
+    label: msg("fields.content", "Content"),
     type: "object",
     objectFields: {
       list: featuredItemsSource.field,
       styles: {
-        label: "Card Presentation",
+        label: msg("fields.cardPresentation", "Card Presentation"),
         type: "object",
         objectFields: {
           description: {
-            label: "Description Styles",
+            label: msg("fields.descriptionStyles", "Description Styles"),
             type: "styledText",
             includeColor: true,
           },
           title: {
-            label: "Title Styles",
+            label: msg("fields.titleStyles", "Title Styles"),
             type: "styledText",
             includeColor: true,
           },
           image: {
-            label: "Image Styles",
+            label: msg("fields.imageStyles", "Image Styles"),
             type: "object",
             objectFields: {
               aspectRatio: {
-                label: "Aspect Ratio",
+                label: msg("fields.aspectRatio", "Aspect Ratio"),
                 type: "basicSelector",
                 options: aspectRatioOptions,
               },
               imageConstrain: {
-                label: "Image Constrain",
+                label: msg("fields.imageConstrain", "Image Constrain"),
                 type: "select",
                 options: [
-                  { label: "Fixed", value: "fixed" },
-                  { label: "Filled", value: "filled" },
+                  { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+                  { label: msg("fields.options.filled", "Filled"), value: "filled" },
                 ],
               },
             },
           },
           buttonColor: {
-            label: "Button Color",
+            label: msg("fields.buttonColor", "Button Color"),
             type: "basicSelector",
             options: "BACKGROUND_COLOR",
           },
@@ -2054,7 +2055,7 @@ const QuickServiceFeaturedComponent: PuckComponent<
 
 export const QuickServiceFeatured: YextComponentConfig<QuickServiceFeaturedProps> =
   {
-    label: "Featured",
+    label: msg("components.featured", "Featured"),
     fields,
     defaultProps: {
       section: {

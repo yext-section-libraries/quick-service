@@ -1,4 +1,5 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { msg } from "@yext/visual-editor/section-library-support";
 
 import { PuckComponent } from "@puckeditor/core";
 import { CircleSlash2 } from "lucide-react";
@@ -43,38 +44,38 @@ type QuickServiceBannerProps = {
 
 const QuickServiceBannerFields: YextFields<QuickServiceBannerProps> = {
   data: {
-    label: "Banner Text",
+    label: msg("fields.bannerText", "Banner Text"),
     type: "object",
     objectFields: {
       text: {
-        label: "Text",
+        label: msg("fields.text", "Text"),
         type: "entityField",
         filter: {
           types: ["type.rich_text_v2"],
         },
       },
       styles: {
-        label: "Text Styles",
+        label: msg("fields.textStyles", "Text Styles"),
         type: "styledText",
       },
       fontColor: {
-        label: "Text Color",
+        label: msg("fields.textColor", "Text Color"),
         type: "basicSelector",
         options: "SITE_COLOR",
       },
     },
   },
   styles: {
-    label: "Styles",
+    label: msg("fields.styles", "Styles"),
     type: "object",
     objectFields: {
       textAlignment: {
-        label: "Text Alignment",
+        label: msg("fields.textAlignment", "Text Alignment"),
         type: "radio",
         options: [
-          { label: "Left", value: "left" },
-          { label: "Center", value: "center" },
-          { label: "Right", value: "right" },
+          { label: msg("fields.options.left", "Left"), value: "left" },
+          { label: msg("fields.options.center", "Center"), value: "center" },
+          { label: msg("fields.options.right", "Right"), value: "right" },
         ],
       },
     },
@@ -165,7 +166,7 @@ const QuickServiceBannerComponent: PuckComponent<QuickServiceBannerProps> = ({
  * Displays a full-width, editor-configurable rich-text banner.
  */
 export const QuickServiceBanner: YextComponentConfig<QuickServiceBannerProps> = {
-  label: "Banner",
+  label: msg("components.banner", "Banner"),
   fields: QuickServiceBannerFields,
   defaultProps: {
     data: {

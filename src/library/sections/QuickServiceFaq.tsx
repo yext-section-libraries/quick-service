@@ -1,4 +1,5 @@
 import type { SectionConfig } from "@yext/visual-editor";
+import { msg } from "@yext/visual-editor/section-library-support";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
@@ -51,15 +52,15 @@ type QuickServiceFaqProps = {
 };
 
 const faqItemsSource = createItemSource<FaqItemSourceItem>({
-  label: "FAQs",
+  label: msg("fields.faqs", "FAQs"),
   mappingFields: {
     question: {
-      label: "Question",
+      label: msg("fields.question", "Question"),
       type: "entityField",
       filter: { types: ["type.string"] },
     },
     answer: {
-      label: "Answer",
+      label: msg("fields.answer", "Answer"),
       type: "entityField",
       filter: { types: ["type.rich_text_v2"] },
     },
@@ -114,56 +115,56 @@ const faqItemsSource = createItemSource<FaqItemSourceItem>({
 
 const headingConfig = createStyledTextConfig({
   kind: "plain",
-  label: "Heading",
+  label: msg("fields.heading", "Heading"),
   includeColor: true,
 });
 
 const fields: YextFields<QuickServiceFaqProps> = {
   section: {
-    label: "Section",
+    label: msg("fields.section", "Section"),
     type: "object",
     objectFields: {
       visibleOnLivePage: {
-        label: "Visible on Live Page",
+        label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
         type: "radio",
         options: [
-          { label: "Yes", value: true },
-          { label: "No", value: false },
+          { label: msg("fields.options.yes", "Yes"), value: true },
+          { label: msg("fields.options.no", "No"), value: false },
         ],
       },
       backgroundColor: {
-        label: "Background Color",
+        label: msg("fields.backgroundColor", "Background Color"),
         type: "basicSelector",
         options: "BACKGROUND_COLOR",
       },
       faqBackgroundColor: {
-        label: "FAQ Background Color",
+        label: msg("fields.faqBackgroundColor", "FAQ Background Color"),
         type: "basicSelector",
         options: "BACKGROUND_COLOR",
       },
     },
   },
   heading: {
-    label: "Heading",
+    label: msg("fields.heading", "Heading"),
     type: "object",
     objectFields: headingConfig.fields!,
   },
   faqs: {
-    label: "FAQs",
+    label: msg("fields.faqs", "FAQs"),
     type: "object",
     objectFields: {
       list: faqItemsSource.field,
       styles: {
-        label: "Styles",
+        label: msg("fields.styles", "Styles"),
         type: "object",
         objectFields: {
           question: {
-            label: "Question Styles",
+            label: msg("fields.questionStyles", "Question Styles"),
             type: "styledText",
             includeColor: true,
           },
           answer: {
-            label: "Answer Styles",
+            label: msg("fields.answerStyles", "Answer Styles"),
             type: "styledText",
             includeColor: true,
           },
@@ -1867,7 +1868,7 @@ const QuickServiceFaqComponent: PuckComponent<QuickServiceFaqProps> = (
 };
 
 export const QuickServiceFaq: YextComponentConfig<QuickServiceFaqProps> = {
-  label: "FAQ",
+  label: msg("components.faq", "FAQ"),
   fields,
   defaultProps: defaultFaqProps,
   render: (props) => <QuickServiceFaqComponent {...props} />,
