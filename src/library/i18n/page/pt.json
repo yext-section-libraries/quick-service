@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> de você",
   "email": "E-mail",
   "enableCookies": "Habilitar Cookies",
+  "fields": {
+    "heading": "Cabeçalho"
+  },
   "filter": "Filtro",
   "findALocation": "Encontre um local",
   "getDirections": "Obtenha direções",
@@ -27,6 +30,9 @@
   "kilometer_other": "quilômetros",
   "kilometer_zero": "quilômetro",
   "loadingMap": "Carregando mapa ...",
+  "loadingNearbyLocations": "A carregar localizações próximas",
+  "locatedKilometersFromLocation": "A {{distance}} quilômetros desta localização",
+  "locatedMilesFromLocation": "A {{distance}} milhas desta localização",
   "locationWithCount_many": "{{count}} locais",
   "locationWithCount_one": "{{count}} localização",
   "locationWithCount_other": "{{count}} localizações",
@@ -36,17 +42,35 @@
   "locationsWithinDistanceOf_many": "{{count}} locais dentro de {{distance}} {{unit}} de \"{{name}}\"",
   "locationsWithinDistanceOf_one": "{{count}} localização dentro de {{distance}} {{unit}} de \"{{name}}\"",
   "locationsWithinDistanceOf_other": "{{count}} locais dentro de {{distance}} {{unit}} de \"{{name}}\"",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Este mapa só pode ser exibido se os cookies estiverem ativados",
   "mile_many": "milhas",
   "mile_one": "milha",
   "mile_other": "milhas",
   "mile_zero": "milha",
+  "noNearbyLocationsFoundForThisLocation": "Nenhum local próximo foi encontrado para este local",
   "noResultsFoundForThisArea": "Nenhum resultado encontrado para esta área",
   "open24Hours": "Aberto 24 horas",
   "openNow": "Aberto agora",
   "opensAtTime": "Abre às {{time}}",
   "opensAtTimeWeek": "Abre às {{time}} {{dayOfWeek}}",
   "phone": "Telefone",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Não está disponível navegação estrutural (a secção será ocultada na página publicada). Crie um diretório para ativar a navegação estrutural."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Transferir aplicações",
+    "footerLinks": "Ligações do rodapé",
+    "legal": "Informações legais",
+    "social": "Redes sociais"
+  },
+  "quickServiceHeader": {
+    "logo": "Logótipo",
+    "primaryNavigation": "Navegação principal"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Onde nos encontrar"
+  },
   "recentReviews": "Avaliações recentes:",
   "refineYourSearch": "Refine sua pesquisa",
   "reopenDate": "Reabrir data",

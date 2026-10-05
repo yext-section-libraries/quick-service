@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> da te",
   "email": "E-mail",
   "enableCookies": "Abilita i cookie",
+  "fields": {
+    "heading": "Intestazione"
+  },
   "filter": "Filtro",
   "findALocation": "Trova una posizione",
   "getDirections": "Ottieni indicazioni",
@@ -27,6 +30,9 @@
   "kilometer_other": "chilometri",
   "kilometer_zero": "chilometri",
   "loadingMap": "Mappa di caricamento ...",
+  "loadingNearbyLocations": "Caricamento delle località vicine",
+  "locatedKilometersFromLocation": "A {{distance}} chilometri da questa sede",
+  "locatedMilesFromLocation": "A {{distance}} miglia da questa sede",
   "locationWithCount_many": "{{count}} posizioni",
   "locationWithCount_one": "{{count}} posizione",
   "locationWithCount_other": "{{count}} località",
@@ -36,17 +42,35 @@
   "locationsWithinDistanceOf_many": "{{count}} posizioni all'interno di {{distance}} {{unit}} di \"{{name}}\"",
   "locationsWithinDistanceOf_one": "{{count}} posizione entro {{distance}} {{unit}} di \"{{name}}\"",
   "locationsWithinDistanceOf_other": "{{count}} località entro {{distance}} {{unit}} di \"{{name}}\"",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Questa mappa può essere visualizzata solo se i cookie sono abilitati",
   "mile_many": "miglia",
   "mile_one": "miglio",
   "mile_other": "miglia",
   "mile_zero": "miglio",
+  "noNearbyLocationsFoundForThisLocation": "Nessuna sede nelle vicinanze trovata per questa posizione",
   "noResultsFoundForThisArea": "Nessun risultato trovato per quest'area",
   "open24Hours": "Aperto 24 ore",
   "openNow": "Aperto ora",
   "opensAtTime": "Apre alle {{time}}",
   "opensAtTimeWeek": "Apre alle {{time}} {{dayOfWeek}}",
   "phone": "Telefono",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Nessun breadcrumb disponibile (la sezione sarà nascosta nella pagina pubblicata). Crea una directory per abilitare i breadcrumb."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Scarica le app",
+    "footerLinks": "Link del piè di pagina",
+    "legal": "Informazioni legali",
+    "social": "Social"
+  },
+  "quickServiceHeader": {
+    "logo": "Logo",
+    "primaryNavigation": "Navigazione principale"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Dove trovarci"
+  },
   "recentReviews": "Recensioni recenti:",
   "refineYourSearch": "Perfeziona la tua ricerca",
   "reopenDate": "Rinnova la data",

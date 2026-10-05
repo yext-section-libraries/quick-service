@@ -17,6 +17,9 @@
   "distanceLineFromYou": "来自您的 <strong>{{distance}}</strong>",
   "email": "电子邮件",
   "enableCookies": "启用 Cookie",
+  "fields": {
+    "heading": "标题"
+  },
   "filter": "筛选",
   "findALocation": "找到一个位置",
   "getDirections": "获取指示",
@@ -25,18 +28,39 @@
   "kilometer_other": "公里",
   "kilometer_zero": "公里",
   "loadingMap": "加载地图...",
+  "loadingNearbyLocations": "正在加载附近地点",
+  "locatedKilometersFromLocation": "距离此门店{{distance}}公里",
+  "locatedMilesFromLocation": "距离此门店{{distance}}英里",
   "locationWithCount_other": "{{count}} 个位置",
   "locationsNear_other": "“{{name}}”附近有 {{count}} 个地点",
   "locationsWithinDistanceOf_other": "“{{name}}”的 {{distance}} {{unit}} 内有 {{count}} 个位置",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "该地图仅在启用cookies的情况下才能显示",
   "mile_other": "英里",
   "mile_zero": "英里",
+  "noNearbyLocationsFoundForThisLocation": "未找到此地点附近的地点",
   "noResultsFoundForThisArea": "该区域找不到结果",
   "open24Hours": "24 小时营业",
   "openNow": "现在打开",
   "opensAtTime": "{{time}}开始营业",
   "opensAtTimeWeek": "开放时间：{{time}} {{dayOfWeek}}",
   "phone": "电话",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "没有可用的面包屑导航（此板块将在已发布的页面上隐藏）。请创建目录以启用面包屑导航。"
+  },
+  "quickServiceFooter": {
+    "downloadApps": "下载应用",
+    "footerLinks": "页脚链接",
+    "legal": "法律信息",
+    "social": "社交媒体"
+  },
+  "quickServiceHeader": {
+    "logo": "徽标",
+    "primaryNavigation": "主导航"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "门店位置"
+  },
   "recentReviews": "最新评价：",
   "refineYourSearch": "优化您的搜索",
   "reopenDate": "重新开放日期",

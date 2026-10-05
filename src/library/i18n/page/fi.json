@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> sinulta",
   "email": "Sähköposti",
   "enableCookies": "Ota evästeet käyttöön",
+  "fields": {
+    "heading": "Otsikko"
+  },
   "filter": "Suodata",
   "findALocation": "Etsi sijainti",
   "getDirections": "Hanki reittiohjeet",
@@ -26,22 +29,43 @@
   "kilometer_other": "kilometriä",
   "kilometer_zero": "kilometri",
   "loadingMap": "Latauskartta ...",
+  "loadingNearbyLocations": "Ladataan lähellä olevia sijainteja",
+  "locatedKilometersFromLocation": "Sijaitsee {{distance}} kilometrin päässä tästä sijainnista",
+  "locatedMilesFromLocation": "Sijaitsee {{distance}} mailin päässä tästä sijainnista",
   "locationWithCount_one": "{{count}} sijainti",
   "locationWithCount_other": "{{count}} sijaintia",
   "locationsNear_one": "{{count}} sijainti lähellä \"{{name}}\"",
   "locationsNear_other": "{{count}} sijaintia lähellä kohdetta {{name}}",
   "locationsWithinDistanceOf_one": "{{count}} sijainti {{distance}} {{unit}} päässä kohteesta \"{{name}}\"",
   "locationsWithinDistanceOf_other": "{{count}} sijaintia {{distance}} {{unit}} säteellä kohteesta \"{{name}}\"",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Tämä kartta voidaan näyttää vain, jos evästeet ovat käytössä",
   "mile_one": "maili",
   "mile_other": "mailia",
   "mile_zero": "mailia",
+  "noNearbyLocationsFoundForThisLocation": "Tämän sijainnin läheltä ei löytynyt sijainteja",
   "noResultsFoundForThisArea": "Tälle alueelle ei löydy tuloksia",
   "open24Hours": "Avoinna ympäri vuorokauden",
   "openNow": "Avoinna nyt",
   "opensAtTime": "Avautuu klo {{time}}",
   "opensAtTimeWeek": "Avautuu {{time}} {{dayOfWeek}}",
   "phone": "Puhelin",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Murupolkua ei ole saatavilla (osio piilotetaan julkaistulla sivulla). Luo hakemisto ottaaksesi murupolun käyttöön."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Lataa sovelluksia",
+    "footerLinks": "Alatunnisteen linkit",
+    "legal": "Oikeudelliset tiedot",
+    "social": "Sosiaalinen media"
+  },
+  "quickServiceHeader": {
+    "logo": "Logo",
+    "primaryNavigation": "Päänavigointi"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Mistä meidät löytää"
+  },
   "recentReviews": "Viimeisimmät arvostelut:",
   "refineYourSearch": "Tarkenna hakuasi",
   "reopenDate": "Avata päivämäärä uudelleen",

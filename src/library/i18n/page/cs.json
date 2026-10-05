@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> od vás",
   "email": "E-mail",
   "enableCookies": "Povolit soubory cookie",
+  "fields": {
+    "heading": "Záhlaví"
+  },
   "filter": "Filtr",
   "findALocation": "Najděte polohu",
   "getDirections": "Získejte pokyny",
@@ -28,6 +31,9 @@
   "kilometer_other": "kilometrů",
   "kilometer_zero": "kilometr",
   "loadingMap": "Načítání mapy ...",
+  "loadingNearbyLocations": "Načítání míst v okolí",
+  "locatedKilometersFromLocation": "Nachází se {{distance}} kilometrů od tohoto místa",
+  "locatedMilesFromLocation": "Nachází se {{distance}} mil od tohoto místa",
   "locationWithCount_few": "{{count}} míst",
   "locationWithCount_many": "{{count}} míst",
   "locationWithCount_one": "{{count}} umístění",
@@ -40,18 +46,36 @@
   "locationsWithinDistanceOf_many": "{{count}} míst v rámci {{distance}} {{unit}} od „{{name}}“",
   "locationsWithinDistanceOf_one": "{{count}} místo v rámci {{distance}} {{unit}} od „{{name}}“",
   "locationsWithinDistanceOf_other": "{{count}} míst ve vzdálenosti {{distance}} {{unit}} od „{{name}}“",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Tuto mapu lze zobrazit pouze v případě, že jsou povoleny soubory cookie",
   "mile_few": "míle",
   "mile_many": "mil",
   "mile_one": "míle",
   "mile_other": "mil",
   "mile_zero": "míle",
+  "noNearbyLocationsFoundForThisLocation": "Pro toto místo nebyly nalezeny žádné pobočky v okolí",
   "noResultsFoundForThisArea": "Pro tuto oblast nebyly nalezeny žádné výsledky",
   "open24Hours": "Otevřeno 24 hodin",
   "openNow": "Otevřeno",
   "opensAtTime": "Otevírá v {{time}}",
   "opensAtTimeWeek": "Otevírá v {{time}} {{dayOfWeek}}",
   "phone": "Telefon",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Drobečková navigace není k dispozici (sekce bude na živé stránce skryta). Vytvořte adresář pro aktivaci drobečkové navigace."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Stáhnout aplikace",
+    "footerLinks": "Odkazy v zápatí",
+    "legal": "Právní informace",
+    "social": "Sociální sítě"
+  },
+  "quickServiceHeader": {
+    "logo": "Logo",
+    "primaryNavigation": "Hlavní navigace"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Kde nás najdete"
+  },
   "recentReviews": "Nedávné recenze:",
   "refineYourSearch": "Upřesněte své vyhledávání",
   "reopenDate": "Znovu otevřít datum",

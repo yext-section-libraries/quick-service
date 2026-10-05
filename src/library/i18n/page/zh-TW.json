@@ -17,6 +17,9 @@
   "distanceLineFromYou": "來自您的 <strong>{{distance}}</strong>",
   "email": "電子郵件",
   "enableCookies": "啟用 Cookie",
+  "fields": {
+    "heading": "標題"
+  },
   "filter": "篩選",
   "findALocation": "找到一個位置",
   "getDirections": "獲取指示",
@@ -25,18 +28,39 @@
   "kilometer_other": "公里",
   "kilometer_zero": "公里",
   "loadingMap": "加載地圖...",
+  "loadingNearbyLocations": "正在載入附近地點",
+  "locatedKilometersFromLocation": "距離此門市{{distance}}公里",
+  "locatedMilesFromLocation": "距離此門市{{distance}}英里",
   "locationWithCount_other": "{{count}} 個位置",
   "locationsNear_other": "“{{name}}”附近有 {{count}} 個位置",
   "locationsWithinDistanceOf_other": "“{{name}}”的 {{distance}} {{unit}} 內有 {{count}} 個位置",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "該地圖僅在啟用cookies的情況下才能顯示",
   "mile_other": "英里",
   "mile_zero": "英里",
+  "noNearbyLocationsFoundForThisLocation": "找不到此位置附近的地點",
   "noResultsFoundForThisArea": "該區域找不到結果",
   "open24Hours": "24 小時營業",
   "openNow": "現在打開",
   "opensAtTime": "{{time}}開始營業",
   "opensAtTimeWeek": "開放時間：{{time}} {{dayOfWeek}}",
   "phone": "電話",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "沒有可用的麵包屑導覽（此區塊將在已發佈的頁面上隱藏）。請建立目錄以啟用麵包屑導覽。"
+  },
+  "quickServiceFooter": {
+    "downloadApps": "下載應用程式",
+    "footerLinks": "頁尾連結",
+    "legal": "法律資訊",
+    "social": "社群媒體"
+  },
+  "quickServiceHeader": {
+    "logo": "標誌",
+    "primaryNavigation": "主要導覽"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "門市位置"
+  },
   "recentReviews": "最新評論：",
   "refineYourSearch": "優化您的搜索",
   "reopenDate": "重新開放日期",

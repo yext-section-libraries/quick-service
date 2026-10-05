@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> de votre part",
   "email": "E-mail",
   "enableCookies": "Activer les cookies",
+  "fields": {
+    "heading": "Titre"
+  },
   "filter": "Filtre",
   "findALocation": "Trouver un emplacement",
   "getDirections": "Obtenir des itinéraires",
@@ -27,6 +30,9 @@
   "kilometer_other": "kilomètres",
   "kilometer_zero": "kilomètre",
   "loadingMap": "Chargement de la carte ...",
+  "loadingNearbyLocations": "Chargement des lieux à proximité",
+  "locatedKilometersFromLocation": "À {{distance}} kilomètres de cet établissement",
+  "locatedMilesFromLocation": "À {{distance}} miles de cet établissement",
   "locationWithCount_many": "{{count}} emplacements",
   "locationWithCount_one": "{{count}} emplacement",
   "locationWithCount_other": "{{count}} emplacements",
@@ -36,17 +42,35 @@
   "locationsWithinDistanceOf_many": "{{count}} emplacements dans un rayon de {{distance}} {{unit}} de \"{{name}}\"",
   "locationsWithinDistanceOf_one": "{{count}} emplacement à {{distance}} {{unit}} de \"{{name}}\"",
   "locationsWithinDistanceOf_other": "{{count}} emplacements dans un rayon de {{distance}} {{unit}} de \"{{name}}\"",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Cette carte ne peut être affichée que si les cookies sont activés",
   "mile_many": "miles",
   "mile_one": "mile",
   "mile_other": "miles",
   "mile_zero": "mile",
+  "noNearbyLocationsFoundForThisLocation": "Aucun établissement à proximité n’a été trouvé pour cet emplacement",
   "noResultsFoundForThisArea": "Aucun résultat trouvé pour cette zone",
   "open24Hours": "Ouvert 24 h/24",
   "openNow": "Ouvrir maintenant",
   "opensAtTime": "Ouvre à {{time}}",
   "opensAtTimeWeek": "Ouvre à {{time}} {{dayOfWeek}}",
   "phone": "Téléphone",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Aucun fil d’Ariane disponible (la section sera masquée sur la page publiée). Créez un répertoire pour activer le fil d’Ariane."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Télécharger les applications",
+    "footerLinks": "Liens du pied de page",
+    "legal": "Informations légales",
+    "social": "Réseaux sociaux"
+  },
+  "quickServiceHeader": {
+    "logo": "Logo",
+    "primaryNavigation": "Navigation principale"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Où nous trouver"
+  },
   "recentReviews": "Avis récents :",
   "refineYourSearch": "Affinez votre recherche",
   "reopenDate": "Date de réouverture",

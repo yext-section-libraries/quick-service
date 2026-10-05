@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> von Ihnen",
   "email": "E-Mail",
   "enableCookies": "Cookies aktivieren",
+  "fields": {
+    "heading": "Überschrift"
+  },
   "filter": "Filter",
   "findALocation": "Finde einen Standort",
   "getDirections": "Route planen",
@@ -26,22 +29,43 @@
   "kilometer_other": "Kilometer",
   "kilometer_zero": "Kilometer",
   "loadingMap": "Karte wird geladen...",
+  "loadingNearbyLocations": "Standorte in der Nähe werden geladen",
+  "locatedKilometersFromLocation": "{{distance}} Kilometer von diesem Standort entfernt",
+  "locatedMilesFromLocation": "{{distance}} Meilen von diesem Standort entfernt",
   "locationWithCount_one": "{{count}} Standort",
   "locationWithCount_other": "{{count}} Standorte",
   "locationsNear_one": "{{count}} Standort in der Nähe von „{{name}}“",
   "locationsNear_other": "{{count}} Standorte in der Nähe von „{{name}}“",
   "locationsWithinDistanceOf_one": "{{count}} Standort im Umkreis von {{distance}} {{unit}} von „{{name}}“",
   "locationsWithinDistanceOf_other": "{{count}} Standorte im Umkreis von {{distance}} {{unit}} von „{{name}}“",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Diese Karte kann nur angezeigt werden, wenn Cookies aktiviert sind",
   "mile_one": "Meile",
   "mile_other": "Meilen",
   "mile_zero": "Meile",
+  "noNearbyLocationsFoundForThisLocation": "Für diesen Standort wurden keine Standorte in der Nähe gefunden",
   "noResultsFoundForThisArea": "Keine Ergebnisse für diesen Bereich gefunden",
   "open24Hours": "24 Stunden geöffnet",
   "openNow": "Jetzt offen",
   "opensAtTime": "Öffnet um {{time}}",
   "opensAtTimeWeek": "Öffnet am {{dayOfWeek}} um {{time}} Uhr",
   "phone": "Telefon",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Keine Breadcrumbs verfügbar (der Abschnitt wird auf der veröffentlichten Seite ausgeblendet). Erstellen Sie ein Verzeichnis, um Breadcrumbs zu aktivieren."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Apps herunterladen",
+    "footerLinks": "Links in der Fußzeile",
+    "legal": "Rechtliche Hinweise",
+    "social": "Soziale Medien"
+  },
+  "quickServiceHeader": {
+    "logo": "Logo",
+    "primaryNavigation": "Hauptnavigation"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Hier finden Sie uns"
+  },
   "recentReviews": "Aktuelle Bewertungen:",
   "refineYourSearch": "Suche verfeinern",
   "reopenDate": "Wiedereröffnungsdatum",

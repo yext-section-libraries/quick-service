@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> nuo jūsų",
   "email": "El. paštas",
   "enableCookies": "Įgalinti slapukus",
+  "fields": {
+    "heading": "Antraštė"
+  },
   "filter": "Filtruoti",
   "findALocation": "Raskite vietą",
   "getDirections": "Gaukite nurodymus",
@@ -28,6 +31,9 @@
   "kilometer_other": "kilometrų",
   "kilometer_zero": "kilometrų",
   "loadingMap": "Krovimo žemėlapis ...",
+  "loadingNearbyLocations": "Įkeliamos netoliese esančios vietos",
+  "locatedKilometersFromLocation": "Yra už {{distance}} kilometrų nuo šios vietos",
+  "locatedMilesFromLocation": "Yra už {{distance}} mylių nuo šios vietos",
   "locationWithCount_few": "{{count}} vietos",
   "locationWithCount_many": "{{count}} vietos",
   "locationWithCount_one": "{{count}} vieta",
@@ -40,18 +46,36 @@
   "locationsWithinDistanceOf_many": "{{count}} vietovių per {{distance}} {{unit}} nuo „{{name}}“",
   "locationsWithinDistanceOf_one": "{{count}} vieta per {{distance}} {{unit}} nuo „{{name}}“",
   "locationsWithinDistanceOf_other": "{{count}} vietovių per {{distance}} {{unit}} nuo „{{name}}“",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Šis žemėlapis gali būti rodomas tik įjungus slapukus",
   "mile_few": "mylios",
   "mile_many": "mylios",
   "mile_one": "mylia",
   "mile_other": "mylių",
   "mile_zero": "mylia",
+  "noNearbyLocationsFoundForThisLocation": "Netoli šios vietos nerasta jokių vietų",
   "noResultsFoundForThisArea": "Nerasta šios srities rezultatų",
   "open24Hours": "Dirba visą parą",
   "openNow": "Atidarykite dabar",
   "opensAtTime": "Atidaroma {{time}} val.",
   "opensAtTimeWeek": "Atidaroma {{time}} {{dayOfWeek}}",
   "phone": "Telefonas",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Naršymo kelias nepasiekiamas (skiltis bus paslėpta paskelbtame puslapyje). Sukurkite katalogą, kad įjungtumėte naršymo kelią."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Atsisiųsti programėles",
+    "footerLinks": "Poraštės nuorodos",
+    "legal": "Teisinė informacija",
+    "social": "Socialiniai tinklai"
+  },
+  "quickServiceHeader": {
+    "logo": "Logotipas",
+    "primaryNavigation": "Pagrindinė navigacija"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Kur mus rasti"
+  },
   "recentReviews": "Naujausi atsiliepimai:",
   "refineYourSearch": "Patikslinkite savo paiešką",
   "reopenDate": "Atnaujinti datą",

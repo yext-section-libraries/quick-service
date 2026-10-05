@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> fra deg",
   "email": "E-post",
   "enableCookies": "Aktiver informasjonskapsler",
+  "fields": {
+    "heading": "Overskrift"
+  },
   "filter": "Filter",
   "findALocation": "Finn et sted",
   "getDirections": "Få veibeskrivelse",
@@ -26,22 +29,43 @@
   "kilometer_other": "kilometer",
   "kilometer_zero": "kilometer",
   "loadingMap": "Laster inn kart ...",
+  "loadingNearbyLocations": "Laster inn steder i nærheten",
+  "locatedKilometersFromLocation": "Ligger {{distance}} kilometer fra dette stedet",
+  "locatedMilesFromLocation": "Ligger {{distance}} miles fra dette stedet",
   "locationWithCount_one": "{{count}} plassering",
   "locationWithCount_other": "{{count}} lokasjoner",
   "locationsNear_one": "{{count}} plassering i nærheten \"{{name}}\"",
   "locationsNear_other": "{{count}} steder i nærheten av «{{name}}»",
   "locationsWithinDistanceOf_one": "{{count}} sted innenfor {{distance}} {{unit}} fra \"{{name}}\"",
   "locationsWithinDistanceOf_other": "{{count}} steder innenfor {{distance}} {{unit}} fra \"{{name}}\"",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Dette kartet kan bare vises hvis informasjonskapsler er aktivert",
   "mile_one": "mil",
   "mile_other": "mil",
   "mile_zero": "mil",
+  "noNearbyLocationsFoundForThisLocation": "Ingen steder i nærheten ble funnet for denne plasseringen",
   "noResultsFoundForThisArea": "Ingen resultater funnet for dette området",
   "open24Hours": "Åpent hele døgnet",
   "openNow": "Åpne nå",
   "opensAtTime": "Åpner kl. {{time}}",
   "opensAtTimeWeek": "Åpner kl. {{time}} {{dayOfWeek}}",
   "phone": "Telefon",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Ingen brødsmuler tilgjengelig (seksjonen skjules på den publiserte siden). Opprett en oversikt for å aktivere brødsmuler."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Last ned apper",
+    "footerLinks": "Lenker i bunnteksten",
+    "legal": "Juridisk informasjon",
+    "social": "Sosiale medier"
+  },
+  "quickServiceHeader": {
+    "logo": "Logo",
+    "primaryNavigation": "Hovednavigasjon"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Her finner du oss"
+  },
   "recentReviews": "Nylige anmeldelser:",
   "refineYourSearch": "Avgrens søket ditt",
   "reopenDate": "Åpne dato på nytt",
