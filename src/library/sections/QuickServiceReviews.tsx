@@ -1523,9 +1523,9 @@ const fields: YextFields<QuickServiceReviewsProps> = {
 const QuickServiceReviewsComponent: PuckComponent<QuickServiceReviewsProps> = (
   props,
 ) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const streamDocument = useDocument<any>();
-  const locale = streamDocument?.locale ?? "en";
+  const locale = i18n.language;
   const isEditing = Boolean(props.puck?.isEditing);
   const sectionSurfaceStyle = getSurfaceColorStyle(
     props.section.backgroundColor,

@@ -1901,9 +1901,9 @@ const defaultFooterProps: QuickServiceFooterProps = {
 const QuickServiceFooterComponent: PuckComponent<QuickServiceFooterProps> = (
   props,
 ) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const streamDocument = useDocument<any>();
-  const locale = streamDocument?.locale ?? "en";
+  const locale = i18n.language;
 
   const brandName = resolveTextFieldValue(
     props.brand.entityName.text,

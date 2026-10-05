@@ -35,6 +35,7 @@ import {
   resolveStyledBodyStyles,
 } from "../shared/sectionHelpers";
 import type { ComplexImageType, ImageType } from "@yext/pages-components";
+import { useTranslation } from "react-i18next";
 
 type OfferingsItem = {
   text: YextEntityField<TranslatableString>;
@@ -1583,7 +1584,8 @@ const QuickServiceOfferingsComponent: PuckComponent<
   QuickServiceOfferingsProps
 > = (props) => {
   const streamDocument = useDocument<StreamDocument>();
-  const locale = streamDocument?.locale ?? "en";
+  const { i18n } = useTranslation();
+  const locale = i18n.language;
   const sectionSurfaceStyle = getSurfaceColorStyle(
     props.section.backgroundColor,
     streamDocument,

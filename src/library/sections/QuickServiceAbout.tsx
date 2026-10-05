@@ -30,6 +30,7 @@ import {
   aspectRatioOptions,
   defaultTextStyles,
 } from "../shared/sectionHelpers";
+import { useTranslation } from "react-i18next";
 
 type AboutSectionImage = {
   image: YextEntityField<AssetImageType>;
@@ -1426,7 +1427,8 @@ const QuickServiceAboutComponent: PuckComponent<QuickServiceAboutProps> = (
   props,
 ) => {
   const streamDocument = useDocument<any>();
-  const locale = streamDocument?.locale ?? "en";
+  const { i18n } = useTranslation();
+  const locale = i18n.language;
   const sectionSurfaceStyle = getSurfaceColorStyle(
     props.section.backgroundColor,
     streamDocument,

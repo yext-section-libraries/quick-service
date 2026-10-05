@@ -1675,7 +1675,7 @@ const QuickServiceHoursComponent: PuckComponent<QuickServiceHoursProps> = (
 ) => {
   const { t, i18n } = useTranslation();
   const streamDocument = useDocument<any>();
-  const locale = streamDocument?.locale ?? "en";
+  const locale = i18n.language;
   const sectionSurfaceStyle = getSurfaceColorStyle(
     props.section.backgroundColor,
     streamDocument,

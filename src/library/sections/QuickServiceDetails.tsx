@@ -34,6 +34,7 @@ import {
   resolveStyledTextStyles,
   toRenderableText,
 } from "../shared/sectionHelpers";
+import { useTranslation } from "react-i18next";
 
 type AddressFieldSet = {
   subheading: YextEntityField<TranslatableString>;
@@ -1791,7 +1792,8 @@ const QuickServiceDetailsComponent: PuckComponent<QuickServiceDetailsProps> = (
   props,
 ) => {
   const streamDocument = useDocument<any>();
-  const locale = streamDocument?.locale ?? "en";
+  const { i18n } = useTranslation();
+  const locale = i18n.language;
   const sectionSurfaceStyle = getSurfaceColorStyle(
     props.section.backgroundColor,
     streamDocument,

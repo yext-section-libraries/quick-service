@@ -1971,7 +1971,7 @@ const QuickServiceHeroComponent: PuckComponent<QuickServiceHeroProps> = (
 ) => {
   const { t, i18n } = useTranslation();
   const streamDocument = useDocument<any>();
-  const locale = streamDocument?.locale ?? "en";
+  const locale = i18n.language;
   const ctaItems = (props.ctas ?? []).map((row) => row.cta);
   const resolvedHours = resolveHoursFieldValue(
     props.hours.entityHours,
