@@ -17,6 +17,9 @@
   "distanceLineFromYou": "あなたからの<strong>{{distance}}</strong>",
   "email": "電子メール",
   "enableCookies": "Cookieを有効にする",
+  "fields": {
+    "heading": "見出し"
+  },
   "filter": "フィルター",
   "findALocation": "場所を見つけます",
   "getDirections": "道順を取得します",
@@ -25,18 +28,39 @@
   "kilometer_other": "キロメートル",
   "kilometer_zero": "キロメートル",
   "loadingMap": "マップの読み込み...",
+  "loadingNearbyLocations": "付近のロケーションを読み込んでいます",
+  "locatedKilometersFromLocation": "この店舗から{{distance}}キロメートルの場所にあります",
+  "locatedMilesFromLocation": "この店舗から{{distance}}マイルの場所にあります",
   "locationWithCount_other": "{{count}} 件の場所",
   "locationsNear_other": "「{{name}}」付近の {{count}} 件の場所",
   "locationsWithinDistanceOf_other": "「{{name}}」から {{distance}} {{unit}} 以内にある {{count}} 件の場所",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "この地図は Cookie が有効になっている場合にのみ表示できます",
   "mile_other": "マイル",
   "mile_zero": "マイル",
+  "noNearbyLocationsFoundForThisLocation": "この場所の近くに該当する場所は見つかりませんでした",
   "noResultsFoundForThisArea": "この領域の結果は見つかりませんでした",
   "open24Hours": "24時間営業",
   "openNow": "営業中",
   "opensAtTime": "{{time}}に開店",
   "opensAtTimeWeek": "{{time}} {{dayOfWeek}} に開店",
   "phone": "電話",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "パンくずリストがありません（公開ページではこのセクションは非表示になります）。パンくずリストを有効にするには、ディレクトリを作成してください。"
+  },
+  "quickServiceFooter": {
+    "downloadApps": "アプリをダウンロード",
+    "footerLinks": "フッターリンク",
+    "legal": "法的情報",
+    "social": "ソーシャルメディア"
+  },
+  "quickServiceHeader": {
+    "logo": "ロゴ",
+    "primaryNavigation": "メインナビゲーション"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "店舗のご案内"
+  },
   "recentReviews": "最近のレビュー：",
   "refineYourSearch": "検索を絞り込む",
   "reopenDate": "日付を再開します",

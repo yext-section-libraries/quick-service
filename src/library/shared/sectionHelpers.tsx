@@ -82,8 +82,15 @@ export const resolveStringEntityFieldValue = (
 };
 
 export const resolveStyledTextStyles = (
-  styles: StyledTextValue | undefined,
-): React.CSSProperties => ({
+  styles:
+    | Partial<
+        Pick<
+          StyledTextValue,
+          "fontFamily" | "fontSize" | "fontWeight" | "fontStyle" | "textTransform"
+        >
+      >
+    | undefined,
+) => ({
   fontFamily: styles?.fontFamily === "default" ? undefined : styles?.fontFamily,
   fontSize: styles?.fontSize === "default" ? undefined : styles?.fontSize,
   fontWeight: styles?.fontWeight === "default" ? undefined : styles?.fontWeight,
@@ -91,6 +98,21 @@ export const resolveStyledTextStyles = (
   textTransform:
     styles?.textTransform === "default" ? undefined : styles?.textTransform,
 });
+
+/** Preserve body field overrides when nested components redefine theme tokens. */
+export const resolveStyledBodyStyles = (
+  styles: Parameters<typeof resolveStyledTextStyles>[0],
+) => {
+  const textStyle = resolveStyledTextStyles(styles);
+  return {
+    ...textStyle,
+    ...Object.fromEntries(
+      Object.entries(textStyle)
+        .filter(([, value]) => value !== undefined)
+        .map(([property, value]) => [`--quick-service-body-${property}`, value]),
+    ),
+  };
+};
 
 export const toRenderableText = (value: unknown, fallback = ""): string => {
   if (typeof value === "string" || typeof value === "number") {
@@ -112,21 +134,60 @@ export const renderRichText = (
   value: unknown,
   richTextStyleOverrides?: MaybeRTFProps["richTextStyleOverrides"],
 ): React.ReactNode => {
+  const textStyle = resolveStyledTextStyles(richTextStyleOverrides);
+  const bodyStyle = resolveStyledBodyStyles(richTextStyleOverrides);
+  const bodyVariables = Object.fromEntries(
+    Object.entries(textStyle)
+      .filter(([, value]) => value !== undefined)
+      .map(([property, value]) => [`--${property}-body-${property}`, value]),
+  );
+  const color =
+    typeof richTextStyleOverrides?.color === "object"
+      ? getThemeColorCssValue(richTextStyleOverrides.color)
+      : richTextStyleOverrides?.color;
+
   if (React.isValidElement(value)) {
-    if (!richTextStyleOverrides) {
-      return value;
+    if (value.type === MaybeRTF) {
+      const element = value as React.ReactElement<MaybeRTFProps>;
+      return React.cloneElement(element, {
+        richTextStyleOverrides: { ...textStyle, color },
+        style: { ...element.props.style, ...bodyStyle, ...bodyVariables, color },
+      });
     }
 
+    const element = value as React.ReactElement<{
+      style?: React.CSSProperties;
+      children?: React.ReactNode;
+    }>;
+    const child = element.props.children;
+    const isMaybeRTFChild = React.isValidElement(child) && child.type === MaybeRTF;
+    const isRichTextChild = React.isValidElement<{
+      className?: string;
+      style?: React.CSSProperties;
+    }>(child) && child.props.className?.includes("rtf-wrapper");
+
     return React.cloneElement(
-      value as React.ReactElement<{ style?: React.CSSProperties }>,
+      element,
       {
+        children:
+          isMaybeRTFChild
+            ? renderRichText(child, richTextStyleOverrides)
+            : isRichTextChild
+            ? React.cloneElement(child, {
+                style: {
+                  ...child.props.style,
+                  ...bodyStyle,
+                  ...bodyVariables,
+                  color,
+                },
+              })
+            : child,
         style: {
-          ...(value.props as { style?: React.CSSProperties }).style,
-          ...richTextStyleOverrides,
-          color:
-            typeof richTextStyleOverrides.color === "object"
-              ? getThemeColorCssValue(richTextStyleOverrides.color)
-              : richTextStyleOverrides.color,
+          ...element.props.style,
+          ...bodyStyle,
+          // Rich-text descendants read body tokens, so overrides must reach them.
+          ...bodyVariables,
+          color,
         },
       },
     );
@@ -141,7 +202,7 @@ export const renderRichText = (
   return (
     <MaybeRTF
       data={data}
-      richTextStyleOverrides={richTextStyleOverrides}
+      richTextStyleOverrides={{ ...textStyle, color }}
     />
   );
 };

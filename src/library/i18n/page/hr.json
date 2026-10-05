@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> od vas",
   "email": "E-mail",
   "enableCookies": "Omogući kolačiće",
+  "fields": {
+    "heading": "Naslov"
+  },
   "filter": "Filter",
   "findALocation": "Pronađite lokaciju",
   "getDirections": "Dobiti upute",
@@ -27,6 +30,9 @@
   "kilometer_other": "kilometara",
   "kilometer_zero": "kilometar",
   "loadingMap": "Učitavanje karte ...",
+  "loadingNearbyLocations": "Učitavanje lokacija u blizini",
+  "locatedKilometersFromLocation": "Nalazi se {{distance}} kilometara od ove lokacije",
+  "locatedMilesFromLocation": "Nalazi se {{distance}} milja od ove lokacije",
   "locationWithCount_few": "{{count}} lokacije",
   "locationWithCount_one": "{{count}} lokacija",
   "locationWithCount_other": "{{count}} lokacija",
@@ -36,17 +42,35 @@
   "locationsWithinDistanceOf_few": "{{count}} lokacije unutar {{distance}} {{unit}} od \"{{name}}\"",
   "locationsWithinDistanceOf_one": "{{count}} lokacija unutar {{distance}} {{unit}} od \"{{name}}\"",
   "locationsWithinDistanceOf_other": "{{count}} lokacija unutar {{distance}} {{unit}} od \"{{name}}\"",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Ova se karta može prikazati samo ako su omogućeni kolačići",
   "mile_few": "milje",
   "mile_one": "milja",
   "mile_other": "milja",
   "mile_zero": "milja",
+  "noNearbyLocationsFoundForThisLocation": "Za ovu lokaciju nisu pronađene lokacije u blizini",
   "noResultsFoundForThisArea": "Nisu pronađeni rezultati za ovo područje",
   "open24Hours": "Otvoreno 24 sata",
   "openNow": "Otvori sada",
   "opensAtTime": "Otvara se u {{time}}",
   "opensAtTimeWeek": "Otvara se u {{time}} {{dayOfWeek}}",
   "phone": "Telefon",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Navigacijska putanja nije dostupna (odjeljak će biti skriven na objavljenoj stranici). Izradite direktorij kako biste omogućili navigacijsku putanju."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Preuzmi aplikacije",
+    "footerLinks": "Poveznice u podnožju",
+    "legal": "Pravne informacije",
+    "social": "Društvene mreže"
+  },
+  "quickServiceHeader": {
+    "logo": "Logotip",
+    "primaryNavigation": "Glavna navigacija"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Gdje nas pronaći"
+  },
   "recentReviews": "Nedavne recenzije:",
   "refineYourSearch": "Pročistite svoju pretragu",
   "reopenDate": "Ponovno otvaranje datuma",

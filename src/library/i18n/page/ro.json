@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> de la tine",
   "email": "E-mail",
   "enableCookies": "Activați cookie-urile",
+  "fields": {
+    "heading": "Titlu"
+  },
   "filter": "Filtra",
   "findALocation": "Găsiți o locație",
   "getDirections": "Obțineți indicații",
@@ -27,6 +30,9 @@
   "kilometer_other": "kilometri",
   "kilometer_zero": "kilometru",
   "loadingMap": "Harta de încărcare ...",
+  "loadingNearbyLocations": "Se încarcă locațiile din apropiere",
+  "locatedKilometersFromLocation": "La {{distance}} kilometri de această locație",
+  "locatedMilesFromLocation": "La {{distance}} mile de această locație",
   "locationWithCount_few": "{{count}} locații",
   "locationWithCount_one": "{{count}} locație",
   "locationWithCount_other": "{{count}} locații",
@@ -36,17 +42,35 @@
   "locationsWithinDistanceOf_few": "{{count}} locații în {{distance}} {{unit}} din „{{name}}”",
   "locationsWithinDistanceOf_one": "{{count}} locație la {{distance}} {{unit}} de „{{name}}”",
   "locationsWithinDistanceOf_other": "{{count}} locații pe o rază de {{distance}} {{unit}} de „{{name}}”",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Această hartă poate fi afișată numai dacă cookie-urile sunt activate",
   "mile_few": "mile",
   "mile_one": "milă",
   "mile_other": "mile",
   "mile_zero": "milă",
+  "noNearbyLocationsFoundForThisLocation": "Nu s-au găsit locații în apropierea acestei locații",
   "noResultsFoundForThisArea": "Nu s -au găsit rezultate pentru acest domeniu",
   "open24Hours": "Deschis nonstop",
   "openNow": "Deschide acum",
   "opensAtTime": "Se deschide la {{time}}",
   "opensAtTimeWeek": "Se deschide la {{time}} {{dayOfWeek}}",
   "phone": "Telefon",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Navigarea ierarhică nu este disponibilă (secțiunea va fi ascunsă pe pagina publicată). Creați un director pentru a activa navigarea ierarhică."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Descarcă aplicațiile",
+    "footerLinks": "Linkuri din subsol",
+    "legal": "Informații juridice",
+    "social": "Rețele sociale"
+  },
+  "quickServiceHeader": {
+    "logo": "Siglă",
+    "primaryNavigation": "Navigare principală"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Unde ne găsiți"
+  },
   "recentReviews": "Recenzii recente:",
   "refineYourSearch": "Rafinați-vă căutarea",
   "reopenDate": "Data redeschiderii",

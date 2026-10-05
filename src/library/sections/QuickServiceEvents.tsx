@@ -1,3 +1,5 @@
+import "../shared/typography.css";
+
 import type { SectionConfig } from "@yext/visual-editor";
 import { msg } from "@yext/visual-editor/section-library-support";
 
@@ -65,12 +67,7 @@ const contentConfig = createStyledTextConfig({
 const eventImageUrl =
   "https://a.mktgcdn.com/p/UHR6VTEvcR-yDMqPSOS7LyK87Qt56EOrmfNbhLQxI08/1267x1900.jpg";
 const QuickServiceEventsStyles = String.raw`
-@import url("https://fonts.googleapis.com/css2?family=Baloo:wght@400..800&family=Baloo+2:wght@400..800&family=Hubot+Sans:wght@400..700&display=swap");
-
 :root {
-  --font--heading-bold--family: "Baloo", "Trebuchet MS", sans-serif;
-  --font--heading-light--family: "Baloo 2", "Trebuchet MS", sans-serif;
-  --font--paragraph--family: "Hubot Sans", "Avenir Next", "Segoe UI", sans-serif;
   --section-heading-content-gap: 30px;
   --split-section-heading-content-gap: 30px;
   --bc-white: #ffffff;
@@ -90,31 +87,8 @@ const QuickServiceEventsStyles = String.raw`
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
-body { font-family: var(--font--paragraph--family); color: var(--bc-text); background: var(--bc-white); }
+body { color: var(--bc-text); background: var(--bc-white); }
 body.no-scroll { overflow: hidden; }
-p { font-weight: 400; }
-
-h1, h2, h3, h4, h5, h6,
-.site-brand {
-  font-family: var(--font--heading-bold--family);
-}
-
-
-.mobile-nav-brand,
-.quick-service-detail-label {
-  font-family: var(--font--heading-light--family);
-}
-
-.site-header button,
-.quick-service-footer-form input,
-.quick-service-footer-form button,
-.quick-service-faq-trigger,
-.site-header-btn,
-.quick-service-featured-cta,
-.quick-service-events-cta,
-.quick-service-footer-form button {
-  font-family: var(--font--paragraph--family);
-}
 
 .site-header {
   position: relative;
@@ -175,18 +149,13 @@ h1, h2, h3, h4, h5, h6,
   visibility: hidden;
   white-space: nowrap;
   pointer-events: none;
-  font-family: var(--font--heading-bold--family);
-  font-size: 24px;
   line-height: 1;
-  font-weight: 700;
   letter-spacing: 0.02em;
 }
 .site-brand {
   color: var(--bc-text-inverse);
   text-decoration: none;
-  font-size: 24px;
   line-height: 1;
-  font-weight: 700;
   letter-spacing: 0.02em;
   display: inline-block;
 }
@@ -218,10 +187,7 @@ h1, h2, h3, h4, h5, h6,
 .site-header-btn {
   color: var(--bc-text-inverse);
   text-decoration: none;
-  font-family: inherit;
-  font-size: 16px;
   line-height: 1;
-  font-weight: 400;
   letter-spacing: 0.02em;
   transition: opacity .2s ease;
 }
@@ -293,8 +259,6 @@ h1, h2, h3, h4, h5, h6,
   margin: 0;
   color: rgba(248, 248, 248, 0.96);
   letter-spacing: 0.02em;
-  font-size: 20px;
-  font-weight: 700;
   line-height: 1.1;
   text-align: center;
   grid-column: 2;
@@ -319,10 +283,7 @@ h1, h2, h3, h4, h5, h6,
   visibility: hidden;
   white-space: nowrap;
   pointer-events: none;
-  font-size: inherit;
-  font-weight: inherit;
   letter-spacing: inherit;
-  text-transform: inherit;
 }
 .mobile-nav-brand--split {
   display: inline-flex;
@@ -346,7 +307,6 @@ h1, h2, h3, h4, h5, h6,
   border: 0;
   background: transparent;
   color: #fff;
-  font-size: 38px;
   line-height: 1;
   cursor: pointer;
   padding: 0;
@@ -354,9 +314,6 @@ h1, h2, h3, h4, h5, h6,
 .mobile-nav-inner a {
   color: #eef2f6;
   text-decoration: none;
-  font-size: 20px;
-  font-family: inherit;
-  font-weight: 500;
   letter-spacing: 0.02em;
   padding: 8px 0;
 }
@@ -389,13 +346,11 @@ h1, h2, h3, h4, h5, h6,
   border: 0;
   border-radius: 999px;
   padding: 5px 12px;
-  font-size: 14px;
-  font-weight: 500;
   background: var(--bc-tertiary);
   color: var(--bc-tertiary-contrast);
 }
 
-.quick-service-static-announcement { background: var(--bc-surface-dark-alt); color: var(--bc-text-inverse); text-align: center; padding: 22px 28px; font-size: 16px; line-height: 1.45; }
+.quick-service-static-announcement { background: var(--bc-surface-dark-alt); color: var(--bc-text-inverse); text-align: center; padding: 22px 28px; line-height: 1.45; }
 .quick-service-static-announcement-text { display: block; width: 700px; max-width: 100%; margin: 0 auto; }
 
 .split-banner { border-top: 2px solid var(--bc-border); }
@@ -411,10 +366,7 @@ h1, h2, h3, h4, h5, h6,
 
 .split-banner-heading {
   margin: 0 0 var(--split-section-heading-content-gap);
-  font-family: var(--font--heading-bold--family);
-  font-weight: 700;
   line-height: 1.08;
-  font-size: clamp(28px, 3.4vw, 44px);
   letter-spacing: 0.01em;
 }
 .split-banner-text > :not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):first-of-type {
@@ -424,13 +376,11 @@ h1, h2, h3, h4, h5, h6,
 
 .quick-service-detail-group { margin: 0 0 26px; padding-bottom: 20px; border-bottom: 1px solid rgba(55, 55, 55, 0.14); }
 .quick-service-detail-group:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
-.quick-service-detail-label { margin: 0 0 10px; font-size: 16px; font-weight: 600; line-height: 1.2; letter-spacing: 0.03em; }
-.quick-service-detail-value { margin: 0 0 10px; font-size: 16px; line-height: 1.5; }
+.quick-service-detail-label { margin: 0 0 10px; line-height: 1.2; letter-spacing: 0.03em; }
+.quick-service-detail-value { margin: 0 0 10px; line-height: 1.5; }
 .quick-service-detail-ctas { margin: 0; display: flex; flex-wrap: wrap; gap: 24px; }
 .quick-service-detail-cta {
   display: inline-block;
-  font-size: 16px;
-  font-weight: 400;
   letter-spacing: 0.04em;
   text-decoration: underline;
   text-underline-offset: 0.12em;
@@ -447,10 +397,9 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .quick-service-hours-row { margin: 0; padding: 13px 0; border-bottom: 1px solid rgba(55, 55, 55, 0.14); display: flex; justify-content: space-between; gap: 20px; }
-.quick-service-hours-day, .quick-service-hours-time { font-size: 16px; line-height: 1.5; }
-.quick-service-hours-row-active .quick-service-hours-day, .quick-service-hours-row-active .quick-service-hours-time { font-weight: 700; }
+.quick-service-hours-day, .quick-service-hours-time { line-height: 1.5; }
 .quick-service-hours-list { margin: 0 0 28px; }
-.quick-service-hours-note { margin: 0 !important; padding: 0 !important; font-size: 16px; line-height: 1.5; }
+.quick-service-hours-note { margin: 0 !important; padding: 0 !important; line-height: 1.5; }
 
 .quick-service-offerings-section {
   background: #fff;
@@ -487,9 +436,7 @@ h1, h2, h3, h4, h5, h6,
   grid-template-columns: 24px 1fr;
   align-items: start;
   gap: 12px;
-  font-size: 16px;
   line-height: 1.5;
-  font-weight: 400;
   letter-spacing: 0;
 }
 .quick-service-offerings-icon {
@@ -552,9 +499,7 @@ h1, h2, h3, h4, h5, h6,
 }
 .quick-service-about-text p {
   margin: 0 0 20px;
-  font-size: 16px;
   line-height: 1.5;
-  font-weight: 400;
 }
 .quick-service-about-text p:last-child {
   margin-bottom: 0;
@@ -591,9 +536,7 @@ h1, h2, h3, h4, h5, h6,
 }
 .quick-service-featured-title {
   margin: 0;
-  font-size: clamp(28px, 3.4vw, 44px);
   line-height: 1.08;
-  font-weight: 700;
   letter-spacing: 0.01em;
   text-align: center;
 }
@@ -622,13 +565,10 @@ h1, h2, h3, h4, h5, h6,
 }
 .quick-service-featured-copy h3 {
   margin: 0 0 10px;
-  font-size: 20px;
   line-height: 1.12;
-  font-weight: 700;
 }
 .quick-service-featured-copy p {
   margin: 0 0 12px;
-  font-size: 16px;
   line-height: 1.5;
 }
 .quick-service-featured-cta {
@@ -641,9 +581,7 @@ h1, h2, h3, h4, h5, h6,
   background: var(--bc-white);
   color: black;
   text-decoration: none;
-  font-size: 16px;
   line-height: 1;
-  font-weight: 400;
   border: 2px solid var(--bc-border);
   box-shadow: 4px 4px 0 black;  transition: background-color .2s ease, transform .12s ease, box-shadow .12s ease;
   margin-top: auto;
@@ -673,33 +611,24 @@ h1, h2, h3, h4, h5, h6,
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-size: 18px;
   line-height: 1.2;
 }
 .quick-service-reviews-score,
 .quick-service-reviews-label {
-  font-size: inherit;
   line-height: inherit;
-  font-weight: 600;
 }
 .quick-service-reviews-stars {
   color: #111;
   letter-spacing: 0.03em;
-  font-size: 18px;
   line-height: 1;
 }
 .quick-service-reviews-divider {
   color: rgba(55, 55, 55, 0.5);
 }
-.quick-service-reviews-count {
-  font-weight: 400;
-}
 .quick-service-reviews-recent {
   margin: 18px 0 22px;
   text-align: center;
-  font-size: inherit;
   line-height: 1.2;
-  font-weight: 500;
 }
 .quick-service-reviews-grid {
   display: grid;
@@ -723,20 +652,15 @@ h1, h2, h3, h4, h5, h6,
 }
 .quick-service-review-head h3 {
   margin: 0;
-  font-size: 18px;
   line-height: 1.1;
-  font-weight: 500;
 }
 .quick-service-review-rating {
   margin: 0 0 12px;
-  font-size: 16px;
   line-height: 1.3;
-  font-weight: 500;
   letter-spacing: 0.02em;
 }
 .quick-service-review-text {
   margin: 0;
-  font-size: 16px;
   line-height: 1.5;
 }
 
@@ -775,7 +699,6 @@ h1, h2, h3, h4, h5, h6,
     padding: 36px 0;
   }
   .quick-service-reviews-recent {
-    font-size: inherit;
     text-align: left;
   }
   .quick-service-reviews-summary {
@@ -808,9 +731,6 @@ h1, h2, h3, h4, h5, h6,
 }
 .quick-service-events-copy h2 {
   margin: 0 0 var(--split-section-heading-content-gap);
-  font-family: var(--font--heading-bold--family);
-  font-size: clamp(28px, 3vw, 46px);
-  font-weight: 700;
   line-height: 1.15;
   letter-spacing: 0.01em;
 }
@@ -820,7 +740,6 @@ h1, h2, h3, h4, h5, h6,
 }
 .quick-service-events-copy p {
   margin: 0 0 22px;
-  font-size: 20px;
   line-height: 1.45;
 }
 .quick-service-events-list {
@@ -831,12 +750,10 @@ h1, h2, h3, h4, h5, h6,
   gap: 10px;
 }
 .quick-service-events-list li {
-  font-size: 18px;
   line-height: 1.35;
 }
 .quick-service-events-list li::before {
   content: "+ ";
-  font-weight: 700;
   color: currentColor;
 }
 .quick-service-events-cta-slot {
@@ -899,7 +816,6 @@ h1, h2, h3, h4, h5, h6,
   border: 0;
   background: transparent;
   color: inherit;
-  font: inherit;
   cursor: pointer;
   padding: clamp(14px, 1.4vw, 18px) clamp(16px, 2vw, 26px);
   display: flex;
@@ -911,9 +827,7 @@ h1, h2, h3, h4, h5, h6,
 .quick-service-faq-label {
   display: flex;
   align-items: center;
-  font-size: clamp(16px, 1.5vw, 20px);
   line-height: 1;
-  text-transform: none;
   margin: 0;
 }
 .quick-service-faq-icon {
@@ -959,7 +873,6 @@ h1, h2, h3, h4, h5, h6,
 }
 .quick-service-faq-panel p {
   margin: 0 0 14px;
-  font-size: 16px;
   line-height: 1.6;
 }
 .quick-service-faq-panel p:last-child {
@@ -1007,7 +920,6 @@ h1, h2, h3, h4, h5, h6,
 }
 .quick-service-events-alt-copy p {
   margin: 0 0 22px;
-  font-size: 20px;
   line-height: 1.45;
 }
 .quick-service-location-list {
@@ -1030,13 +942,10 @@ h1, h2, h3, h4, h5, h6,
 }
 .quick-service-location-item h3 {
   margin: 0;
-  font-size: 20px;
   line-height: 1.25;
-  font-weight: 600;
 }
 .quick-service-location-item p {
   margin: 0;
-  font-size: 16px;
   line-height: 1.5;
 }
 .quick-service-location-link {
@@ -1076,7 +985,6 @@ h1, h2, h3, h4, h5, h6,
     align-items: center;
   }
   .site-brand {
-    font-size: 18px;
     line-height: 1.05;
     display: inline-block;
     max-width: 100%;
@@ -1090,7 +998,6 @@ h1, h2, h3, h4, h5, h6,
     overflow-wrap: anywhere;
   }
   .site-brand-measure {
-    font-size: 18px;
     line-height: 1.05;
   }
   .site-brand-line--secondary {
@@ -1119,14 +1026,7 @@ h1, h2, h3, h4, h5, h6,
     padding: 34px 24px;
   }
   .quick-service-events-copy h2 {
-    font-size: clamp(24px, 6vw, 38px);
     line-height: 1.2;
-  }
-  .quick-service-events-copy p {
-    font-size: 18px;
-  }
-  .quick-service-events-copy li {
-    font-size: 16px;
   }
   .quick-service-events-image {
     order: 2;
@@ -1142,12 +1042,6 @@ h1, h2, h3, h4, h5, h6,
   }
   .quick-service-faq-heading {
     margin-bottom: var(--section-heading-content-gap);
-  }
-  .quick-service-faq-label {
-    font-size: 16px;
-  }
-  .quick-service-faq-panel p {
-    font-size: 16px;
   }
 
   .quick-service-events-alt-grid {
@@ -1171,29 +1065,20 @@ h1, h2, h3, h4, h5, h6,
   .quick-service-events-alt-map {
     min-height: 360px;
   }
-  .quick-service-events-alt-copy p {
-    font-size: 18px;
-  }
-  .quick-service-location-item h3 { font-size: 20px; }
 }
 
 @media (max-width: 700px) {
   .site-header-inner { padding: 10px 14px; }
   .menu-toggle { left: 14px; }
   .site-header-center { padding: 0 42px; }
-  .site-brand { font-size: 18px; }
-  .site-brand-measure { font-size: 18px; }
   .site-brand-line--secondary {
-    font-size: inherit;
     margin-top: 3px;
   }
   .mobile-nav-inner { padding: 10px 14px 28px; }
   .mobile-nav-brand {
-    font-size: 18px;
     max-width: none;
     padding-inline: 0;
   }
-  .mobile-nav-inner a { font-size: 18px; }
 
 
 
@@ -1226,9 +1111,6 @@ h1, h2, h3, h4, h5, h6,
     padding: 16px;
     min-height: auto;
   }
-  .quick-service-featured-copy h3 {
-    font-size: 24px;
-  }
   .quick-service-featured-cta {
     margin-top: 12px;
   }
@@ -1239,16 +1121,11 @@ h1, h2, h3, h4, h5, h6,
   }
   .quick-service-reviews-summary {
     gap: 6px;
-    font-size: 16px;
     flex-wrap: wrap;
     justify-content: flex-start;
     text-align: left;
   }
-  .quick-service-reviews-stars {
-    font-size: 16px;
-  }
   .quick-service-reviews-recent {
-    font-size: inherit;
     margin: 14px 0 18px;
     text-align: left;
   }
@@ -1259,26 +1136,15 @@ h1, h2, h3, h4, h5, h6,
     min-height: auto;
     padding: 18px 16px;
   }
-  .quick-service-review-head h3 {
-    font-size: 18px;
-  }
 
   .quick-service-events-copy {
     padding: 30px 16px;
   }
   .quick-service-events-copy h2 {
-    font-size: clamp(22px, 8vw, 34px);
     line-height: 1.22;
-  }
-  .quick-service-events-copy p {
-    font-size: 16px;
-  }
-  .quick-service-events-copy li {
-    font-size: 16px;
   }
   .quick-service-events-cta {
     min-height: 46px;
-    font-size: 16px;
     padding: 0 14px;
   }
   .quick-service-events-image {
@@ -1301,9 +1167,6 @@ h1, h2, h3, h4, h5, h6,
   .quick-service-faq-trigger {
     padding: 16px 14px;
   }
-  .quick-service-faq-label {
-    font-size: 16px;
-  }
   .quick-service-faq-icon {
     width: 20px;
     height: 20px;
@@ -1319,7 +1182,6 @@ h1, h2, h3, h4, h5, h6,
     padding-bottom: 16px;
   }
   .quick-service-faq-panel p {
-    font-size: 16px;
     line-height: 1.6;
   }
 
@@ -1330,12 +1192,8 @@ h1, h2, h3, h4, h5, h6,
     width: calc(100% - 32px);
     padding-top: 24px;
   }
-  .quick-service-events-alt-copy p {
-    font-size: 16px;
-  }
   .quick-service-location-item { padding: 12px 0; }
   .quick-service-location-item:first-child { padding-top: 0; }
-  .quick-service-location-item h3 { font-size: 18px; }
   .quick-service-location-item { gap: 6px; }
   .quick-service-events-alt-image {
     padding: 16px;
@@ -1354,7 +1212,6 @@ h1, h2, h3, h4, h5, h6,
   justify-content: center;
   align-items: center;
   gap: 18px;
-  font-size: 14px;
 }
 .quick-service-footer-social,
 .quick-service-footer-links,
@@ -1370,8 +1227,6 @@ h1, h2, h3, h4, h5, h6,
 }
 .quick-service-footer-light a {
   color: #373737;
-  font-size: 16px;
-  font-weight: 400;
   letter-spacing: 0.03em;
   text-decoration: underline;
   text-underline-offset: 0.12em;
@@ -1389,9 +1244,7 @@ h1, h2, h3, h4, h5, h6,
 .quick-service-footer-logo {
   margin: 64px 0 56px;
   text-align: center;
-  font-size: clamp(32px, 4.8vw, 56px);
   line-height: 1;
-  font-weight: 500;
   letter-spacing: 0.01em;
 }
 .quick-service-footer-bottom {
@@ -1436,7 +1289,6 @@ h1, h2, h3, h4, h5, h6,
 }
 .quick-service-footer-legal {
   justify-content: flex-end;
-  font-size: 14px;
   letter-spacing: 0.02em;
 }
 
@@ -1445,19 +1297,15 @@ h1, h2, h3, h4, h5, h6,
     padding: 16px;
   }
   .quick-service-footer-top {
-    font-size: 14px;
     grid-template-columns: 1fr;
     justify-items: start;
     text-align: left;
   }
-  .quick-service-footer-legal { font-size: 14px; }
   .quick-service-footer-copy {
     white-space: normal;
   }
   .quick-service-footer-logo {
     margin: 34px 0 30px;
-    font-size: clamp(26px, 7vw, 40px);
-    font-weight: 500;
     text-align: left;
   }
   .quick-service-footer-bottom {
@@ -1479,9 +1327,6 @@ h1, h2, h3, h4, h5, h6,
     justify-content: flex-start;
   }
   .quick-service-footer-legal { justify-content: flex-start; }
-}
-
-@media (max-width: 700px) {
 }
 
 /* Heading alignment hierarchy */
@@ -1539,8 +1384,6 @@ h1, h2, h3, h4, h5, h6,
   height: 100%;
   min-height: 100%;
   text-align: center;
-  font-size: 20px;
-  font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--bc-text);
 }
@@ -1711,10 +1554,10 @@ const QuickServiceEventsComponent: PuckComponent<QuickServiceEventsProps> = (
     (image): image is AssetImageType =>
       Boolean(
         image &&
-          typeof image === "object" &&
-          "url" in image &&
-          typeof image.url === "string" &&
-          image.url.length > 0,
+        typeof image === "object" &&
+        "url" in image &&
+        typeof image.url === "string" &&
+        image.url.length > 0,
       ),
   );
   const sectionImageWrapperStyle: React.CSSProperties = {
@@ -1780,11 +1623,11 @@ const QuickServiceEventsComponent: PuckComponent<QuickServiceEventsProps> = (
                       props.heading.data.text.constantValueEnabled
                     }
                   >
-                  <StyledTextComponent
-                    kind="plain"
-                    {...props.heading}
-                    tag="h2"
-                  />
+                    <StyledTextComponent
+                      kind="plain"
+                      {...props.heading}
+                      tag="h2"
+                    />
                   </EntityField>
                 </div>
                 <EntityField
@@ -1794,10 +1637,7 @@ const QuickServiceEventsComponent: PuckComponent<QuickServiceEventsProps> = (
                     props.content.data.text.constantValueEnabled
                   }
                 >
-                <StyledTextComponent
-                  kind="richText"
-                  {...props.content}
-                />
+                  <StyledTextComponent kind="richText" {...props.content} />
                 </EntityField>
                 <div className="quick-service-events-cta-slot">
                   <EntityField
@@ -1828,12 +1668,12 @@ const QuickServiceEventsComponent: PuckComponent<QuickServiceEventsProps> = (
                       props.sectionImage.image.constantValueEnabled
                     }
                   >
-                  <div style={sectionImageWrapperStyle}>
-                    <Image
-                      image={selectedSectionImage}
-                      style={sectionImageStyle}
-                    />
-                  </div>
+                    <div style={sectionImageWrapperStyle}>
+                      <Image
+                        image={selectedSectionImage}
+                        style={sectionImageStyle}
+                      />
+                    </div>
                   </EntityField>
                 </article>
               ) : null}
@@ -1847,7 +1687,7 @@ const QuickServiceEventsComponent: PuckComponent<QuickServiceEventsProps> = (
 
 export const QuickServiceEvents: YextComponentConfig<QuickServiceEventsProps> =
   {
-    label: msg("components.events", "Events"),
+    label: msg("components.events", "Events Section"),
     fields,
     defaultProps: defaultEventsProps,
     render: (props) => <QuickServiceEventsComponent {...props} />,
@@ -1855,7 +1695,7 @@ export const QuickServiceEvents: YextComponentConfig<QuickServiceEventsProps> =
 
 export const config: SectionConfig = {
   id: "QuickServiceEvents",
-  displayName: "Events",
+  displayName: "Events Section",
   description: "Events",
   pageSetTypes: ["ENTITY"],
 };

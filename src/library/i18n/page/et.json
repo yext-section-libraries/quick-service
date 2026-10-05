@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> teilt",
   "email": "Meil",
   "enableCookies": "Luba küpsised",
+  "fields": {
+    "heading": "Pealkiri"
+  },
   "filter": "Filter",
   "findALocation": "Leidke asukoht",
   "getDirections": "Hankige juhiseid",
@@ -26,22 +29,43 @@
   "kilometer_other": "kilomeetrit",
   "kilometer_zero": "kilomeetrit",
   "loadingMap": "Kaardi laadimine ...",
+  "loadingNearbyLocations": "Läheduses olevate asukohtade laadimine",
+  "locatedKilometersFromLocation": "Asub sellest asukohast {{distance}} kilomeetri kaugusel",
+  "locatedMilesFromLocation": "Asub sellest asukohast {{distance}} miili kaugusel",
   "locationWithCount_one": "{{count}} asukoht",
   "locationWithCount_other": "{{count}} asukohad",
   "locationsNear_one": "{{count}} asukoht \"{{name}}\" lähedal",
   "locationsNear_other": "{{count}} asukohta \"{{name}}\" läheduses",
   "locationsWithinDistanceOf_one": "{{count}} asukoht {{distance}} {{unit}} raadiuses asukohast \"{{name}}\"",
   "locationsWithinDistanceOf_other": "{{count}} asukohta asukohast \"{{name}}\" {{distance}} {{unit}} raadiuses",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Seda kaarti saab kuvada ainult siis, kui küpsised on lubatud",
   "mile_one": "miil",
   "mile_other": "miili",
   "mile_zero": "miil",
+  "noNearbyLocationsFoundForThisLocation": "Selle asukoha läheduses ei leitud ühtegi asukohta",
   "noResultsFoundForThisArea": "Selle piirkonna kohta tulemusi ei leitud",
   "open24Hours": "Avatud ööpäev läbi",
   "openNow": "Nüüd avatud",
   "opensAtTime": "Avatakse kell {{time}}",
   "opensAtTimeWeek": "Avatakse kell {{time}} {{dayOfWeek}}",
   "phone": "Telefon",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Navigatsioonirada pole saadaval (sektsioon peidetakse avaldatud lehel). Navigatsiooniraja lubamiseks looge kataloog."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Laadi rakendused alla",
+    "footerLinks": "Jaluse lingid",
+    "legal": "Õigusteave",
+    "social": "Sotsiaalmeedia"
+  },
+  "quickServiceHeader": {
+    "logo": "Logo",
+    "primaryNavigation": "Põhinavigatsioon"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Kust meid leida"
+  },
   "recentReviews": "Hiljutised arvustused:",
   "refineYourSearch": "Täpsustage oma otsingut",
   "reopenDate": "Taasavamine kuupäev",

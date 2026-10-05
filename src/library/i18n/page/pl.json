@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> od Ciebie",
   "email": "E-mail",
   "enableCookies": "Włącz pliki cookie",
+  "fields": {
+    "heading": "Nagłówek"
+  },
   "filter": "Filtr",
   "findALocation": "Znajdź lokalizację",
   "getDirections": "Uzyskaj wskazówki",
@@ -28,6 +31,9 @@
   "kilometer_other": "kilometry",
   "kilometer_zero": "kilometr",
   "loadingMap": "Ładowanie mapy ...",
+  "loadingNearbyLocations": "Wczytywanie lokalizacji w pobliżu",
+  "locatedKilometersFromLocation": "W odległości {{distance}} kilometrów od tej lokalizacji",
+  "locatedMilesFromLocation": "W odległości {{distance}} mil od tej lokalizacji",
   "locationWithCount_few": "{{count}} lokalizacje",
   "locationWithCount_many": "{{count}} lokalizacji",
   "locationWithCount_one": "{{count}} lokalizacja",
@@ -40,18 +46,36 @@
   "locationsWithinDistanceOf_many": "{{count}} lokalizacji w promieniu {{distance}} {{unit}} od „{{name}}”",
   "locationsWithinDistanceOf_one": "{{count}} lokalizacja w promieniu {{distance}} {{unit}} od „{{name}}”",
   "locationsWithinDistanceOf_other": "{{count}} lokalizacji w promieniu {{distance}} {{unit}} od „{{name}}”",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Ta mapa może być wyświetlana tylko wtedy, gdy włączona jest obsługa plików cookie",
   "mile_few": "mile",
   "mile_many": "mil",
   "mile_one": "mila",
   "mile_other": "mili",
   "mile_zero": "mila",
+  "noNearbyLocationsFoundForThisLocation": "Nie znaleziono pobliskich lokalizacji dla tej lokalizacji",
   "noResultsFoundForThisArea": "Nie znaleziono wyników dla tego obszaru",
   "open24Hours": "Otwarte 24 godziny",
   "openNow": "Otwarte teraz",
   "opensAtTime": "Otwarcie o {{time}}",
   "opensAtTimeWeek": "Otwarte o {{time}} {{dayOfWeek}}",
   "phone": "Telefon",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Nawigacja okruszkowa jest niedostępna (sekcja będzie ukryta na opublikowanej stronie). Utwórz katalog, aby włączyć nawigację okruszkową."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Pobierz aplikacje",
+    "footerLinks": "Linki w stopce",
+    "legal": "Informacje prawne",
+    "social": "Media społecznościowe"
+  },
+  "quickServiceHeader": {
+    "logo": "Logo",
+    "primaryNavigation": "Nawigacja główna"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Gdzie nas znaleźć"
+  },
   "recentReviews": "Najnowsze opinie:",
   "refineYourSearch": "Sprecyzuj wyszukiwanie",
   "reopenDate": "Data ponownego otwarcia",

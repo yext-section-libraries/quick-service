@@ -1,7 +1,11 @@
+import "../shared/typography.css";
+import { resolveStyledTextStyles } from "../shared/sectionHelpers";
+
 import type { SectionConfig } from "@yext/visual-editor";
 import { msg } from "@yext/visual-editor/section-library-support";
 
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import type { PuckComponent } from "@puckeditor/core";
 import { AnalyticsScopeProvider, Link } from "@yext/pages-components";
 import {
@@ -82,7 +86,6 @@ const fields: YextFields<QuickServiceBreadcrumbsProps> = {
 const QuickServiceBreadcrumbsStyles = String.raw`
 .quick-service-breadcrumbs {
   padding: 14px 28px;
-  font-family: "Hubot Sans", "Avenir Next", "Segoe UI", sans-serif;
 }
 .quick-service-breadcrumbs-list {
   display: flex;
@@ -93,8 +96,6 @@ const QuickServiceBreadcrumbsStyles = String.raw`
   margin: 0 auto;
   padding: 0;
   list-style: none;
-  font-size: 14px;
-  font-weight: 500;
   letter-spacing: 0.02em;
 }
 .quick-service-breadcrumbs-link {
@@ -119,6 +120,7 @@ const QuickServiceBreadcrumbsStyles = String.raw`
 const QuickServiceBreadcrumbsComponent: PuckComponent<
   QuickServiceBreadcrumbsProps
 > = (props) => {
+  const { t } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
   const { relativePrefixToRoot } = useTemplateProps<{
     relativePrefixToRoot?: string;
@@ -139,26 +141,7 @@ const QuickServiceBreadcrumbsComponent: PuckComponent<
     color:
       getThemeColorCssValue(props.fontColor) ??
       getThemeColorCssValue(props.section.backgroundColor.contrastingColor),
-    fontFamily:
-      props.textStyles.fontFamily === "default"
-        ? undefined
-        : props.textStyles.fontFamily,
-    fontSize:
-      props.textStyles.fontSize === "default"
-        ? undefined
-        : props.textStyles.fontSize,
-    fontStyle:
-      props.textStyles.fontStyle === "default"
-        ? undefined
-        : props.textStyles.fontStyle,
-    fontWeight:
-      props.textStyles.fontWeight === "default"
-        ? undefined
-        : props.textStyles.fontWeight,
-    textTransform:
-      props.textStyles.textTransform === "default"
-        ? undefined
-        : props.textStyles.textTransform,
+    ...resolveStyledTextStyles(props.textStyles),
   };
 
   if (!breadcrumbs.length) {
@@ -166,12 +149,13 @@ const QuickServiceBreadcrumbsComponent: PuckComponent<
       <p
         style={{
           ...sectionSurfaceStyle,
-          fontFamily: "Arial, Helvetica, sans-serif",
           padding: "18px 24px",
         }}
       >
-        No breadcrumbs available (section will be hidden on live page). Create a
-        directory to enable breadcrumbs.
+        {t(
+          "quickServiceBreadcrumbs.noBreadcrumbsAvailable",
+          "No breadcrumbs available (section will be hidden on live page). Create a directory to enable breadcrumbs.",
+        )}
       </p>
     ) : (
       <></>
@@ -236,6 +220,7 @@ const QuickServiceBreadcrumbsComponent: PuckComponent<
                     ) : (
                       <Link
                         className="quick-service-breadcrumbs-link"
+                        style={textStyle}
                         eventName={`breadcrumb${breadcrumbIndex}`}
                         href={href}
                       >
@@ -267,7 +252,7 @@ const QuickServiceBreadcrumbsComponent: PuckComponent<
 
 export const QuickServiceBreadcrumbs: YextComponentConfig<QuickServiceBreadcrumbsProps> =
   {
-    label: msg("components.breadcrumbs", "Breadcrumbs"),
+    label: msg("components.breadcrumbsSection", "Breadcrumbs Section"),
     fields,
     defaultProps: {
       section: {
@@ -303,7 +288,7 @@ export const QuickServiceBreadcrumbs: YextComponentConfig<QuickServiceBreadcrumb
 
 export const config: SectionConfig = {
   id: "QuickServiceBreadcrumbs",
-  displayName: "Breadcrumbs",
+  displayName: "Breadcrumbs  Section",
   description: "Breadcrumbs",
   pageSetTypes: ["ENTITY"],
 };

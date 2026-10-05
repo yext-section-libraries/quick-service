@@ -17,6 +17,9 @@
   "distanceLineFromYou": "<strong>{{distance}}</strong> från dig",
   "email": "E-post",
   "enableCookies": "Aktivera cookies",
+  "fields": {
+    "heading": "Rubrik"
+  },
   "filter": "Filtrera",
   "findALocation": "Hitta en plats",
   "getDirections": "Få vägbeskrivning",
@@ -26,22 +29,43 @@
   "kilometer_other": "kilometer",
   "kilometer_zero": "kilometer",
   "loadingMap": "Laddar karta ...",
+  "loadingNearbyLocations": "Läser in platser i närheten",
+  "locatedKilometersFromLocation": "Ligger {{distance}} kilometer från denna plats",
+  "locatedMilesFromLocation": "Ligger {{distance}} engelska mil från denna plats",
   "locationWithCount_one": "{{count}} Plats",
   "locationWithCount_other": "{{count}} Platser",
   "locationsNear_one": "{{count}} Plats nära \"{{name}}\"",
   "locationsNear_other": "{{count}} platser nära \"{{name}}\"",
   "locationsWithinDistanceOf_one": "{{count}} plats inom {{distance}} {{unit}} från \"{{name}}\"",
   "locationsWithinDistanceOf_other": "{{count}} platser inom {{distance}} {{unit}} från \"{{name}}\"",
+  "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Denna karta kan endast visas om cookies är aktiverade",
   "mile_one": "mil",
   "mile_other": "mil",
   "mile_zero": "mil",
+  "noNearbyLocationsFoundForThisLocation": "Inga platser i närheten hittades för den här platsen",
   "noResultsFoundForThisArea": "Inga resultat hittades för detta område",
   "open24Hours": "Öppet dygnet runt",
   "openNow": "Öppet nu",
   "opensAtTime": "Öppnar kl. {{time}}",
   "opensAtTimeWeek": "Öppnar kl. {{time}} {{dayOfWeek}}",
   "phone": "Telefon",
+  "quickServiceBreadcrumbs": {
+    "noBreadcrumbsAvailable": "Inga brödsmulor tillgängliga (sektionen döljs på den publicerade sidan). Skapa en katalog för att aktivera brödsmulor."
+  },
+  "quickServiceFooter": {
+    "downloadApps": "Ladda ned appar",
+    "footerLinks": "Länkar i sidfoten",
+    "legal": "Juridisk information",
+    "social": "Sociala medier"
+  },
+  "quickServiceHeader": {
+    "logo": "Logotyp",
+    "primaryNavigation": "Huvudnavigering"
+  },
+  "quickServiceLocations": {
+    "whereToFindUs": "Här hittar du oss"
+  },
   "recentReviews": "Senaste recensionerna:",
   "refineYourSearch": "Förfina din sökning",
   "reopenDate": "Öppna datum igen",

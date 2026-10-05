@@ -1,3 +1,5 @@
+import "../shared/typography.css";
+
 import type { SectionConfig } from "@yext/visual-editor";
 import { msg } from "@yext/visual-editor/section-library-support";
 
@@ -113,10 +115,10 @@ const QuickServiceBannerComponent: PuckComponent<QuickServiceBannerProps> = ({
         <div className="relative flex h-20 w-full flex-row items-center justify-center gap-3 rounded-lg border border-gray-200 bg-gray-100 px-4">
           <CircleSlash2 className="h-10 w-10 flex-shrink-0 text-gray-400" />
           <div className="flex flex-col items-start">
-            <Body className="font-medium text-gray-500" variant="sm">
+            <Body className="text-gray-500" variant="sm">
               Section hidden for this page
             </Body>
-            <Body className="font-normal text-gray-500" variant="sm">
+            <Body className="text-gray-500" variant="sm">
               The mapped banner field is empty
             </Body>
           </div>
@@ -165,47 +167,48 @@ const QuickServiceBannerComponent: PuckComponent<QuickServiceBannerProps> = ({
 /**
  * Displays a full-width, editor-configurable rich-text banner.
  */
-export const QuickServiceBanner: YextComponentConfig<QuickServiceBannerProps> = {
-  label: msg("components.banner", "Banner"),
-  fields: QuickServiceBannerFields,
-  defaultProps: {
-    data: {
-      text: {
-        field: "",
-        constantValue: {
-          defaultValue: getDefaultRTF("Banner Text"),
+export const QuickServiceBanner: YextComponentConfig<QuickServiceBannerProps> =
+  {
+    label: msg("components.banner", "Banner Section"),
+    fields: QuickServiceBannerFields,
+    defaultProps: {
+      data: {
+        text: {
+          field: "",
+          constantValue: {
+            defaultValue: getDefaultRTF("Banner Text"),
+          },
+          constantValueEnabled: true,
         },
-        constantValueEnabled: true,
+        styles: {
+          fontFamily: "default",
+          fontSize: "default",
+          fontWeight: "default",
+          fontStyle: "default",
+          textTransform: "default",
+        },
       },
       styles: {
-        fontFamily: "default",
-        fontSize: "default",
-        fontWeight: "default",
-        fontStyle: "default",
-        textTransform: "default",
+        textAlignment: "center",
+      },
+      section: {
+        backgroundColor: backgroundColors.color1.value,
+        visibleOnLivePage: true,
       },
     },
-    styles: {
-      textAlignment: "center",
-    },
-    section: {
-      backgroundColor: backgroundColors.color1.value,
-      visibleOnLivePage: true,
-    },
-  },
-  render: (props) => (
-    <VisibilityWrapper
-      isEditing={props.puck.isEditing}
-      liveVisibility={props.section.visibleOnLivePage}
-    >
-      <QuickServiceBannerComponent {...props} />
-    </VisibilityWrapper>
-  ),
-};
+    render: (props) => (
+      <VisibilityWrapper
+        isEditing={props.puck.isEditing}
+        liveVisibility={props.section.visibleOnLivePage}
+      >
+        <QuickServiceBannerComponent {...props} />
+      </VisibilityWrapper>
+    ),
+  };
 
 export const config: SectionConfig = {
   id: "QuickServiceBanner",
-  displayName: "Banner",
+  displayName: "Banner  Section",
   description: "Banner",
   pageSetTypes: ["ENTITY"],
 };
