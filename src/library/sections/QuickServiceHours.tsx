@@ -1962,7 +1962,7 @@ const QuickServiceHoursComponent: PuckComponent<QuickServiceHoursProps> = (
 };
 
 export const QuickServiceHours: YextComponentConfig<QuickServiceHoursProps> = {
-  label: msg("components.hours", "Hours Section"),
+  label: msg("components.hoursLabel", "Hours"),
   fields,
   defaultProps: defaultHoursProps,
   render: (props) => <QuickServiceHoursComponent {...props} />,
@@ -1970,7 +1970,7 @@ export const QuickServiceHours: YextComponentConfig<QuickServiceHoursProps> = {
 
 export const config: SectionConfig = {
   id: "QuickServiceHours",
-  displayName: "Hours Section",
+  displayName: "Hours",
   description: "Hours",
   pageSetTypes: ["ENTITY"],
 };

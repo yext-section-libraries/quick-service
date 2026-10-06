@@ -1743,7 +1743,7 @@ const QuickServiceOfferingsComponent: PuckComponent<
 
 export const QuickServiceOfferings: YextComponentConfig<QuickServiceOfferingsProps> =
   {
-    label: msg("components.offerings", "Offerings Section"),
+    label: msg("components.offeringsLabel", "Offerings"),
     fields,
     defaultProps: defaultOfferingsProps,
     render: (props) => <QuickServiceOfferingsComponent {...props} />,
@@ -1751,7 +1751,7 @@ export const QuickServiceOfferings: YextComponentConfig<QuickServiceOfferingsPro
 
 export const config: SectionConfig = {
   id: "QuickServiceOfferings",
-  displayName: "Offerings Section",
+  displayName: "Offerings",
   description: "Offerings",
   pageSetTypes: ["ENTITY"],
 };

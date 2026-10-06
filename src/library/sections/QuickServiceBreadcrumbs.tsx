@@ -252,7 +252,7 @@ const QuickServiceBreadcrumbsComponent: PuckComponent<
 
 export const QuickServiceBreadcrumbs: YextComponentConfig<QuickServiceBreadcrumbsProps> =
   {
-    label: msg("components.breadcrumbsSection", "Breadcrumbs Section"),
+    label: msg("components.breadcrumbsLabel", "Breadcrumbs"),
     fields,
     defaultProps: {
       section: {
@@ -288,7 +288,7 @@ export const QuickServiceBreadcrumbs: YextComponentConfig<QuickServiceBreadcrumb
 
 export const config: SectionConfig = {
   id: "QuickServiceBreadcrumbs",
-  displayName: "Breadcrumbs  Section",
+  displayName: "Breadcrumbs",
   description: "Breadcrumbs",
   pageSetTypes: ["ENTITY"],
 };

@@ -1547,7 +1547,7 @@ const QuickServiceAboutComponent: PuckComponent<QuickServiceAboutProps> = (
 };
 
 export const QuickServiceAbout: YextComponentConfig<QuickServiceAboutProps> = {
-  label: msg("components.about", "About Section"),
+  label: msg("components.aboutLabel", "About"),
   fields,
   defaultProps: defaultAboutProps,
   render: (props) => <QuickServiceAboutComponent {...props} />,
@@ -1555,7 +1555,7 @@ export const QuickServiceAbout: YextComponentConfig<QuickServiceAboutProps> = {
 
 export const config: SectionConfig = {
   id: "QuickServiceAbout",
-  displayName: "About  Section",
+  displayName: "About",
   description: "About",
   pageSetTypes: ["ENTITY"],
 };
