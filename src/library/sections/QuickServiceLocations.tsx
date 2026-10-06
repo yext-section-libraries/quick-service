@@ -2128,7 +2128,7 @@ const QuickServiceLocationsComponent: PuckComponent<
 
 export const QuickServiceLocations: YextComponentConfig<QuickServiceLocationsProps> =
   {
-    label: msg("components.locations", "Nearby Locations Section"),
+    label: msg("components.locationsLabel", "Nearby Locations"),
     fields,
     defaultProps: defaultLocationsProps,
     render: (props) => <QuickServiceLocationsComponent {...props} />,
@@ -2136,7 +2136,7 @@ export const QuickServiceLocations: YextComponentConfig<QuickServiceLocationsPro
 
 export const config: SectionConfig = {
   id: "QuickServiceLocations",
-  displayName: "Nearby Locations Section",
+  displayName: "Nearby Locations",
   description: "Locations",
   pageSetTypes: ["ENTITY"],
 };

@@ -1689,7 +1689,7 @@ const QuickServiceEventsComponent: PuckComponent<QuickServiceEventsProps> = (
 
 export const QuickServiceEvents: YextComponentConfig<QuickServiceEventsProps> =
   {
-    label: msg("components.events", "Events Section"),
+    label: msg("components.eventsLabel", "Events"),
     fields,
     defaultProps: defaultEventsProps,
     render: (props) => <QuickServiceEventsComponent {...props} />,
@@ -1697,7 +1697,7 @@ export const QuickServiceEvents: YextComponentConfig<QuickServiceEventsProps> =
 
 export const config: SectionConfig = {
   id: "QuickServiceEvents",
-  displayName: "Events Section",
+  displayName: "Events",
   description: "Events",
   pageSetTypes: ["ENTITY"],
 };

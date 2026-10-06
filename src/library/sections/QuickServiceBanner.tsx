@@ -169,7 +169,7 @@ const QuickServiceBannerComponent: PuckComponent<QuickServiceBannerProps> = ({
  */
 export const QuickServiceBanner: YextComponentConfig<QuickServiceBannerProps> =
   {
-    label: msg("components.banner", "Banner Section"),
+    label: msg("components.bannerLabel", "Banner"),
     fields: QuickServiceBannerFields,
     defaultProps: {
       data: {
@@ -208,7 +208,7 @@ export const QuickServiceBanner: YextComponentConfig<QuickServiceBannerProps> =
 
 export const config: SectionConfig = {
   id: "QuickServiceBanner",
-  displayName: "Banner  Section",
+  displayName: "Banner",
   description: "Banner",
   pageSetTypes: ["ENTITY"],
 };

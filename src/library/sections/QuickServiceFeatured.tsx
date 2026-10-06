@@ -1910,7 +1910,7 @@ const QuickServiceFeaturedComponent: PuckComponent<
 
 export const QuickServiceFeatured: YextComponentConfig<QuickServiceFeaturedProps> =
   {
-    label: msg("components.featured", "Featured Items Section"),
+    label: msg("components.featuredLabel", "Featured Items"),
     fields,
     defaultProps: {
       section: {
@@ -1928,7 +1928,7 @@ export const QuickServiceFeatured: YextComponentConfig<QuickServiceFeaturedProps
 
 export const config: SectionConfig = {
   id: "QuickServiceFeatured",
-  displayName: "Featured Items Section",
+  displayName: "Featured Items",
   description: "Featured",
   pageSetTypes: ["ENTITY"],
 };

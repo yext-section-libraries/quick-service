@@ -2280,7 +2280,7 @@ const QuickServiceHeroComponent: PuckComponent<QuickServiceHeroProps> = (
 };
 
 export const QuickServiceHero: YextComponentConfig<QuickServiceHeroProps> = {
-  label: msg("components.hero", "Hero Section"),
+  label: msg("components.heroLabel", "Hero"),
   fields,
   defaultProps: defaultHeroProps,
   render: (props) => <QuickServiceHeroComponent {...props} />,
@@ -2288,7 +2288,7 @@ export const QuickServiceHero: YextComponentConfig<QuickServiceHeroProps> = {
 
 export const config: SectionConfig = {
   id: "QuickServiceHero",
-  displayName: "Hero Section",
+  displayName: "Hero",
   description: "Hero",
   pageSetTypes: ["ENTITY"],
 };

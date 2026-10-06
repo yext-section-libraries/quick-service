@@ -1734,7 +1734,7 @@ const defaultReviewsProps: QuickServiceReviewsProps = {
 
 export const QuickServiceReviews: YextComponentConfig<QuickServiceReviewsProps> =
   {
-    label: msg("components.reviews", "Reviews Section"),
+    label: msg("components.reviewsLabel", "Reviews"),
     fields,
     defaultProps: defaultReviewsProps,
     render: (props) => <QuickServiceReviewsComponent {...props} />,
@@ -1742,7 +1742,7 @@ export const QuickServiceReviews: YextComponentConfig<QuickServiceReviewsProps> 
 
 export const config: SectionConfig = {
   id: "QuickServiceReviews",
-  displayName: "Reviews Section",
+  displayName: "Reviews",
   description: "Reviews",
   pageSetTypes: ["ENTITY"],
 };

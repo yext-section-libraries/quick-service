@@ -2120,7 +2120,7 @@ const QuickServiceDetailsComponent: PuckComponent<QuickServiceDetailsProps> = (
 
 export const QuickServiceDetails: YextComponentConfig<QuickServiceDetailsProps> =
   {
-    label: msg("components.details", "Details Section"),
+    label: msg("components.detailsLabel", "Details"),
     fields,
     defaultProps: {
       section: {
@@ -2143,7 +2143,7 @@ export const QuickServiceDetails: YextComponentConfig<QuickServiceDetailsProps> 
 
 export const config: SectionConfig = {
   id: "QuickServiceDetails",
-  displayName: "Details Section",
+  displayName: "Details",
   description: "Details",
   pageSetTypes: ["ENTITY"],
 };
