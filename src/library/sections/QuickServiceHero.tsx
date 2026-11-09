@@ -3,7 +3,7 @@ import "../shared/typography.css";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
-import type { PuckComponent } from "@puckeditor/core";
+import type { WithId, WithPuckProps } from "@puckeditor/core";
 import { useTranslation } from "react-i18next";
 import {
   AnalyticsScopeProvider,
@@ -29,31 +29,19 @@ import {
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
+  type YextTransformedProps,
   type TranslatableAssetImage,
   type TranslatableString,
   useDocument,
   VisibilityWrapper,
 } from "@yext/visual-editor";
 import { msg, pt } from "@yext/visual-editor/section-library-support";
-import {
-  aspectRatioOptions,
-  resolveStyledTextStyles,
-} from "../shared/sectionHelpers";
+import { aspectRatioOptions } from "../shared/sectionHelpers";
 import type {
   ComplexImageType,
   HoursType,
   ImageType,
 } from "@yext/pages-components";
-
-type IntervalData = {
-  start?: string;
-  end?: string;
-};
-
-type DayData = {
-  isClosed?: boolean;
-  openIntervals?: IntervalData[];
-};
 
 type HeroTextFieldValue = {
   text: YextEntityField<TranslatableString>;
@@ -108,13 +96,13 @@ const heroImageUrl =
   "https://a.mktgcdn.com/p/vQqhmnexQfZueJGyh5M_j5W4EcTkTyZlW93eIoqjjvQ/1900x1267.jpg";
 const defaultHeroAltText = "Hero background image";
 const QuickServiceHeroStyles = String.raw`
-:root {
+.components {
   --section-heading-content-gap: 30px;
   --split-section-heading-content-gap: 30px;
   --bc-white: #ffffff;
   --bc-text: var(--colors-palette-quaternary, #373737);
   --bc-text-inverse: var(--colors-palette-quaternary-contrast, #ffffff);
-  --bc-border: #111111;
+  --bc-border: currentColor;
   --bc-shadow: var(--colors-palette-quaternary, #000000);
   --bc-surface-dark: var(--colors-palette-quaternary, #222222);
   --bc-surface-dark-alt: var(--colors-palette-quaternary, #1f2023);
@@ -128,7 +116,6 @@ const QuickServiceHeroStyles = String.raw`
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
-body { color: var(--bc-text); background: var(--bc-white); }
 body.no-scroll { overflow: hidden; }
 
 .site-header {
@@ -190,13 +177,11 @@ body.no-scroll { overflow: hidden; }
   white-space: nowrap;
   pointer-events: none;
   line-height: 1;
-  letter-spacing: 0.02em;
 }
 .site-brand {
   color: var(--bc-text-inverse);
   text-decoration: none;
   line-height: 1;
-  letter-spacing: 0.02em;
   display: inline-block;
 }
 .site-brand-line {
@@ -228,7 +213,6 @@ body.no-scroll { overflow: hidden; }
   color: var(--bc-text-inverse);
   text-decoration: none;
   line-height: 1;
-  letter-spacing: 0.02em;
   transition: opacity .2s ease;
 }
 .site-header-btn:hover,
@@ -297,8 +281,7 @@ body.no-scroll { overflow: hidden; }
 }
 .mobile-nav-brand {
   margin: 0;
-  color: rgba(248, 248, 248, 0.96);
-  letter-spacing: 0.02em;
+  color: inherit;
   line-height: 1.1;
   text-align: center;
   grid-column: 2;
@@ -323,7 +306,6 @@ body.no-scroll { overflow: hidden; }
   visibility: hidden;
   white-space: nowrap;
   pointer-events: none;
-  letter-spacing: inherit;
 }
 .mobile-nav-brand--split {
   display: inline-flex;
@@ -346,15 +328,14 @@ body.no-scroll { overflow: hidden; }
   left: 0;
   border: 0;
   background: transparent;
-  color: #fff;
+  color: inherit;
   line-height: 1;
   cursor: pointer;
   padding: 0;
 }
 .mobile-nav-inner a {
-  color: #eef2f6;
+  color: inherit;
   text-decoration: none;
-  letter-spacing: 0.02em;
   padding: 8px 0;
 }
 .mobile-nav-divider {
@@ -386,10 +367,10 @@ body.no-scroll { overflow: hidden; }
   position: relative;
   width: 100%;
   margin: 0;
-  padding: clamp(40px, 6vw, 72px) 0;
+  padding: var(--padding-pageSection-verticalPadding) 0;
 }
 .hero-has-image {
-  padding: clamp(24px, 4vw, 40px) 0;
+  padding: var(--padding-pageSection-verticalPadding) 0;
 }
 .hero-image {
   position: absolute;
@@ -404,13 +385,13 @@ body.no-scroll { overflow: hidden; }
 }
 .hero-overlay {
   position: relative;
-  width: min(980px, calc(100% - 56px));
+  width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 48px));
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  padding: clamp(24px, 4vw, 40px) 0;
+  padding: 0;
   text-align: center;
   color: var(--bc-text-inverse);
   z-index: 1;
@@ -426,7 +407,6 @@ body.no-scroll { overflow: hidden; }
 }
 .hero-kicker {
   margin: 0;
-  letter-spacing: 0.02em;
 }
 .hero-title {
   margin: 10px 0 14px;
@@ -449,7 +429,7 @@ body.no-scroll { overflow: hidden; }
   line-height: inherit;
 }
 .hero-rating-divider {
-  color: rgba(255, 255, 255, 0.8);
+  color: inherit;
 }
 .hero-status {
   display: inline-flex;
@@ -462,7 +442,7 @@ body.no-scroll { overflow: hidden; }
   border-radius: 999px;
   padding: 5px 12px;
   background: var(--bc-tertiary);
-  color: #111111;
+  color: inherit;
   white-space: nowrap;
 }
 .hero-hours-detail {
@@ -493,21 +473,7 @@ body.no-scroll { overflow: hidden; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 62px;
-  padding: 0 18px;
   max-width: none;
-  line-height: 1;
-}
-
-.hero-cta--solid {
-  box-shadow: 6px 6px 0 var(--bc-shadow);
-  transition: transform .1s .1s cubic-bezier(.19,1,.22,1), box-shadow .1s .1s cubic-bezier(.19,1,.22,1);
-}
-
-.hero-cta--solid:hover,
-.hero-cta--solid:focus-visible {
-  transform: translate3d(6px, 6px, 0);
-  box-shadow: 0 0 0 #000;
 }
 
 .quick-service-static-announcement { background: var(--bc-surface-dark-alt); color: var(--bc-text-inverse); text-align: center; padding: 22px 28px; line-height: 1.45; }
@@ -520,14 +486,17 @@ body.no-scroll { overflow: hidden; }
   isolation: isolate;
   overflow: hidden;
 }
-.split-banner-wrap { display: grid; grid-template-columns: 1fr 1fr; }
-.split-banner-text { background: inherit; padding: clamp(30px, 4.2vw, 58px); }
+.split-banner-wrap { display: grid; grid-template-columns: 1fr 1fr;
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
+}
+.split-banner-text { background: inherit; padding: var(--padding-pageSection-verticalPadding) clamp(30px, 4.2vw, 58px); }
 .split-banner-image img { width: 100%; height: 100%; min-height: 420px; object-fit: cover; display: block; }
 
 .split-banner-heading {
   margin: 0 0 var(--split-section-heading-content-gap);
   line-height: 1.08;
-  letter-spacing: 0.01em;
 }
 .split-banner-text > :not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):first-of-type {
   margin-top: 0;
@@ -536,24 +505,15 @@ body.no-scroll { overflow: hidden; }
 
 .quick-service-detail-group { margin: 0 0 26px; padding-bottom: 20px; border-bottom: 1px solid rgba(55, 55, 55, 0.14); }
 .quick-service-detail-group:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
-.quick-service-detail-label { margin: 0 0 10px; line-height: 1.2; letter-spacing: 0.03em; }
+.quick-service-detail-label { margin: 0 0 10px; line-height: 1.2;  }
 .quick-service-detail-value { margin: 0 0 10px; line-height: 1.5; }
 .quick-service-detail-ctas { margin: 0; display: flex; flex-wrap: wrap; gap: 24px; }
 .quick-service-detail-cta {
   display: inline-block;
-  letter-spacing: 0.04em;
-  text-decoration: underline;
-  text-underline-offset: 0.12em;
-  border-bottom: 0;
-  padding-bottom: 0;
-  line-height: 1.2;
-  color: inherit;
-  transition: opacity .2s ease, text-decoration-color .2s ease;
 }
 .quick-service-detail-cta:hover,
 .quick-service-detail-cta:focus-visible {
   opacity: .75;
-  text-decoration: none;
 }
 
 .quick-service-hours-row { margin: 0; padding: 13px 0; border-bottom: 1px solid rgba(55, 55, 55, 0.14); display: flex; justify-content: space-between; gap: 20px; }
@@ -563,13 +523,16 @@ body.no-scroll { overflow: hidden; }
 
 .quick-service-offerings-section {
   background: #fff;
-  border-top: 2px solid #111;
+  border-top: 2px solid currentColor;
   margin: 0;
-  padding: 0;
+  padding: var(--padding-pageSection-verticalPadding) 0;
 }
 .quick-service-offerings-header {
   background: inherit;
-  padding: clamp(30px, 4.2vw, 58px) clamp(30px, 4.2vw, 58px) 0;
+  padding: 0 clamp(30px, 4.2vw, 58px);
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
 }
 .quick-service-offerings-main-heading {
   margin: 0 0 var(--section-heading-content-gap);
@@ -579,10 +542,13 @@ body.no-scroll { overflow: hidden; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: start;
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
 }
 .quick-service-offerings-list-panel {
   background: inherit;
-  padding: 0 clamp(30px, 4.2vw, 58px) clamp(30px, 4.2vw, 58px);
+  padding: 0 clamp(30px, 4.2vw, 58px);
 }
 .quick-service-offerings-list {
   list-style: none;
@@ -597,13 +563,12 @@ body.no-scroll { overflow: hidden; }
   align-items: start;
   gap: 12px;
   line-height: 1.5;
-  letter-spacing: 0;
 }
 .quick-service-offerings-icon {
   width: 20px;
   height: 20px;
   display: inline-block;
-  background-color: #373737;
+  background-color: currentColor;
   transform: translateY(2px);
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
@@ -626,24 +591,25 @@ body.no-scroll { overflow: hidden; }
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  padding-block: 0;
 }
 .quick-service-offerings-image-panel img {
   width: 100%;
   max-width: 100%;
   height: auto;
   display: block;
-  border-radius: 0;
+  border-radius: var(--borderRadius-image-borderRadius);
   margin: 0 auto;
 }
 
 .quick-service-about-section {
   background: #fff;
-  border-top: 2px solid #111;
+  border-top: 2px solid currentColor;
 }
 .quick-service-about-wrap {
-  width: min(1200px, calc(100% - 96px));
+  width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 48px));
   margin: 0 auto;
-  padding: 52px 0;
+  padding: var(--padding-pageSection-verticalPadding) 0;
 }
 .quick-service-about-text {
   padding: 0;
@@ -672,13 +638,14 @@ body.no-scroll { overflow: hidden; }
   max-width: 100%;
   display: block;
   height: auto;
-  border-radius: 0;
+  border-radius: var(--borderRadius-image-borderRadius);
   margin: 0 auto;
 }
 
 .quick-service-featured-section {
   background: #fff;
-  border-top: 2px solid #111;
+  border-top: 2px solid currentColor;
+  padding-block: var(--padding-pageSection-verticalPadding);
 }
 .quick-service-featured-grid {
   display: grid;
@@ -697,12 +664,11 @@ body.no-scroll { overflow: hidden; }
 .quick-service-featured-title {
   margin: 0;
   line-height: 1.08;
-  letter-spacing: 0.01em;
   text-align: center;
 }
 .quick-service-featured-item-card {
-  border-bottom: 2px solid #111;
-  border-right: 2px solid #111;
+  border-bottom: 2px solid currentColor;
+  border-right: 2px solid currentColor;
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -735,31 +701,17 @@ body.no-scroll { overflow: hidden; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
-  padding: 0 14px;
   white-space: nowrap;
-  background: var(--bc-white);
-  color: black;
-  text-decoration: none;
-  line-height: 1;
-  border: 2px solid var(--bc-border);
-  box-shadow: 4px 4px 0 black;  transition: background-color .2s ease, transform .12s ease, box-shadow .12s ease;
   margin-top: auto;
-}
-.quick-service-featured-cta:hover,
-.quick-service-featured-cta:focus-visible {
-  background: var(--bc-primary);
-  transform: translate3d(4px, 4px, 0);
-  box-shadow: 0 0 0 #111;
 }
 
 .quick-service-reviews-section {
   background: #fff;
 }
 .quick-service-reviews-wrap {
-  width: min(1200px, calc(100% - 96px));
+  width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 48px));
   margin: 0 auto;
-  padding: 52px 0;
+  padding: var(--padding-pageSection-verticalPadding) 0;
 }
 .quick-service-reviews-heading {
   margin: 0 0 var(--section-heading-content-gap);
@@ -778,12 +730,11 @@ body.no-scroll { overflow: hidden; }
   line-height: inherit;
 }
 .quick-service-reviews-stars {
-  color: #111;
-  letter-spacing: 0.03em;
+  color: inherit;
   line-height: 1;
 }
 .quick-service-reviews-divider {
-  color: rgba(55, 55, 55, 0.5);
+  color: inherit;
 }
 .quick-service-reviews-recent {
   margin: 18px 0 22px;
@@ -793,13 +744,13 @@ body.no-scroll { overflow: hidden; }
 .quick-service-reviews-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border-left: 2px solid #111;
-  border-top: 2px solid #111;
+  border-left: 2px solid currentColor;
+  border-top: 2px solid currentColor;
 }
 .quick-service-review-card {
   background: #fff;
-  border-right: 2px solid #111;
-  border-bottom: 2px solid #111;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
   padding: 22px;
   min-height: auto;
 }
@@ -817,7 +768,6 @@ body.no-scroll { overflow: hidden; }
 .quick-service-review-rating {
   margin: 0 0 12px;
   line-height: 1.3;
-  letter-spacing: 0.02em;
 }
 .quick-service-review-text {
   margin: 0;
@@ -825,7 +775,7 @@ body.no-scroll { overflow: hidden; }
 }
 
 @media (max-width: 1100px) {
-  :root {
+  .components {
     --section-heading-content-gap: 24px;
     --split-section-heading-content-gap: 24px;
   }
@@ -833,8 +783,8 @@ body.no-scroll { overflow: hidden; }
   .quick-service-about-text { order: 1; }
   .quick-service-about-image { order: 2; }
   .quick-service-about-wrap {
-    width: calc(100% - 44px);
-    padding: 36px 0;
+    width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 32px));
+    padding: var(--padding-pageSection-verticalPadding) 0;
   }
 
   .quick-service-featured-grid {
@@ -842,7 +792,7 @@ body.no-scroll { overflow: hidden; }
   }
   .quick-service-featured-title-card,
   .quick-service-featured-item-card {
-    border-right: 2px solid #111;
+    border-right: 2px solid currentColor;
   }
   .quick-service-featured-item-card:nth-child(2n) {
     border-right: 0;
@@ -855,8 +805,8 @@ body.no-scroll { overflow: hidden; }
   }
 
   .quick-service-reviews-wrap {
-    width: calc(100% - 44px);
-    padding: 36px 0;
+    width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 32px));
+    padding: var(--padding-pageSection-verticalPadding) 0;
   }
   .quick-service-reviews-recent {
     text-align: left;
@@ -871,11 +821,15 @@ body.no-scroll { overflow: hidden; }
   border-top: 2px solid var(--bc-border);
   border-bottom: 2px solid var(--bc-border);
   background: var(--bc-white);
+  padding-block: var(--padding-pageSection-verticalPadding);
 }
 .quick-service-events-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 560px;
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
 }
 
 .quick-service-events-list {
@@ -896,24 +850,10 @@ body.no-scroll { overflow: hidden; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 50px;
-  padding: 0 18px;
-  background: var(--bc-white);
-  color: var(--bc-text);
-  text-decoration: none;
-  line-height: 1;
-  border: 2px solid var(--bc-border);
-  box-shadow: 4px 4px 0 black;  transition: background-color .2s ease, transform .12s ease, box-shadow .12s ease;
-}
-.quick-service-events-cta:hover,
-.quick-service-events-cta:focus-visible {
-  background: #fff;
-  transform: translate3d(4px, 4px, 0);
-  box-shadow: 0 0 0 #111;
 }
 .quick-service-events-image {
   order: 1;
-  padding: clamp(24px, 3vw, 46px);
+  padding: 0 clamp(24px, 3vw, 46px);
 }
 .quick-service-events-image img {
   width: 100%;
@@ -928,9 +868,9 @@ body.no-scroll { overflow: hidden; }
   border-bottom: 2px solid var(--bc-border);
 }
 .quick-service-faq-wrap {
-  width: min(980px, calc(100% - 56px));
+  width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 48px));
   margin: 0 auto;
-  padding: 34px 0 40px;
+  padding: var(--padding-pageSection-verticalPadding) 0;
 }
 .quick-service-faq-heading {
   margin: 0 0 var(--section-heading-content-gap);
@@ -940,7 +880,7 @@ body.no-scroll { overflow: hidden; }
   border: 2px solid var(--bc-border);
   background: var(--bc-white);
   margin: 0 auto 16px;
-  max-width: 920px;
+  max-width: 100%;
 }
 .quick-service-faq-trigger {
   width: 100%;
@@ -975,7 +915,7 @@ body.no-scroll { overflow: hidden; }
   right: 0;
   top: 50%;
   height: 2px;
-  background: #474747;
+  background-color: currentColor;
   transform: translateY(-50%);
 }
 .quick-service-faq-icon::after {
@@ -1013,11 +953,12 @@ body.no-scroll { overflow: hidden; }
 .quick-service-events-alt-section {
   border-bottom: 2px solid var(--bc-border);
   background: var(--bc-white);
+  padding-block: var(--padding-pageSection-verticalPadding);
 }
 .quick-service-events-alt-header {
-  width: min(1200px, calc(100% - 96px));
+  width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 48px));
   margin: 0 auto;
-  padding: 34px 0 0;
+  padding: 0;
 }
 .quick-service-events-alt-heading {
   margin: 0 0 var(--split-section-heading-content-gap);
@@ -1027,9 +968,12 @@ body.no-scroll { overflow: hidden; }
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   min-height: 560px;
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
 }
 .quick-service-events-alt-image {
-  padding: 0 clamp(24px, 3vw, 46px) clamp(24px, 3vw, 46px);
+  padding: 0 clamp(24px, 3vw, 46px);
 }
 .quick-service-events-alt-map {
   width: 100%;
@@ -1044,6 +988,7 @@ body.no-scroll { overflow: hidden; }
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding-block: 0;
 }
 .quick-service-events-alt-copy > :not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):first-of-type {
   margin-top: 0;
@@ -1059,7 +1004,7 @@ body.no-scroll { overflow: hidden; }
 .quick-service-location-item {
   padding: 16px 0;
   margin: 0;
-  border-bottom: 1px solid #111;
+  border-bottom: 1px solid currentColor;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1134,33 +1079,40 @@ body.no-scroll { overflow: hidden; }
   .site-brand-line--secondary {
     margin-top: 4px;
   }
-  .hero-overlay { width: min(760px, calc(100% - 36px)); }
+  .hero-overlay { width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 48px)); }
   .hero-info-panel { width: min(500px, 100%); padding: 40px; }
   .hero-rating { gap: 6px; margin-bottom: 14px; }
   .hero-cta-row { gap: 20px; }
   .hero-cta-row { width: min(560px, 100%); }
-  .hero-cta { min-height: 58px; padding: 0 14px; }
-  .hero-cta--solid { box-shadow: 5px 5px 0 #000; }
-  .hero-cta--solid:hover,
-  .hero-cta--solid:focus-visible { transform: translate3d(5px, 5px, 0); }
 
-  .split-banner-wrap { grid-template-columns: 1fr; }
-  .split-banner-text { padding: 30px 22px; }
+  .split-banner-wrap { grid-template-columns: 1fr;
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
+}
+  .split-banner-text { padding: var(--padding-pageSection-verticalPadding) 22px; }
   .split-banner-image img { min-height: 320px; max-height: 440px; }
-  .quick-service-offerings-wrap { grid-template-columns: 1fr; }
+  .quick-service-offerings-wrap { grid-template-columns: 1fr;
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
+}
   .quick-service-offerings-image-panel {
     margin: 0;
-    padding: 0 22px 30px;
-  }
+    padding: 0 22px;
+}
   .quick-service-events-grid {
     grid-template-columns: 1fr;
     min-height: auto;
-  }
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
+}
   .quick-service-events-copy {
     order: 1;
     border-left: 0;
     border-right: 0;
-    border-bottom: 2px solid #111;
+    border-bottom: 2px solid currentColor;
     padding: 34px 24px;
   }
   .quick-service-events-copy h2 {
@@ -1168,15 +1120,15 @@ body.no-scroll { overflow: hidden; }
   }
   .quick-service-events-image {
     order: 2;
-    padding: 24px;
-  }
+    padding: 0 24px;
+}
   .quick-service-events-image img {
     min-height: 360px;
   }
 
   .quick-service-faq-wrap {
-    width: calc(100% - 40px);
-    padding: 28px 0 34px;
+    width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 32px));
+    padding: var(--padding-pageSection-verticalPadding) 0;
   }
   .quick-service-faq-heading {
     margin-bottom: var(--section-heading-content-gap);
@@ -1185,21 +1137,24 @@ body.no-scroll { overflow: hidden; }
   .quick-service-events-alt-grid {
     grid-template-columns: 1fr;
     min-height: auto;
-  }
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
+}
   .quick-service-events-alt-header {
-    width: calc(100% - 44px);
+    width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 32px));
     padding-top: 30px;
   }
   .quick-service-events-alt-copy {
     order: 1;
     border-left: 0;
     border-bottom: 0;
-    padding: 0 24px 34px;
-  }
+    padding: 0 24px;
+}
   .quick-service-events-alt-image {
     order: 2;
-    padding: 24px;
-  }
+    padding: 0 24px;
+}
   .quick-service-events-alt-map {
     min-height: 360px;
   }
@@ -1217,7 +1172,7 @@ body.no-scroll { overflow: hidden; }
     max-width: none;
     padding-inline: 0;
   }
-  .hero-overlay { width: calc(100% - 28px); }
+  .hero-overlay { width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 32px)); }
   .hero-info-panel { width: 100%; padding: 32px; }
   .hero-title { margin-bottom: 12px; }
   .hero-rating { gap: 6px; margin-bottom: 12px; }
@@ -1225,25 +1180,26 @@ body.no-scroll { overflow: hidden; }
   .hero-status span:last-child { text-align: center; }
   .hero-cta-row { flex-direction: column; gap: 12px; width: 100%; margin-top: 12px; }
   .hero-cta-slot { width: 100%; }
-  .hero-cta { max-width: none; width: 100%; min-height: 56px; padding: 0 14px; }
-  .hero-cta--solid { box-shadow: 4px 4px 0 #000; }
-  .hero-cta--solid:hover,
-  .hero-cta--solid:focus-visible { transform: translate3d(4px, 4px, 0); }
+  .hero-cta { max-width: none; width: 100%;   }
 
   .quick-service-offerings-header {
-    padding: 30px 16px 0;
-  }
-  .split-banner-text { padding: 30px 16px; }
+    padding: 0 16px;
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
+}
+  .split-banner-text { padding: var(--padding-pageSection-verticalPadding) 16px; }
   .quick-service-offerings-list-panel,
   .quick-service-offerings-image-panel { padding: 0; }
-  .quick-service-offerings-list-panel { padding: 0 16px 30px; }
+  .quick-service-offerings-list-panel { padding: 0 16px;
+}
   .quick-service-offerings-image-panel {
     margin: 0;
-    padding: 0 16px 30px;
-  }
+    padding: 0 16px;
+}
   .quick-service-about-wrap {
-    width: calc(100% - 32px);
-    padding: 30px 0;
+    width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 32px));
+    padding: var(--padding-pageSection-verticalPadding) 0;
   }
   .quick-service-offerings-image-panel img,
   .quick-service-about-image img { max-width: 100%; }
@@ -1264,8 +1220,8 @@ body.no-scroll { overflow: hidden; }
   }
 
   .quick-service-reviews-wrap {
-    width: calc(100% - 32px);
-    padding: 30px 0;
+    width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 32px));
+    padding: var(--padding-pageSection-verticalPadding) 0;
   }
   .quick-service-reviews-summary {
     gap: 6px;
@@ -1291,20 +1247,16 @@ body.no-scroll { overflow: hidden; }
   .quick-service-events-copy h2 {
     line-height: 1.22;
   }
-  .quick-service-events-cta {
-    min-height: 46px;
-    padding: 0 14px;
-  }
   .quick-service-events-image {
-    padding: 16px;
-  }
+    padding: 0 16px;
+}
   .quick-service-events-image img {
     min-height: 280px;
   }
 
   .quick-service-faq-wrap {
-    width: calc(100% - 24px);
-    padding: 20px 0 24px;
+    width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 32px));
+    padding: var(--padding-pageSection-verticalPadding) 0;
   }
   .quick-service-faq-heading {
     margin-bottom: 24px;
@@ -1334,18 +1286,18 @@ body.no-scroll { overflow: hidden; }
   }
 
   .quick-service-events-alt-copy {
-    padding: 0 16px 30px;
-  }
+    padding: 0 16px;
+}
   .quick-service-events-alt-header {
-    width: calc(100% - 32px);
+    width: min(var(--maxWidth-pageSection-contentWidth), calc(100% - 32px));
     padding-top: 24px;
   }
   .quick-service-location-item { padding: 12px 0; }
   .quick-service-location-item:first-child { padding-top: 0; }
   .quick-service-location-item { gap: 6px; }
   .quick-service-events-alt-image {
-    padding: 16px;
-  }
+    padding: 0 16px;
+}
   .quick-service-events-alt-map {
     min-height: 280px;
   }
@@ -1353,13 +1305,16 @@ body.no-scroll { overflow: hidden; }
 
 .quick-service-footer-light {
   background: #fff;
-  padding: 18px 28px 20px;
+  padding: var(--padding-pageSection-verticalPadding) 28px;
 }
 .quick-service-footer-top {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 18px;
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
 }
 .quick-service-footer-social,
 .quick-service-footer-links,
@@ -1374,16 +1329,12 @@ body.no-scroll { overflow: hidden; }
   width: 100%;
 }
 .quick-service-footer-light a {
-  color: #373737;
-  letter-spacing: 0.03em;
-  text-decoration: underline;
   text-underline-offset: 0.12em;
   transition: opacity .2s ease, text-decoration-color .2s ease;
 }
 .quick-service-footer-light a:hover,
 .quick-service-footer-light a:focus-visible {
   opacity: .75;
-  text-decoration: none;
 }
 .quick-service-footer-copy {
   margin: 0;
@@ -1393,13 +1344,18 @@ body.no-scroll { overflow: hidden; }
   margin: 64px 0 56px;
   text-align: center;
   line-height: 1;
-  letter-spacing: 0.01em;
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
 }
 .quick-service-footer-bottom {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: end;
   gap: 24px;
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
 }
 .quick-service-footer-meta {
   display: flex;
@@ -1437,30 +1393,38 @@ body.no-scroll { overflow: hidden; }
 }
 .quick-service-footer-legal {
   justify-content: flex-end;
-  letter-spacing: 0.02em;
 }
 
 @media (max-width: 1100px) {
   .quick-service-footer-light {
-    padding: 16px;
+    padding: var(--padding-pageSection-verticalPadding) 16px;
   }
   .quick-service-footer-top {
     grid-template-columns: 1fr;
     justify-items: start;
     text-align: left;
-  }
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
+}
   .quick-service-footer-copy {
     white-space: normal;
   }
   .quick-service-footer-logo {
     margin: 34px 0 30px;
     text-align: left;
-  }
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
+}
   .quick-service-footer-bottom {
     grid-template-columns: 1fr;
     justify-items: start;
     text-align: left;
-  }
+  max-width: var(--maxWidth-pageSection-contentWidth);
+  margin-inline: auto;
+  width: 100%;
+}
   .quick-service-footer-meta {
     align-items: flex-start;
     gap: 12px;
@@ -1532,7 +1496,6 @@ body.no-scroll { overflow: hidden; }
   height: 100%;
   min-height: 100%;
   text-align: center;
-  letter-spacing: 0.02em;
   color: var(--bc-text);
 }
 `;
@@ -1569,7 +1532,7 @@ const defaultHeroCtas: HeroCtaRow[] = [
   { cta: defaultHeroCta("View Menu") },
 ];
 
-const fields: YextFields<QuickServiceHeroProps> = {
+const fields = {
   section: {
     label: msg("fields.section", "Section"),
     type: "object",
@@ -1647,6 +1610,7 @@ const fields: YextFields<QuickServiceHeroProps> = {
           styles: {
             label: msg("fields.textStyles", "Text Styles"),
             type: "styledText",
+            transform: true,
           },
           fontColor: {
             label: msg("fields.fontColor", "Font Color"),
@@ -1685,6 +1649,7 @@ const fields: YextFields<QuickServiceHeroProps> = {
           styles: {
             label: msg("fields.imageStyles", "Image Styles"),
             type: "styledImage",
+            transform: true,
           },
         },
       },
@@ -1704,6 +1669,7 @@ const fields: YextFields<QuickServiceHeroProps> = {
       styles: {
         label: msg("fields.textStyles", "Text Styles"),
         type: "styledText",
+        transform: true,
       },
       fontColor: {
         label: msg("fields.fontColor", "Font Color"),
@@ -1799,32 +1765,7 @@ const fields: YextFields<QuickServiceHeroProps> = {
     getItemSummary: (_item, index) =>
       pt("buttonNumber", "Button {{number}}", { number: (index ?? 0) + 1 }),
   },
-};
-
-const toRenderableText = (value: unknown, fallback = "") => {
-  if (typeof value === "string" || typeof value === "number") {
-    return String(value);
-  }
-
-  if (value && typeof value === "object") {
-    const maybeDayValue = normalizeDayValue(value as DayData);
-    if (maybeDayValue) {
-      return maybeDayValue;
-    }
-
-    if ("defaultValue" in (value as Record<string, unknown>)) {
-      const defaultValue = (value as Record<string, unknown>).defaultValue;
-      if (
-        typeof defaultValue === "string" ||
-        typeof defaultValue === "number"
-      ) {
-        return String(defaultValue);
-      }
-    }
-  }
-
-  return fallback;
-};
+} satisfies YextFields<QuickServiceHeroProps>;
 
 const defaultHeroProps: QuickServiceHeroProps = {
   section: {
@@ -1926,28 +1867,6 @@ const defaultHeroProps: QuickServiceHeroProps = {
   ctas: defaultHeroCtas,
 };
 
-const normalizeDayValue = (value?: string | DayData) => {
-  if (!value) return null;
-  if (typeof value === "string") return value;
-  if (value.isClosed) return "Closed";
-
-  const intervals =
-    value.openIntervals
-      ?.map((interval) => {
-        if (!interval?.start || !interval?.end) return null;
-        return `${interval.start} - ${interval.end}`;
-      })
-      .filter((interval): interval is string => Boolean(interval)) ?? [];
-
-  return intervals.length > 0 ? intervals.join(", ") : "Closed";
-};
-
-const resolveTextFieldValue = (
-  field: YextEntityField<TranslatableString>,
-  locale: string,
-  streamDocument: Record<string, any> | undefined,
-) => toRenderableText(resolveComponentData(field, locale, streamDocument), "");
-
 const resolveHoursFieldValue = (
   field: YextEntityField<HoursDataValue>,
   locale: string,
@@ -1966,9 +1885,11 @@ const resolveHoursFieldValue = (
   return field.constantValue;
 };
 
-const QuickServiceHeroComponent: PuckComponent<QuickServiceHeroProps> = (
-  props,
-) => {
+const QuickServiceHeroComponent: React.FC<
+  WithPuckProps<
+    WithId<YextTransformedProps<QuickServiceHeroProps, typeof fields>>
+  >
+> = (props) => {
   const { t, i18n } = useTranslation();
   const streamDocument = useDocument<any>();
   const locale = i18n.language;
@@ -1986,7 +1907,7 @@ const QuickServiceHeroComponent: PuckComponent<QuickServiceHeroProps> = (
     props.section.cardColor,
     streamDocument,
   );
-  const brandName = resolveTextFieldValue(
+  const brandName = resolveComponentData(
     props.brand.name.text,
     locale,
     streamDocument,
@@ -2002,15 +1923,11 @@ const QuickServiceHeroComponent: PuckComponent<QuickServiceHeroProps> = (
     height: "100px",
     margin: "0 auto 18px",
     borderRadius:
-      props.brand.logo.styles?.borderRadius === "default"
-        ? undefined
-        : props.brand.logo.styles?.borderRadius,
-    overflow:
-      props.brand.logo.styles?.borderRadius === "default"
-        ? undefined
-        : "hidden",
+      props.brand.logo.styles?.borderRadius ??
+      "var(--borderRadius-image-borderRadius)",
+    overflow: !props.brand.logo.styles?.borderRadius ? undefined : "hidden",
   };
-  const geomodifier = resolveTextFieldValue(
+  const geomodifier = resolveComponentData(
     props.geomodifier.text,
     locale,
     streamDocument,
@@ -2160,6 +2077,7 @@ const QuickServiceHeroComponent: PuckComponent<QuickServiceHeroProps> = (
                         image={resolvedBrandLogo}
                         className="hero-kicker"
                         style={{
+                          borderRadius: "inherit",
                           display: "block",
                           width: "100%",
                           height: "100%",
@@ -2181,7 +2099,7 @@ const QuickServiceHeroComponent: PuckComponent<QuickServiceHeroProps> = (
                       className="hero-kicker"
                       style={{
                         ...(brandNameColor ? { color: brandNameColor } : {}),
-                        ...resolveStyledTextStyles(brandNameStyles),
+                        ...brandNameStyles,
                       }}
                     >
                       {brandName}
@@ -2199,7 +2117,7 @@ const QuickServiceHeroComponent: PuckComponent<QuickServiceHeroProps> = (
                     className="hero-title"
                     style={{
                       ...(geomodifierColor ? { color: geomodifierColor } : {}),
-                      ...resolveStyledTextStyles(geomodifierStyles),
+                      ...geomodifierStyles,
                     }}
                   >
                     {geomodifier}
@@ -2279,7 +2197,10 @@ const QuickServiceHeroComponent: PuckComponent<QuickServiceHeroProps> = (
   );
 };
 
-export const QuickServiceHero: YextComponentConfig<QuickServiceHeroProps> = {
+export const QuickServiceHero: YextComponentConfig<
+  QuickServiceHeroProps,
+  typeof fields
+> = {
   label: msg("components.heroLabel", "Hero"),
   fields,
   defaultProps: defaultHeroProps,

@@ -5,10 +5,9 @@ import { msg } from "@yext/visual-editor/section-library-support";
 
 import * as React from "react";
 import { useTranslation } from "react-i18next";
-import { type PuckComponent } from "@puckeditor/core";
+import type { WithId, WithPuckProps } from "@puckeditor/core";
 import {
   AnalyticsScopeProvider,
-  Link,
   type ComplexImageType,
   type ImageType,
   type LinkType,
@@ -16,6 +15,7 @@ import {
 } from "@yext/pages-components";
 import {
   Background,
+  CTA,
   ComprehensiveCTA,
   type ComprehensiveCTAValue,
   EntityField,
@@ -33,16 +33,14 @@ import {
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
+  type YextTransformedProps,
   getAnalyticsScopeHash,
   normalizeLink,
   normalizeThemeColorToken,
   resolveComponentData,
   useDocument,
 } from "@yext/visual-editor";
-import {
-  aspectRatioOptions,
-  resolveStyledTextStyles,
-} from "../shared/sectionHelpers";
+import { aspectRatioOptions } from "../shared/sectionHelpers";
 
 type SharedHeaderVariant =
   | "centerLogoSplitNav"
@@ -155,69 +153,6 @@ const defaultUtilityIconImage: SharedHeaderAction["iconImage"] = {
   },
 };
 
-const hasExplicitThemeColor = (color?: ThemeColor): color is ThemeColor => {
-  return Boolean(normalizeThemeColorToken(color));
-};
-
-const resolveBorderRadius = (value?: string): string | undefined => {
-  if (!value || value === "default") {
-    return undefined;
-  }
-
-  return value;
-};
-
-const getTextStyles = ({
-  color,
-  styles,
-}: {
-  color?: ThemeColor;
-  styles: Pick<
-    StyledLinkValue,
-    | "fontFamily"
-    | "fontSize"
-    | "fontWeight"
-    | "fontStyle"
-    | "textTransform"
-    | "letterSpacing"
-  >;
-}): React.CSSProperties => {
-  return {
-    color: getThemeColorCssValue(color),
-    ...resolveStyledTextStyles(styles),
-    letterSpacing:
-      styles?.letterSpacing === "default" ? undefined : styles?.letterSpacing,
-  };
-};
-
-const resolveString = (
-  value: TranslatableString | undefined,
-  locale: string,
-  streamDocument: StreamDocument,
-): string => {
-  if (!value) {
-    return "";
-  }
-
-  return resolveComponentData(value, locale, streamDocument) || "";
-};
-
-const normalizeResolvedLink = ({
-  link,
-  linkType,
-  shouldNormalize,
-}: {
-  link: string;
-  linkType: LinkType;
-  shouldNormalize: boolean;
-}): string => {
-  if (!shouldNormalize) {
-    return link;
-  }
-
-  return normalizeLink(link, linkType);
-};
-
 const hasImageSource = (
   image: ImageType | ComplexImageType | TranslatableAssetImage | undefined,
 ): image is ImageType | ComplexImageType | TranslatableAssetImage => {
@@ -250,10 +185,7 @@ const resolveImageValue = (value: unknown) => {
     !React.isValidElement(value) &&
     hasImageSource(
       value as
-        | ImageType
-        | ComplexImageType
-        | TranslatableAssetImage
-        | undefined,
+        ImageType | ComplexImageType | TranslatableAssetImage | undefined,
     )
   ) {
     return value as ImageType | ComplexImageType | TranslatableAssetImage;
@@ -278,7 +210,7 @@ const SharedHeaderDefaultUtilityIcon = () => (
   </svg>
 );
 
-const QuickServiceHeaderFields: YextFields<QuickServiceHeaderProps> = {
+const QuickServiceHeaderFields = {
   variant: {
     label: msg("fields.variant", "Variant"),
     type: "select",
@@ -387,6 +319,7 @@ const QuickServiceHeaderFields: YextFields<QuickServiceHeaderProps> = {
       styles: {
         label: msg("fields.linkStyles", "Link Styles"),
         type: "styledLink",
+        transform: true,
       },
     },
   },
@@ -439,6 +372,7 @@ const QuickServiceHeaderFields: YextFields<QuickServiceHeaderProps> = {
               styles: {
                 label: msg("fields.imageStyles", "Image Styles"),
                 type: "styledImage",
+                transform: true,
               },
             },
           },
@@ -585,14 +519,22 @@ const QuickServiceHeaderFields: YextFields<QuickServiceHeaderProps> = {
       styles: {
         label: msg("fields.imageStyles", "Image Styles"),
         type: "styledImage",
+        transform: true,
       },
     },
   },
-};
+} satisfies YextFields<QuickServiceHeaderProps>;
 
-const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
-  props,
-) => {
+const QuickServiceHeaderComponent: React.FC<
+  WithPuckProps<
+    WithId<
+      YextTransformedProps<
+        QuickServiceHeaderProps,
+        typeof QuickServiceHeaderFields
+      >
+    >
+  >
+> = (props) => {
   const analytics = useAnalytics();
   const { t } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
@@ -623,15 +565,15 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
     streamDocument,
   );
 
-  const navigationColor = hasExplicitThemeColor(props.navigation.fontColor)
+  const navigationColor = normalizeThemeColorToken(props.navigation.fontColor)
     ? props.navigation.fontColor
     : undefined;
   const navigationColorCss = getThemeColorCssValue(navigationColor);
 
-  const navigationTextStyles = getTextStyles({
-    color: navigationColor,
-    styles: props.navigation.styles,
-  });
+  const navigationTextStyles = {
+    color: navigationColorCss,
+    ...props.navigation.styles,
+  };
 
   const logoWrapperStyle: React.CSSProperties = {
     height: "50px",
@@ -639,11 +581,14 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
       props.logoImage.aspectRatio > 0
         ? `${50 * props.logoImage.aspectRatio}px`
         : "50px",
-    borderRadius: resolveBorderRadius(props.logoImage.styles?.borderRadius),
+    borderRadius:
+      props.logoImage.styles?.borderRadius ??
+      "var(--borderRadius-image-borderRadius)",
     overflow: "hidden",
   };
 
   const logoStyle: React.CSSProperties = {
+    borderRadius: "inherit",
     display: "block",
     width: "100%",
     height: "100%",
@@ -652,13 +597,13 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
 
   const navigationLinks = (props.navigation.links ?? [])
     .map((item, index) => {
-      const label = resolveString(item.label, locale, streamDocument);
-      const resolvedLink = resolveString(item.link, locale, streamDocument);
-      const link = normalizeResolvedLink({
-        link: resolvedLink,
-        linkType: item.linkType,
-        shouldNormalize: item.normalizeLink,
-      });
+      const label =
+        resolveComponentData(item.label, locale, streamDocument) || "";
+      const resolvedLink =
+        resolveComponentData(item.link, locale, streamDocument) || "";
+      const link = item.normalizeLink
+        ? normalizeLink(resolvedLink, item.linkType)
+        : resolvedLink;
 
       return {
         eventName: `headerLink${index}`,
@@ -672,13 +617,13 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
 
   const utilityLinks = (props.utilities.items ?? [])
     .map((item, index) => {
-      const label = resolveString(item.label, locale, streamDocument);
-      const resolvedLink = resolveString(item.link, locale, streamDocument);
-      const link = normalizeResolvedLink({
-        link: resolvedLink,
-        linkType: item.linkType,
-        shouldNormalize: item.normalizeLink,
-      });
+      const label =
+        resolveComponentData(item.label, locale, streamDocument) || "";
+      const resolvedLink =
+        resolveComponentData(item.link, locale, streamDocument) || "";
+      const link = item.normalizeLink
+        ? normalizeLink(resolvedLink, item.linkType)
+        : resolvedLink;
       const resolvedIconImage = resolveComponentData(
         item.iconImage.image,
         locale,
@@ -704,7 +649,10 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
     iconImageProps,
   }: {
     iconImage?: ImageType | ComplexImageType | TranslatableAssetImage;
-    iconImageProps: SharedHeaderAction["iconImage"];
+    iconImageProps: YextTransformedProps<
+      QuickServiceHeaderProps,
+      typeof QuickServiceHeaderFields
+    >["utilities"]["items"][number]["iconImage"];
   }) => {
     if (!hasImageSource(iconImage)) {
       return (
@@ -725,15 +673,18 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
       height: "32px",
       aspectRatio:
         iconImageProps.aspectRatio > 0 ? iconImageProps.aspectRatio : undefined,
-      borderRadius: resolveBorderRadius(iconImageProps.styles?.borderRadius),
+      borderRadius:
+        iconImageProps.styles?.borderRadius ??
+        "var(--borderRadius-image-borderRadius)",
       overflow:
         iconImageProps.imageConstrain === "filled" ||
-        iconImageProps.styles?.borderRadius !== "default"
+        Boolean(iconImageProps.styles?.borderRadius)
           ? "hidden"
           : undefined,
     };
 
     const imageStyle: React.CSSProperties = {
+      borderRadius: "inherit",
       display: "block",
       width: "100%",
       height: "100%",
@@ -758,37 +709,42 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
     );
   };
 
-  const showNavCaret =
-    props.navigation.styles.includeCaret !== "default" &&
-    props.navigation.styles.includeCaret !== "false";
+  const caretDisplay = (
+    props.navigation.styles as React.CSSProperties & {
+      "--display-link-caret"?: string;
+    }
+  )["--display-link-caret"];
+  const showNavCaret = caretDisplay !== "false";
 
   const desktopSharedRightSide = (
     <div className="flex items-center justify-end gap-3">
       {showUtilities && utilityLinks.length > 0 ? (
         <div className="flex items-center gap-2">
           {utilityLinks.map((item) => (
-            <Link
+            <CTA
+              variant="link"
+              normalizeLink={false}
+              label={
+                <span className="flex h-full w-full items-center justify-center">
+                  {renderUtilityIcon({
+                    iconImage: item.iconImage,
+                    iconImageProps: item.iconImageProps,
+                  })}
+                </span>
+              }
+              alwaysHideCaret
               key={`${item.eventName}-${item.link}`}
-              cta={{
-                link: item.link,
-                linkType: item.linkType,
-              }}
+              link={item.link}
+              linkType={item.linkType}
               eventName={item.eventName}
               target={item.openInNewTab ? "_blank" : undefined}
-              rel={item.openInNewTab ? "noopener noreferrer" : undefined}
-              aria-label={item.label}
+              openInNewTab={item.openInNewTab}
+              ariaLabel={item.label}
               className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-opacity hover:opacity-80"
               style={
                 navigationColorCss ? { color: navigationColorCss } : undefined
               }
-            >
-              <span className="flex h-full w-full items-center justify-center">
-                {renderUtilityIcon({
-                  iconImage: item.iconImage,
-                  iconImageProps: item.iconImageProps,
-                })}
-              </span>
-            </Link>
+            />
           ))}
         </div>
       ) : null}
@@ -804,7 +760,7 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
               <ComprehensiveCTA
                 value={item.cta as Partial<ComprehensiveCTAValue>}
                 eventName={`headerCta${index}`}
-                className="inline-flex h-10 items-center justify-center px-5 transition-opacity hover:opacity-90"
+                className="inline-flex items-center justify-center transition-opacity hover:opacity-90"
               />
             </EntityField>
           ))}
@@ -814,7 +770,12 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
   );
 
   const renderNavigationLinks = (orientation: "row" | "column") => (
-    <nav aria-label={t("quickServiceHeader.primaryNavigation", "Primary navigation")}>
+    <nav
+      aria-label={t(
+        "quickServiceHeader.primaryNavigation",
+        "Primary navigation",
+      )}
+    >
       <ul
         className={
           orientation === "row"
@@ -825,20 +786,36 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
         {showNavigation
           ? navigationLinks.map((item) => (
               <li key={`${item.eventName}-${item.link}`}>
-                <Link
-                  cta={{
-                    link: item.link,
-                    linkType: item.linkType,
-                  }}
+                <CTA
+                  variant="link"
+                  normalizeLink={false}
+                  label={
+                    <>
+                      <span>{item.label}</span>
+                      {showNavCaret ? (
+                        <span
+                          aria-hidden="true"
+                          style={{
+                            display:
+                              caretDisplay === undefined
+                                ? "var(--display-link-caret)"
+                                : undefined,
+                          }}
+                        >
+                          +
+                        </span>
+                      ) : null}
+                    </>
+                  }
+                  alwaysHideCaret
+                  link={item.link}
+                  linkType={item.linkType}
                   eventName={item.eventName}
                   target={item.openInNewTab ? "_blank" : undefined}
-                  rel={item.openInNewTab ? "noopener noreferrer" : undefined}
+                  openInNewTab={item.openInNewTab}
                   className="inline-flex items-center gap-2 transition-opacity hover:opacity-80"
                   style={navigationTextStyles}
-                >
-                  <span>{item.label}</span>
-                  {showNavCaret ? <span aria-hidden="true">+</span> : null}
-                </Link>
+                />
               </li>
             ))
           : null}
@@ -889,17 +866,17 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
         fieldId={props.logoImage.url.field}
         constantValueEnabled={props.logoImage.url.constantValueEnabled}
       >
-        <Link
-          cta={{
-            link: logoUrl,
-            linkType: "URL",
-          }}
+        <CTA
+          variant="link"
+          normalizeLink={false}
+          label={logoContent}
+          alwaysHideCaret
+          link={logoUrl}
+          linkType="URL"
           eventName="headerLogo"
           className="inline-flex transition-opacity hover:opacity-80"
-          aria-label={t("quickServiceHeader.logo", "Logo")}
-        >
-          {logoContent}
-        </Link>
+          ariaLabel={t("quickServiceHeader.logo", "Logo")}
+        />
       </EntityField>
     ) : (
       logoContent
@@ -965,15 +942,15 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
       <Background
         as="header"
         background={props.section.backgroundColor}
-        className="relative"
+        className="relative py-pageSection-verticalPadding"
         style={{
           ...headerSurfaceStyle,
           ...(navigationColorCss ? { color: navigationColorCss } : {}),
         }}
       >
-        <div className="hidden lg:block">{desktopVariantContent}</div>
+        <div className="mx-auto hidden max-w-pageSection-contentWidth lg:block">{desktopVariantContent}</div>
 
-        <div className="flex min-h-[82px] items-center gap-4 px-6 md:px-8 lg:hidden">
+        <div className="mx-auto flex min-h-[82px] max-w-pageSection-contentWidth items-center gap-4 px-6 md:px-8 lg:hidden">
           <div className="min-w-0 flex-1">{renderLogo()}</div>
           {showCta ? (
             <div className="hidden items-center gap-3 md:flex">
@@ -987,7 +964,7 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
                   <ComprehensiveCTA
                     value={item.cta as Partial<ComprehensiveCTAValue>}
                     eventName={`tabletCta${index}`}
-                    className="inline-flex h-10 items-center justify-center px-5 transition-opacity hover:opacity-90"
+                    className="inline-flex items-center justify-center transition-opacity hover:opacity-90"
                   />
                 </EntityField>
               ))}
@@ -1053,7 +1030,7 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
                           <ComprehensiveCTA
                             value={item.cta as Partial<ComprehensiveCTAValue>}
                             eventName={`mobileOverlayCta${index}`}
-                            className="inline-flex h-10 w-full items-center justify-center px-5 transition-opacity hover:opacity-90 md:hidden"
+                            className="inline-flex w-full items-center justify-center transition-opacity hover:opacity-90 md:hidden"
                           />
                         </EntityField>
                       ))}
@@ -1062,34 +1039,32 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
                   {showUtilities && utilityLinks.length > 0 ? (
                     <div className="mt-6 flex flex-wrap items-center gap-3">
                       {utilityLinks.map((item) => (
-                        <Link
+                        <CTA
+                          variant="link"
+                          normalizeLink={false}
+                          label={
+                            <span className="flex h-full w-full items-center justify-center">
+                              {renderUtilityIcon({
+                                iconImage: item.iconImage,
+                                iconImageProps: item.iconImageProps,
+                              })}
+                            </span>
+                          }
+                          alwaysHideCaret
                           key={`${item.eventName}-mobile-${item.link}`}
-                          cta={{
-                            link: item.link,
-                            linkType: item.linkType,
-                          }}
+                          link={item.link}
+                          linkType={item.linkType}
                           eventName={`${item.eventName}Mobile`}
                           target={item.openInNewTab ? "_blank" : undefined}
-                          rel={
-                            item.openInNewTab
-                              ? "noopener noreferrer"
-                              : undefined
-                          }
-                          aria-label={item.label}
+                          openInNewTab={item.openInNewTab}
+                          ariaLabel={item.label}
                           className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-opacity hover:opacity-80"
                           style={
                             navigationColorCss
                               ? { color: navigationColorCss }
                               : undefined
                           }
-                        >
-                          <span className="flex h-full w-full items-center justify-center">
-                            {renderUtilityIcon({
-                              iconImage: item.iconImage,
-                              iconImageProps: item.iconImageProps,
-                            })}
-                          </span>
-                        </Link>
+                        />
                       ))}
                     </div>
                   ) : null}
@@ -1103,141 +1078,143 @@ const QuickServiceHeaderComponent: PuckComponent<QuickServiceHeaderProps> = (
   );
 };
 
-export const QuickServiceHeader: YextComponentConfig<QuickServiceHeaderProps> =
-  {
-    label: msg("components.header", "Header"),
-    fields: QuickServiceHeaderFields,
-    defaultProps: {
-      variant: "centerLogoSplitNav",
-      section: {
-        visibleOnLivePage: true,
-        backgroundColor: {
-          selectedColor: "palette-quaternary",
-          contrastingColor: "palette-quaternary-contrast",
-        },
-      },
-      navigation: {
-        show: true,
-        links: [
-          {
-            label: "Link 1",
-            link: "#",
-            linkType: "URL",
-            normalizeLink: false,
-            openInNewTab: false,
-          },
-          {
-            label: "Link 2",
-            link: "#",
-            linkType: "URL",
-            normalizeLink: false,
-            openInNewTab: false,
-          },
-          {
-            label: "Link 3",
-            link: "#",
-            linkType: "URL",
-            normalizeLink: false,
-            openInNewTab: false,
-          },
-        ],
-        styles: defaultLinkStyles,
-      },
-      utilities: {
-        show: true,
-        items: [
-          {
-            iconImage: defaultUtilityIconImage,
-            label: "Facebook",
-            link: "#",
-            linkType: "URL",
-            normalizeLink: false,
-            openInNewTab: false,
-          },
-          {
-            iconImage: defaultUtilityIconImage,
-            label: "Instagram",
-            link: "#",
-            linkType: "URL",
-            normalizeLink: false,
-            openInNewTab: false,
-          },
-          {
-            iconImage: defaultUtilityIconImage,
-            label: "Yelp",
-            link: "#",
-            linkType: "URL",
-            normalizeLink: false,
-            openInNewTab: false,
-          },
-        ],
-      },
-      cta: {
-        show: true,
-        items: [
-          {
-            cta: {
-              data: {
-                actionType: "link",
-                cta: {
-                  field: "",
-                  constantValueEnabled: true,
-                  constantValue: {
-                    ctaType: "textAndLink",
-                    label: { defaultValue: "CTA Label" },
-                    link: { defaultValue: "#" },
-                    linkType: "URL",
-                  },
-                  selectedType: "textAndLink",
-                },
-                openInNewTab: false,
-                buttonText: { defaultValue: "Button" },
-                customId: "",
-                customClass: "",
-                dataAttributes: [],
-                ariaLabel: { defaultValue: "CTA Label" },
-              },
-              styles: {
-                variant: "primary",
-                color: defaultPrimaryCtaColor,
-                button: defaultButtonStyles,
-                link: defaultLinkStyles,
-              },
-            },
-          },
-        ],
-      },
-      logoImage: {
-        show: true,
-        image: {
-          field: "",
-          constantValueEnabled: true,
-          constantValue: {
-            url: "https://a.mktgcdn.com/p/OLT2KExDEKhKlCmIobyRRHN6MFUS77fVs5gIt_FTnBI/450x450.jpg",
-            width: 450,
-            height: 450,
-          },
-        },
-        url: {
-          field: "",
-          constantValue: {
-            defaultValue: "",
-          },
-          constantValueEnabled: true,
-        },
-        aspectRatio: 1,
-        imageConstrain: "fixed",
-        styles: defaultImageStyles,
+export const QuickServiceHeader: YextComponentConfig<
+  QuickServiceHeaderProps,
+  typeof QuickServiceHeaderFields
+> = {
+  label: msg("components.header", "Header"),
+  fields: QuickServiceHeaderFields,
+  defaultProps: {
+    variant: "centerLogoSplitNav",
+    section: {
+      visibleOnLivePage: true,
+      backgroundColor: {
+        selectedColor: "palette-quaternary",
+        contrastingColor: "palette-quaternary-contrast",
       },
     },
-    render: (props) => (
-      <AnalyticsScopeProvider
-        name={`QuickServiceHeader${getAnalyticsScopeHash(props.id)}`}
-      >
-        <QuickServiceHeaderComponent {...props} />
-      </AnalyticsScopeProvider>
-    ),
-  };
+    navigation: {
+      show: true,
+      links: [
+        {
+          label: "Link 1",
+          link: "#",
+          linkType: "URL",
+          normalizeLink: false,
+          openInNewTab: false,
+        },
+        {
+          label: "Link 2",
+          link: "#",
+          linkType: "URL",
+          normalizeLink: false,
+          openInNewTab: false,
+        },
+        {
+          label: "Link 3",
+          link: "#",
+          linkType: "URL",
+          normalizeLink: false,
+          openInNewTab: false,
+        },
+      ],
+      styles: defaultLinkStyles,
+    },
+    utilities: {
+      show: true,
+      items: [
+        {
+          iconImage: defaultUtilityIconImage,
+          label: "Facebook",
+          link: "#",
+          linkType: "URL",
+          normalizeLink: false,
+          openInNewTab: false,
+        },
+        {
+          iconImage: defaultUtilityIconImage,
+          label: "Instagram",
+          link: "#",
+          linkType: "URL",
+          normalizeLink: false,
+          openInNewTab: false,
+        },
+        {
+          iconImage: defaultUtilityIconImage,
+          label: "Yelp",
+          link: "#",
+          linkType: "URL",
+          normalizeLink: false,
+          openInNewTab: false,
+        },
+      ],
+    },
+    cta: {
+      show: true,
+      items: [
+        {
+          cta: {
+            data: {
+              actionType: "link",
+              cta: {
+                field: "",
+                constantValueEnabled: true,
+                constantValue: {
+                  ctaType: "textAndLink",
+                  label: { defaultValue: "CTA Label" },
+                  link: { defaultValue: "#" },
+                  linkType: "URL",
+                },
+                selectedType: "textAndLink",
+              },
+              openInNewTab: false,
+              buttonText: { defaultValue: "Button" },
+              customId: "",
+              customClass: "",
+              dataAttributes: [],
+              ariaLabel: { defaultValue: "CTA Label" },
+            },
+            styles: {
+              variant: "primary",
+              color: defaultPrimaryCtaColor,
+              button: defaultButtonStyles,
+              link: defaultLinkStyles,
+            },
+          },
+        },
+      ],
+    },
+    logoImage: {
+      show: true,
+      image: {
+        field: "",
+        constantValueEnabled: true,
+        constantValue: {
+          url: "https://a.mktgcdn.com/p/OLT2KExDEKhKlCmIobyRRHN6MFUS77fVs5gIt_FTnBI/450x450.jpg",
+          width: 450,
+          height: 450,
+        },
+      },
+      url: {
+        field: "",
+        constantValue: {
+          defaultValue: "",
+        },
+        constantValueEnabled: true,
+      },
+      aspectRatio: 1,
+      imageConstrain: "fixed",
+      styles: defaultImageStyles,
+    },
+  },
+  render: (props) => (
+    <AnalyticsScopeProvider
+      name={`QuickServiceHeader${getAnalyticsScopeHash(props.id)}`}
+    >
+      <QuickServiceHeaderComponent {...props} />
+    </AnalyticsScopeProvider>
+  ),
+};
 
 export const config: SectionConfig = {
   id: "QuickServiceHeader",

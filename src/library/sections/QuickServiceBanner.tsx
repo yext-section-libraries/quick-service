@@ -1,9 +1,10 @@
+import type * as React from "react";
 import "../shared/typography.css";
 
 import type { SectionConfig } from "@yext/visual-editor";
 import { msg } from "@yext/visual-editor/section-library-support";
 
-import { PuckComponent } from "@puckeditor/core";
+import { WithId, WithPuckProps } from "@puckeditor/core";
 import { CircleSlash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
@@ -17,17 +18,15 @@ import {
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
+  type YextTransformedProps,
   backgroundColors,
   getDefaultRTF,
+  getThemeColorCssValue,
   resolveComponentData,
   resolveYextEntityField,
   useDocument,
 } from "@yext/visual-editor";
-import {
-  isRichTextEmpty,
-  renderRichText,
-  sectionField,
-} from "../shared/sectionHelpers";
+import { withBodyTypography } from "../shared/sectionHelpers";
 
 type QuickServiceBannerProps = {
   data: {
@@ -44,7 +43,7 @@ type QuickServiceBannerProps = {
   };
 };
 
-const QuickServiceBannerFields: YextFields<QuickServiceBannerProps> = {
+const QuickServiceBannerFields = {
   data: {
     label: msg("fields.bannerText", "Banner Text"),
     type: "object",
@@ -59,6 +58,7 @@ const QuickServiceBannerFields: YextFields<QuickServiceBannerProps> = {
       styles: {
         label: msg("fields.textStyles", "Text Styles"),
         type: "styledText",
+        transform: true,
       },
       fontColor: {
         label: msg("fields.textColor", "Text Color"),
@@ -82,15 +82,54 @@ const QuickServiceBannerFields: YextFields<QuickServiceBannerProps> = {
       },
     },
   },
-  section: sectionField,
+  section: {
+    label: "Section",
+    type: "object",
+    objectFields: {
+      backgroundColor: {
+        label: "Background Color",
+        type: "basicSelector",
+        options: "BACKGROUND_COLOR",
+      },
+      visibleOnLivePage: {
+        label: "Visible on Live Page",
+        type: "radio",
+        options: [
+          { label: "Yes", value: true },
+          { label: "No", value: false },
+        ],
+      },
+    },
+  },
+} satisfies YextFields<QuickServiceBannerProps>;
+
+const isRichTextEmpty = (value: unknown): boolean => {
+  if (!value) {
+    return true;
+  }
+
+  if (typeof value === "string") {
+    return value.trim() === "";
+  }
+
+  if (typeof value === "object" && "html" in value) {
+    const html = (value as { html?: unknown }).html;
+    return typeof html !== "string" || html.trim() === "";
+  }
+
+  return false;
 };
 
-const QuickServiceBannerComponent: PuckComponent<QuickServiceBannerProps> = ({
-  data,
-  styles,
-  section,
-  puck,
-}) => {
+const QuickServiceBannerComponent: React.FC<
+  WithPuckProps<
+    WithId<
+      YextTransformedProps<
+        QuickServiceBannerProps,
+        typeof QuickServiceBannerFields
+      >
+    >
+  >
+> = ({ data, styles, section, puck }) => {
   const { i18n } = useTranslation();
   const streamDocument = useDocument();
   const isMappedField =
@@ -110,7 +149,6 @@ const QuickServiceBannerComponent: PuckComponent<QuickServiceBannerProps> = ({
       <PageSection
         background={section.backgroundColor}
         className="flex items-center justify-center"
-        verticalPadding="sm"
       >
         <div className="relative flex h-20 w-full flex-row items-center justify-center gap-3 rounded-lg border border-gray-200 bg-gray-100 px-4">
           <CircleSlash2 className="h-10 w-10 flex-shrink-0 text-gray-400" />
@@ -129,7 +167,9 @@ const QuickServiceBannerComponent: PuckComponent<QuickServiceBannerProps> = ({
 
   const richTextStyleOverrides = {
     ...data.styles,
-    color: data.fontColor ?? section.backgroundColor.contrastingColor,
+    color: getThemeColorCssValue(
+      data.fontColor ?? section.backgroundColor.contrastingColor,
+    ),
   };
   const resolvedText = resolveComponentData(
     data.text,
@@ -144,6 +184,7 @@ const QuickServiceBannerComponent: PuckComponent<QuickServiceBannerProps> = ({
   return (
     <PageSection
       background={section.backgroundColor}
+      style={withBodyTypography(richTextStyleOverrides)}
       className={`flex items-center ${
         {
           left: "justify-start text-left",
@@ -151,14 +192,17 @@ const QuickServiceBannerComponent: PuckComponent<QuickServiceBannerProps> = ({
           right: "justify-end text-right",
         }[styles.textAlignment]
       }`}
-      verticalPadding="sm"
     >
       <EntityField
         constantValueEnabled={data.text.constantValueEnabled}
         displayName="Banner Text"
         fieldId={data.text.field}
       >
-        {renderRichText(resolvedText, richTextStyleOverrides)}
+        {typeof resolvedText === "string" ? (
+          <Body style={richTextStyleOverrides}>{resolvedText}</Body>
+        ) : (
+          resolvedText
+        )}
       </EntityField>
     </PageSection>
   );
@@ -167,44 +211,46 @@ const QuickServiceBannerComponent: PuckComponent<QuickServiceBannerProps> = ({
 /**
  * Displays a full-width, editor-configurable rich-text banner.
  */
-export const QuickServiceBanner: YextComponentConfig<QuickServiceBannerProps> =
-  {
-    label: msg("components.bannerLabel", "Banner"),
-    fields: QuickServiceBannerFields,
-    defaultProps: {
-      data: {
-        text: {
-          field: "",
-          constantValue: {
-            defaultValue: getDefaultRTF("Banner Text"),
-          },
-          constantValueEnabled: true,
+export const QuickServiceBanner: YextComponentConfig<
+  QuickServiceBannerProps,
+  typeof QuickServiceBannerFields
+> = {
+  label: msg("components.bannerLabel", "Banner"),
+  fields: QuickServiceBannerFields,
+  defaultProps: {
+    data: {
+      text: {
+        field: "",
+        constantValue: {
+          defaultValue: getDefaultRTF("Banner Text"),
         },
-        styles: {
-          fontFamily: "default",
-          fontSize: "default",
-          fontWeight: "default",
-          fontStyle: "default",
-          textTransform: "default",
-        },
+        constantValueEnabled: true,
       },
       styles: {
-        textAlignment: "center",
-      },
-      section: {
-        backgroundColor: backgroundColors.color1.value,
-        visibleOnLivePage: true,
+        fontFamily: "default",
+        fontSize: "default",
+        fontWeight: "default",
+        fontStyle: "default",
+        textTransform: "default",
       },
     },
-    render: (props) => (
-      <VisibilityWrapper
-        isEditing={props.puck.isEditing}
-        liveVisibility={props.section.visibleOnLivePage}
-      >
-        <QuickServiceBannerComponent {...props} />
-      </VisibilityWrapper>
-    ),
-  };
+    styles: {
+      textAlignment: "center",
+    },
+    section: {
+      backgroundColor: backgroundColors.color1.value,
+      visibleOnLivePage: true,
+    },
+  },
+  render: (props) => (
+    <VisibilityWrapper
+      isEditing={props.puck.isEditing}
+      liveVisibility={props.section.visibleOnLivePage}
+    >
+      <QuickServiceBannerComponent {...props} />
+    </VisibilityWrapper>
+  ),
+};
 
 export const config: SectionConfig = {
   id: "QuickServiceBanner",

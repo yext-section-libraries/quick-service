@@ -103,3 +103,8 @@
     text-transform: var(--textTransform-h2-textTransform);
   }
 }
+
+/* Images inherit global corners; an authored wrapper may override the token. */
+:where(:root:not(:has(.Puck))) img {
+  border-radius: var(--borderRadius-image-borderRadius);
+}
