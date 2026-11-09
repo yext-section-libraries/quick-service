@@ -1,15 +1,15 @@
 import "../shared/typography.css";
-import { resolveStyledTextStyles } from "../shared/sectionHelpers";
 
 import type { SectionConfig } from "@yext/visual-editor";
 import { msg } from "@yext/visual-editor/section-library-support";
 
 import * as React from "react";
 import { useTranslation } from "react-i18next";
-import type { PuckComponent } from "@puckeditor/core";
-import { AnalyticsScopeProvider, Link } from "@yext/pages-components";
+import type { WithId, WithPuckProps } from "@puckeditor/core";
+import { AnalyticsScopeProvider } from "@yext/pages-components";
 import {
   Background,
+  CTA,
   EntityField,
   getAnalyticsScopeHash,
   getSurfaceColorStyle,
@@ -23,6 +23,7 @@ import {
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
+  type YextTransformedProps,
   useDocument,
   useTemplateProps,
   VisibilityWrapper,
@@ -39,7 +40,7 @@ type QuickServiceBreadcrumbsProps = {
   includeCurrentLocation: boolean;
 };
 
-const fields: YextFields<QuickServiceBreadcrumbsProps> = {
+const fields = {
   section: {
     label: msg("fields.section", "Section"),
     type: "object",
@@ -67,6 +68,7 @@ const fields: YextFields<QuickServiceBreadcrumbsProps> = {
   textStyles: {
     label: msg("fields.textStyles", "Text Styles"),
     type: "styledText",
+    transform: true,
   },
   fontColor: {
     label: msg("fields.fontColor", "Font Color"),
@@ -81,30 +83,21 @@ const fields: YextFields<QuickServiceBreadcrumbsProps> = {
       { label: msg("fields.options.no", "No"), value: false },
     ],
   },
-};
+} satisfies YextFields<QuickServiceBreadcrumbsProps>;
 
 const QuickServiceBreadcrumbsStyles = String.raw`
 .quick-service-breadcrumbs {
-  padding: 14px 28px;
+  padding: var(--padding-pageSection-verticalPadding) 28px;
 }
 .quick-service-breadcrumbs-list {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 7px;
-  max-width: 1200px;
+  max-width: var(--maxWidth-pageSection-contentWidth);
   margin: 0 auto;
   padding: 0;
   list-style: none;
-  letter-spacing: 0.02em;
-}
-.quick-service-breadcrumbs-link {
-  color: inherit;
-  text-decoration: none;
-}
-.quick-service-breadcrumbs-link:hover,
-.quick-service-breadcrumbs-link:focus-visible {
-  text-decoration: underline;
 }
 .quick-service-breadcrumbs-separator {
   opacity: 0.65;
@@ -113,12 +106,14 @@ const QuickServiceBreadcrumbsStyles = String.raw`
   opacity: 0.82;
 }
 @media (max-width: 640px) {
-  .quick-service-breadcrumbs { padding: 12px 20px; }
+  .quick-service-breadcrumbs { padding: var(--padding-pageSection-verticalPadding) 20px; }
 }
 `;
 
-const QuickServiceBreadcrumbsComponent: PuckComponent<
-  QuickServiceBreadcrumbsProps
+const QuickServiceBreadcrumbsComponent: React.FC<
+  WithPuckProps<
+    WithId<YextTransformedProps<QuickServiceBreadcrumbsProps, typeof fields>>
+  >
 > = (props) => {
   const { t } = useTranslation();
   const streamDocument = useDocument<StreamDocument>();
@@ -138,10 +133,8 @@ const QuickServiceBreadcrumbsComponent: PuckComponent<
     streamDocument,
   );
   const textStyle: React.CSSProperties = {
-    color:
-      getThemeColorCssValue(props.fontColor) ??
-      getThemeColorCssValue(props.section.backgroundColor.contrastingColor),
-    ...resolveStyledTextStyles(props.textStyles),
+    color: getThemeColorCssValue(props.fontColor),
+    ...props.textStyles,
   };
 
   if (!breadcrumbs.length) {
@@ -218,26 +211,30 @@ const QuickServiceBreadcrumbsComponent: PuckComponent<
                         {label}
                       </span>
                     ) : (
-                      <Link
+                      <CTA
+                        variant="link"
+                        normalizeLink={false}
+                        label={
+                          isRoot ? (
+                            <EntityField
+                              displayName="Root Label"
+                              fieldId={props.rootLabel.field}
+                              constantValueEnabled={
+                                props.rootLabel.constantValueEnabled
+                              }
+                            >
+                              <span>{label}</span>
+                            </EntityField>
+                          ) : (
+                            label
+                          )
+                        }
                         className="quick-service-breadcrumbs-link"
                         style={textStyle}
                         eventName={`breadcrumb${breadcrumbIndex}`}
-                        href={href}
-                      >
-                        {isRoot ? (
-                          <EntityField
-                            displayName="Root Label"
-                            fieldId={props.rootLabel.field}
-                            constantValueEnabled={
-                              props.rootLabel.constantValueEnabled
-                            }
-                          >
-                            <span>{label}</span>
-                          </EntityField>
-                        ) : (
-                          label
-                        )}
-                      </Link>
+                        link={href}
+                        linkType="URL"
+                      />
                     )}
                   </li>
                 </React.Fragment>
@@ -250,7 +247,10 @@ const QuickServiceBreadcrumbsComponent: PuckComponent<
   );
 };
 
-export const QuickServiceBreadcrumbs: YextComponentConfig<QuickServiceBreadcrumbsProps> =
+export const QuickServiceBreadcrumbs: YextComponentConfig<
+  QuickServiceBreadcrumbsProps,
+  typeof fields
+> =
   {
     label: msg("components.breadcrumbsLabel", "Breadcrumbs"),
     fields,
