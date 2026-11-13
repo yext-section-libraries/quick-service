@@ -59,6 +59,7 @@
     "answer": "Vastus",
     "answerStyles": "Vastuse stiilid",
     "aspectRatio": "Kuvasuhe",
+    "autoSearchOnMapMove": "Otsige automaatselt kaardil liikumist",
     "backgroundColor": "Taustvärv",
     "backgroundFill": "Taustvärv — Täide",
     "backgroundImage": "Taustapilt",

@@ -59,6 +59,7 @@
     "answer": "Réponse",
     "answerStyles": "Styles de réponse",
     "aspectRatio": "Rapport d'aspect",
+    "autoSearchOnMapMove": "Recherche automatique sur le mouvement de la carte",
     "backgroundColor": "Couleur de fond",
     "backgroundFill": "Couleur de fond — Remplissage",
     "backgroundImage": "Image d’arrière-plan",

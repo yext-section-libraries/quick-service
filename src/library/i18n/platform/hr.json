@@ -59,6 +59,7 @@
     "answer": "Odgovor",
     "answerStyles": "Stilovi odgovora",
     "aspectRatio": "Omjer slike",
+    "autoSearchOnMapMove": "Automatsko pretraživanje po kretanju karte",
     "backgroundColor": "Boja pozadine",
     "backgroundFill": "Boja pozadine — Ispuna",
     "backgroundImage": "Pozadinska slika",

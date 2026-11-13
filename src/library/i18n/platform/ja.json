@@ -59,6 +59,7 @@
     "answer": "回答",
     "answerStyles": "回答のスタイル",
     "aspectRatio": "アスペクト比",
+    "autoSearchOnMapMove": "地図移動時に自動検索",
     "backgroundColor": "背景色",
     "backgroundFill": "背景色 — 塗りつぶし",
     "backgroundImage": "背景画像",

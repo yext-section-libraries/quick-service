@@ -59,6 +59,7 @@
     "answer": "Odpoveď",
     "answerStyles": "Štýly odpovede",
     "aspectRatio": "Miera strán",
+    "autoSearchOnMapMove": "Automaticky hľadať pri pohybe mapy",
     "backgroundColor": "Farba pozadia",
     "backgroundFill": "Farba pozadia — Výplň",
     "backgroundImage": "Obrázok na pozadí",

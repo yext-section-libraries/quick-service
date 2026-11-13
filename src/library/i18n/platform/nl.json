@@ -59,6 +59,7 @@
     "answer": "Antwoord",
     "answerStyles": "Antwoordstijlen",
     "aspectRatio": "Beeldverhouding",
+    "autoSearchOnMapMove": "Automatisch zoeken op kaartbeweging",
     "backgroundColor": "Achtergrondkleur",
     "backgroundFill": "Achtergrondkleur — Opvulling",
     "backgroundImage": "Achtergrondafbeelding",

@@ -59,6 +59,7 @@
     "answer": "Válasz",
     "answerStyles": "Válasz stílusai",
     "aspectRatio": "Oldal arány",
+    "autoSearchOnMapMove": "Automatikus keresés a térképen, mozgás",
     "backgroundColor": "Háttérszín",
     "backgroundFill": "Háttérszín — Kitöltés",
     "backgroundImage": "Háttérkép",

@@ -59,6 +59,7 @@
     "answer": "Atsakymas",
     "answerStyles": "Atsakymo stiliai",
     "aspectRatio": "Kraštinių santykis",
+    "autoSearchOnMapMove": "Automatiškai ieškoti judėjimo žemėlapyje",
     "backgroundColor": "Fono spalva",
     "backgroundFill": "Fono spalva — Užpildas",
     "backgroundImage": "Fono vaizdas",
