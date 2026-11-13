@@ -59,6 +59,7 @@
     "answer": "Svar",
     "answerStyles": "Svarstiler",
     "aspectRatio": "Aspektforhold",
+    "autoSearchOnMapMove": "Søk automatisk på kartbevegelse",
     "backgroundColor": "Bakgrunnsfarge",
     "backgroundFill": "Bakgrunnsfarge — Fyll",
     "backgroundImage": "Bakgrunnsbilde",

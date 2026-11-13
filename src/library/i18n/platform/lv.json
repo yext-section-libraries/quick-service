@@ -59,6 +59,7 @@
     "answer": "Atbilde",
     "answerStyles": "Atbildes stili",
     "aspectRatio": "Malu attiecība",
+    "autoSearchOnMapMove": "Automātiski meklēt kartē kustību",
     "backgroundColor": "Fona krāsa",
     "backgroundFill": "Fona krāsa — Aizpildījums",
     "backgroundImage": "Fona attēls",

@@ -59,6 +59,7 @@
     "answer": "回答",
     "answerStyles": "回答樣式",
     "aspectRatio": "縱橫比",
+    "autoSearchOnMapMove": "地圖移動自動搜索",
     "backgroundColor": "背景顏色",
     "backgroundFill": "背景顏色 — 填滿",
     "backgroundImage": "背景圖片",

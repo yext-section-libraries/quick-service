@@ -59,6 +59,7 @@
     "answer": "Vastaus",
     "answerStyles": "Vastauksen tyylit",
     "aspectRatio": "Kuvasuhde",
+    "autoSearchOnMapMove": "Hae automaattisesti kartan liikkeestä",
     "backgroundColor": "Taustaväri",
     "backgroundFill": "Taustaväri — Täyttö",
     "backgroundImage": "Taustakuva",
