@@ -40,6 +40,7 @@
   "locationsWithinDistanceOf_other": "\"{{name}}\" 'den {{distance}} {{unit}} uzaklıktaki {{count}} konum",
   "mapCoordinate": "Map Coordinate",
   "mapRequiresOptIn": "Bu harita yalnızca çerezler etkinse görüntülenebilir",
+  "mapRequiresWebGL": "WebGL kullanılamadığı için harita kullanılamıyor.",
   "mile_one": "mil",
   "mile_other": "mil",
   "mile_zero": "mil",
