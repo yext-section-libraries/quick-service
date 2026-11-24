@@ -132,6 +132,7 @@
     "imageConstrain": "Billedbegrænsning",
     "imageFillType": "Billedfyldtype",
     "imageStyles": "Stilarter",
+    "includeCount": "Inkluder tæller",
     "includeCurrentLocation": "Medtag aktuel placering",
     "includePhoneHyperlink": "Medtag telefonhyperlink",
     "items": "Elementer",
